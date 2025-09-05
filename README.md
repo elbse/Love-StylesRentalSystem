@@ -8,7 +8,7 @@ It automates the currently manual process of recording reservations, managing av
 
 ## 🛠 Tech Stack
 - **Backend:** Laravel / PHP  
-- **Frontend:** Blade / TailwindCSS (or React if applicable)  
+- **Frontend:** Blade / TailwindCSS 
 - **Database:** MySQL / MariaDB  
 - **Payments:** Integration with Payment Gateway API  
 - **Version Control:** Git & GitHub  
