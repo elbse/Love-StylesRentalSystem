@@ -12,7 +12,13 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('payments', function (Blueprint $table) {
-            $table->id();
+            $table->id('payment_id');
+            $table->foreignId('rental_id')->constrained('rentals', 'rental_id')->onDelete('cascade');
+            $table->decimal('amount', 10,2)->nullable(false);
+            $table->enum('payment_method', ['cash', 'card', 'bank_transfer'])->nullable(false);
+            $table->dateTime('payment_date')->nullable(false)->useCurrent();
+            $table->foreignId('processed_by')->constrained('users', 'user_id')->onDelete('cascade');
+            $table->enum('status', ['pending', 'completed', 'failed'])->default('pending')->nullable(false);
             $table->timestamps();
         });
     }
