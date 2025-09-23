@@ -1,7 +1,6 @@
 # Love & Styles — Reservation & Booking System (RTW Attires)
 
-This project is a **Reservation & Booking Management System (RBMS)** for  
-**Love & Styles**, a company offering rental-ready fashion attires.  
+This project is a **Reservation & Booking Management System (RBMS)** for  **Love & Styles**, a company offering rental-ready fashion attires.  
 It automates the currently manual process of recording reservations, managing availability, and handling payments.
 
 -----
