@@ -20,7 +20,7 @@ return new class extends Migration
             $table->string('design');
             $table->string('rental_price')->nullable(false);
             $table->enum('item_condition', ['good', 'damaged', 'under repair', 'retired'])->default('good');
-            $table->enum('item_status', ['available', 'reserved', 'rented', 'archived'])->default('available');
+            $table->foreignId('status_id')->constrained('inventory_status', 'status_id')->onDelete('cascade');
             $table->timestamps();
         });
     }

@@ -16,9 +16,10 @@ return new class extends Migration
             $table->string('full_name');
             $table->string('email')->unique();
             $table->timestamp('email_verified_at')->nullable();
+            $table->string('address');
             $table->string('contact_number');
             $table->json('measurement');
-            $table->boolean('active');
+            $table->foreignId('status_id')->constrained('customer_status', 'status_id')->onDelete('cascade');
             $table->timestamps();
         });
     }

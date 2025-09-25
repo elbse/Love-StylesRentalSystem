@@ -17,7 +17,7 @@ return new class extends Migration
             $table->foreignId('item_id')->constrained('inventories', 'item_id')->onDelete('cascade');
             $table->foreignId('reserved_by')->constrained('users', 'user_id')->onDelete('cascade');
             $table->dateTime('reservation_date')->useCurrent();
-            $table->enum('status', ['pending', 'confirmed', 'cancelled'])->default('pending');
+            $table->foreignId('status_id')->constrained('reservation_status', 'status_id')->onDelete('cascade');
             $table->date('start_date');
             $table->date('end_date');
             $table->timestamps();
