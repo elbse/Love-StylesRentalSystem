@@ -18,5 +18,5 @@ It automates the currently manual process of recording reservations, managing av
 - php artisan key:generate
 - php artisan migrate
 - php artisan db:seed
-- php artisan serve
+- php artisan serve (back end) and npm run dev (front end)
 
