@@ -18,5 +18,5 @@ Route::get('/register',[AuthContoller::class, 'showRegister'])->name('show.regis
 Route::get('/login',[AuthContoller::class, 'showLogin'])->name('show.login');
 
 Route::get('/', function () {
-    return view('welcome');
+    return view('components.layout');
 });
