@@ -12,38 +12,36 @@
 <body class="h-screen flex flex-col">
 
     <!-- Hero Section -->
-    <section class="relative flex-1 flex">
+    <section class="relative flex-1 flex items-center">
 
         <!-- Background Collage -->
         <div class="absolute inset-0">
             <img src="/images/landing_background.png" alt="Collage" 
-                class="w-full h-full object-cover">
+                 class="w-full h-full object-cover">
             <div class="absolute inset-0 bg-black/40"></div>
         </div>
 
-        {{-- <!-- Lady Image (Floating) -->
-        <div class="absolute bottom-0 left-16 z-10">
-        <img src="/images/landing_character.png" 
-         alt="Main Visual" 
-         class="w-[500px] md:w-[650px] drop-shadow-2xl">
-        </div> --}}
+        <!-- Hero Content Wrapper -->
+        <div class="relative flex flex-1 items-center px-12 z-10">
+            <!-- Left: Lady Image + Tagline -->
+            <div class="flex flex-col justify-center w-1/2 space-y-6 text-white">
+                <img src="/images/landing_character.png" 
+                     alt="Main Visual" 
+                     class="w-[350px] md:w-[500px] drop-shadow-2xl mb-6">
 
-
-        <!-- Content (shifted to the right) -->
-        <div class="relative flex flex-1 ml-[100px]">
-            <!-- Left: Tagline -->
-            <div class="flex flex-col justify-end p-12 text-white w-1/2">
                 <h2 class="text-4xl md:text-5xl font-bold leading-snug">
                     Your Trusted Partner <br> in Timeless Style.
                 </h2>
             </div>
 
-            <!-- Right: Login Card -->
-            
+            <!-- Right: Login Slot -->
+            <div class="flex justify-center w-1/2">
+                {{ $slot }}
+            </div>
+        </div>
     </section>
 
-
-    <!-- Footer Section -->
+    <!-- Footer -->
     <footer class="bg-white py-4 px-6 flex items-center justify-center space-x-4 shadow-inner">
         <img src="images/pod_logo.png" alt="Logo" class="w-12 h-12">
         <p class="text-gray-700 max-w-lg text-sm">

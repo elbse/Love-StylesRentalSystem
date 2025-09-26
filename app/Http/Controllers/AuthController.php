@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 
-class AuthContoller extends Controller
+class AuthController extends Controller
 {
     public function showRegister()
     {
@@ -15,6 +15,18 @@ class AuthContoller extends Controller
     public function showLogin()
     {
         return view('auth.login');
+
+    }
+
+    public function register()
+    {
+       
+
+    }
+
+    public function login()
+    {
+        
 
     }
 }
