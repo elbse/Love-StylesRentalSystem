@@ -52,7 +52,7 @@
                 <span>Inventory</span>
             </a>
 
-            <a href="#" class="flex items-center p-2 rounded hover:bg-gray-800">
+            <a href="" class="flex items-center p-2 rounded hover:bg-gray-800">
                 <i class="fas fa-users mr-3"></i>
                 <span>Customer</span>
             </a>
