@@ -52,12 +52,12 @@
                 <span>Inventory</span>
             </a>
 
-            <a href="" class="flex items-center p-2 rounded hover:bg-gray-800">
+            <a href="{{ route('customers.index') }}" class="flex items-center p-2 rounded hover:bg-gray-800 bg-purple-700 ">
                 <i class="fas fa-users mr-3"></i>
                 <span>Customer</span>
             </a>
 
-            <a href="#" class="flex items-center p-2 rounded bg-purple-700 hover:bg-purple-800">
+            <a href="#" class="flex items-center p-2 rounded ">
                 <i class="fas fa-calendar-check mr-3"></i>
                 <span>Bookings</span>
             </a>
@@ -77,7 +77,7 @@
 
         <!-- Left: Page Title -->
         <h1 class="flex items-center text-2xl font-semibold text-white relative z-10">
-            Reservation & Booking
+            Customer Management
         </h1>
 
         <!-- Right: Actions -->

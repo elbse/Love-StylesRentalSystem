@@ -12,9 +12,9 @@ class CustomerController extends Controller
      */
     public function index()
     {
-        //
+        return view('customers.index');
     }
-
+    
     /**
      * Show the form for creating a new resource.
      */

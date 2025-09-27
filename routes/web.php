@@ -1,6 +1,6 @@
 <?php
 
-
+use App\Http\Controllers\CustomerController;
 use App\Http\Controllers\AuthController;
 use Illuminate\Support\Facades\Route;
 
@@ -16,9 +16,12 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
+
+Route::get('/customers', [CustomerController::class, 'index'])->name('customers.index');
 Route::get('/register',[AuthController::class, 'showRegister'])->name('show.register');
 Route::get('/login',[AuthController::class, 'showLogin'])->name('show.login');
 Route::post('/login',[AuthController::class, 'login'])->name('login');
+
 
 Route::get('/', function () {
     return view('auth.login');
