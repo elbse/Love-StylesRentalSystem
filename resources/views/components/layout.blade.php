@@ -69,28 +69,34 @@
     <div class="flex-1 flex flex-col">
 
         <!-- Top Bar -->
-        <header class="flex items-center justify-between bg-white shadow px-6 py-3">
-            <!-- Left: Page Title -->
-            <h1 class="text-xl font-semibold text-gray-800">
-                Reservation & Booking
-            </h1>
+        <header class="relative flex items-center justify-between bg-white/0 shadow px-6 py-3 h-[94px] overflow-hidden">
+        <!-- Background Image -->
+        <img src="/images/topbar_background.png" 
+            alt="Collage" 
+            class="absolute inset-0 w-full h-full object-cover -z-10">
 
-            <!-- Right: Actions -->
-            <div class="flex items-center space-x-4">
-                <button class="text-gray-600 hover:text-gray-800">
-                    <i class="fas fa-bell"></i>
-                </button>
+        <!-- Left: Page Title -->
+        <h1 class="flex items-center text-2xl font-semibold text-white relative z-10">
+            Reservation & Booking
+        </h1>
 
-                <button class="text-gray-600 hover:text-gray-800">
-                    <i class="fas fa-cog"></i>
-                </button>
+        <!-- Right: Actions -->
+        <div class="flex items-center space-x-4 relative z-10">
+            <button class="text-gray-600 hover:text-gray-800">
+                <i class="fas fa-bell"></i>
+            </button>
 
-                <div class="flex items-center space-x-2">
-                    <img src="/user-avatar.jpg" alt="User" class="w-8 h-8 rounded-full">
-                    <span class="font-medium text-gray-700">Charisse</span>
-                </div>
+            <button class="text-gray-600 hover:text-gray-800">
+                <i class="fas fa-cog"></i>
+            </button>
+
+            <div class="flex items-center space-x-2">
+                <img src="images/avatar.png" alt="User" class="w-8 h-8 rounded-full">
+                <span class="font-medium text-white">Charisse</span>
+            </div>
             </div>
         </header>
+
 
  <!-- Page Content -->
         <main class="flex-1 p-6 bg-gray-100">
