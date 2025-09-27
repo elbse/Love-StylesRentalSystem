@@ -25,9 +25,8 @@
         <div class="relative flex flex-1 items-center px-12 z-10">
             <!-- Left: Lady Image + Tagline -->
             <div class="flex flex-col justify-center w-1/2 space-y-6 text-white">
-                <img src="/images/landing_character.png" 
-                     alt="Main Visual" 
-                     class="w-[350px] md:w-[500px] drop-shadow-2xl mb-6">
+                <img src="/images/landing_character.png" class="w-full max-w-none drop-shadow-2xl mb-6 ">
+                    
 
                 <h2 class="text-4xl md:text-5xl font-bold leading-snug">
                     Your Trusted Partner <br> in Timeless Style.

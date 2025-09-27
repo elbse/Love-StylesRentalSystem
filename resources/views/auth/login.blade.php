@@ -4,6 +4,10 @@
 
         <form action="{{ route('login')}}" method="POST" class="space-y-4">
             @csrf
+
+            <input type="name" name="name" placeholder="Name"
+                class="w-full px-4 py-2 rounded-lg border border-gray-300 focus:ring-2 bg-white focus:ring-purple-500 outline-none">
+
             <input type="email" name="email" placeholder="Email"
                 class="w-full px-4 py-2 rounded-lg border border-gray-300 focus:ring-2 bg-white focus:ring-purple-500 outline-none">
             
