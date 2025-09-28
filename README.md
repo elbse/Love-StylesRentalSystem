@@ -26,7 +26,7 @@ It automates the currently manual process of recording reservations, managing av
 - User::create([
 'name' => 'John Doe',
 'email' => 'john@example.com',
-'password' => bcrypt('secret123')
+'password' => 'secret123'
 ]);
 
 
