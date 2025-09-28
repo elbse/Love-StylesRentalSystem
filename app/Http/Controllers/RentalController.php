@@ -12,7 +12,9 @@ class RentalController extends Controller
      */
     public function index()
     {
-        return view('rentals.index');
+        return view('rentals.index',[
+        'title' => 'Rental Management'
+        ]);
     }
 
     /**

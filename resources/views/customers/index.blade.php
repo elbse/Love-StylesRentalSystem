@@ -1,4 +1,5 @@
-<x-layout>
+<x-layout :title="$title">
+
     <h2 class="mb-4 text-xl font-bold">Customer Management</h2>
 
     <div class="flex gap-6 ">
