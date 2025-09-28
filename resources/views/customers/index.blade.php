@@ -33,6 +33,81 @@
     <a href="{{ route('customers.create') }}" class="text-blue-500 hover:underline">Create New Customer </a>
     
     </div>
+    
+    <div class="grid grid-cols-4 gap-8">
+
+
+
+        <div class="bg-white rounded-xl shadow-md overflow-hidden col-span-3">
+    <!-- Header -->
+    <div class="bg-gradient-to-r from-purple-600 to-purple-800 text-white p-4">
+        <h2 class="text-xl font-semibold">Customers</h2>
+    </div>
+
+    <!-- Table -->
+    <div class="overflow-x-auto">
+        <table class="min-w-full border-collapse">
+            <thead>
+                <tr class="bg-purple-100 text-gray-700">
+                    <th class="px-4 py-2 text-left">Name</th>
+                    <th class="px-4 py-2 text-left">Contact No.</th>
+                    <th class="px-4 py-2 text-left">Email</th>
+                    <th class="px-4 py-2 text-left">Type</th>
+                    <th class="px-4 py-2 text-left">Size</th>
+                    <th class="px-4 py-2 text-left">Action</th>
+                </tr>
+            </thead>
+            <tbody class="divide-y divide-gray-200">
+                <!-- Example Row -->
+                <tr>
+                    <td class="px-4 py-3 flex items-center space-x-2">
+                        <img src="{{ asset('images/avatar.png') }}" 
+                             alt="User" 
+                             class="w-8 h-8 rounded-full border">
+                        <span>Jackie Chan</span>
+                    </td>
+                    <td class="px-4 py-3">+639090909090</td>
+                    <td class="px-4 py-3">jchan@gmail.com</td>
+                    <td class="px-4 py-3">
+                        <span class="px-2 py-1 text-sm rounded-full bg-green-100 text-green-700">Good</span>
+                    </td>
+                    <td class="px-4 py-3">Large</td>
+                    <td class="px-4 py-3">
+                        <button class="text-gray-600 hover:text-purple-600">⋮</button>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td class="px-4 py-3 flex items-center space-x-2">
+                        <img src="{{ asset('images/avatar.png') }}" 
+                             alt="User" 
+                             class="w-8 h-8 rounded-full border">
+                        <span>Jackeline China</span>
+                    </td>
+                    <td class="px-4 py-3">+639090909090</td>
+                    <td class="px-4 py-3">jchina@gmail.com</td>
+                    <td class="px-4 py-3">
+                        <span class="px-2 py-1 text-sm rounded-full bg-green-100 text-green-700">Good</span>
+                    </td>
+                    <td class="px-4 py-3">Medium</td>
+                    <td class="px-4 py-3">
+                        <button class="text-gray-600 hover:text-purple-600">⋮</button>
+                    </td>
+                </tr>
+
+                <!-- More rows go here -->
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <x-action-panel class="col-start-1" />
+    
+    
+    </div>
+    
+
+    
 
 
 </x-layout>
