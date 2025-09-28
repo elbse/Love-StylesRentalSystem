@@ -20,3 +20,13 @@ It automates the currently manual process of recording reservations, managing av
 - php artisan db:seed
 - php artisan serve (back end) and npm run dev (front end)
 
+## How to create user via cmd
+- php artisan tinker
+- use App\Models\User
+- User::create([
+'name' => 'John Doe',
+'email' => 'john@example.com',
+'password' => bcrypt('secret123')
+]);
+
+

@@ -20,21 +20,25 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
+Route::middleware('auth')->group(function () {
+    Route::get('/bookings', [ReservationController::class, 'index'])->name('bookings.index');
+    Route::get('/rentals', [RentalController::class, 'index'])->name('rentals.index');
+    Route::get('/billings', [PaymentController::class, 'index'])->name('billings.index');
+    Route::get('/inventories', [InventoryController::class, 'index'])->name('inventories.index');
+    Route::get('/customers/create', [CustomerController::class, 'create'])->name('customers.create');
+    Route::post('/customers', [CustomerController::class, 'store'])->name('customers.store');
+    Route::get('/customers', [CustomerController::class, 'index'])->name('customers.index');
 
-Route::get('/bookings', [ReservationController::class, 'index'])->name('bookings.index');
-Route::get('/rentals', [RentalController::class, 'index'])->name('rentals.index');
-Route::get('/billings', [PaymentController::class, 'index'])->name('billings.index');
-Route::get('/inventories', [InventoryController::class, 'index'])->name('inventories.index');
-Route::get('/customers/create', [CustomerController::class, 'create'])->name('customers.create');
-Route::post('/customers', [CustomerController::class, 'store'])->name('customers.store');
-Route::get('/customers', [CustomerController::class, 'index'])->name('customers.index');
-Route::get('/register',[AuthController::class, 'showRegister'])->name('show.register');
-Route::get('/login',[AuthController::class, 'showLogin'])->name('show.login');
+});
+
+Route::get('/register',[AuthController::class, 'showRegister'])->name('show.register')->middleware('guest');
+Route::get('/login',[AuthController::class, 'showLogin'])->name('show.login')->middleware('guest');
 Route::post('/login',[AuthController::class, 'login'])->name('login');
+Route::post('/logout',[AuthController::class, 'logout'])->name('logout');
 
-Route::get('dashboard', function(){
+Route::get('/dashboard', function(){
     return view('dashboard');
-})->name('dashboard');
+})->name('dashboard')->middleware('auth');
 
 Route::get('/', function () {
     return view('auth.login');
