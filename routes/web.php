@@ -29,7 +29,7 @@ Route::get('/customers/create', [CustomerController::class, 'create'])->name('cu
 Route::post('/customers', [CustomerController::class, 'store'])->name('customers.store');
 Route::get('/customers', [CustomerController::class, 'index'])->name('customers.index');
 Route::get('/register',[AuthController::class, 'showRegister'])->name('show.register');
-Route::get('/login',[AuthController::class, 'showLogin'])->name('show.login');
+Route::get('/',[AuthController::class, 'showLogin'])->name('show.login');
 Route::post('/login',[AuthController::class, 'login'])->name('login');
 
 Route::get('dashboard', function(){

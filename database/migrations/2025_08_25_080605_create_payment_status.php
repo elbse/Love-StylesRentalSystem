@@ -11,8 +11,9 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('customer_statuses', function (Blueprint $table) {
-            $table->id();
+        Schema::create('payment_status', function (Blueprint $table) {
+            $table->id('status_id');
+            $table->string('status_name');
             $table->timestamps();
         });
     }
@@ -22,6 +23,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('customer_statuses');
+        //
     }
 };
