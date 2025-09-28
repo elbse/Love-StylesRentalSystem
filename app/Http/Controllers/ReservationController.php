@@ -12,7 +12,9 @@ class ReservationController extends Controller
      */
     public function index()
     {
-        return view('bookings.index');
+        return view('bookings.index', [
+        'title' => 'Booking Management'
+        ]);
     }
 
     /**

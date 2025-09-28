@@ -12,7 +12,9 @@ class PaymentController extends Controller
      */
     public function index()
     {
-        return view('billings.index');
+        return view('billings.index',[
+            'title' => 'Payment Management'
+        ]);
     }
 
     /**
