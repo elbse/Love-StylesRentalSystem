@@ -5,6 +5,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Love and Styles Rental System</title>
 
+    <link rel="shortcut icon" href="{{ asset('lsrs_logo.png') }}?v=1" type="image/png">
+
+
     @vite('resources/css/app.css')
 </head>
 <body class="flex h-screen bg-gray-100">
@@ -13,7 +16,7 @@
 
         <!-- Logo -->
         <div class="flex items-center justify-center py-6 border-b border-gray-700">
-            <img src="images/lsrs_logo.png" alt="Logo" class="w-10 h-10 mr-2">
+            <img src="{{ asset('images/lsrs_logo.png') }}" alt="Logo" class="w-10 h-10 mr-2">
             <span class="font-bold text-lg leading-tight text-black">
                 Love & Styles <br>
                 Rental System
@@ -22,42 +25,53 @@
 
         <!-- Navigation -->
         <nav class="flex-1 p-4 space-y-2 bg-gray-900 text-white" >
-            <a href="#" class="flex items-center p-2 rounded hover:bg-gray-800">
+
+            <a href="{{ route('dashboard') }}"
+                class="flex items-center p-2 rounded hover:bg-gray-800 
+                {{ request()->routeIs('dashboard') ? 'bg-purple-700' : '' }}">
                 <i class="fas fa-home mr-3"></i>
                 <span>Dashboard</span>
             </a>
 
-            <a href="#" class="flex items-center p-2 rounded hover:bg-gray-800">
+            <a href="{{ route('rentals.index') }}" class="flex items-center p-2 rounded hover:bg-gray-800
+                {{ request()->routeIs('rentals.*') ? 'bg-purple-700' : '' }}">
                 <i class="fas fa-box mr-3"></i>
                 <span>Rentals</span>
             </a>
 
-            <a href="#" class="flex items-center p-2 rounded hover:bg-gray-800">
+            {{-- <a href="{{ route('releases.index') }}" class="flex items-center p-2 rounded hover:bg-gray-800
+                {{ request()->routeIs('releases.*') ? 'bg-purple-700' : '' }}">
                 <i class="fas fa-upload mr-3"></i>
                 <span>Release</span>
-            </a>
+            </a> --}}
 
-            <a href="#" class="flex items-center p-2 rounded hover:bg-gray-800">
+            {{-- <a href="{{ route('returns.index') }}" class="flex items-center p-2 rounded hover:bg-gray-800  
+                {{ request()->routeIs('returns.*') ? 'bg-purple-700' : '' }}">
                 <i class="fas fa-undo mr-3"></i>
                 <span>Return</span>
-            </a>
+            </a> --}}
 
-            <a href="#" class="flex items-center p-2 rounded hover:bg-gray-800">
+            <a href="{{ route('billings.index') }}" class="flex items-center p-2 rounded hover:bg-gray-800
+                {{ request()->routeIs('billings.*') ? 'bg-purple-700' : '' }}">
                 <i class="fas fa-file-invoice-dollar mr-3"></i>
                 <span>Billing</span>
             </a>
 
-            <a href="#" class="flex items-center p-2 rounded hover:bg-gray-800">
+            <a href="{{ route('inventories.index') }}" class="flex items-center p-2 rounded hover:bg-gray-800
+                {{ request()->routeIs('inventories.*') ? 'bg-purple-700' : '' }}">
                 <i class="fas fa-warehouse mr-3"></i>
                 <span>Inventory</span>
             </a>
 
-            <a href="{{ route('customers.index') }}" class="flex items-center p-2 rounded hover:bg-gray-800 bg-purple-700 ">
+            <a href="{{ route('customers.index') }}"
+                class="flex items-center p-2 rounded hover:bg-gray-800 
+                {{ request()->routeIs('customers.*') ? 'bg-purple-700' : '' }}">
                 <i class="fas fa-users mr-3"></i>
                 <span>Customer</span>
             </a>
 
-            <a href="#" class="flex items-center p-2 rounded ">
+            <a href="{{ route('bookings.index')}}" class="flex items-center p-2 rounded hover:bg-gray-800
+                {{ request()->routeIs('bookings.*') ? 'bg-purple-700' : '' }}">
                 <i class="fas fa-calendar-check mr-3"></i>
                 <span>Bookings</span>
             </a>

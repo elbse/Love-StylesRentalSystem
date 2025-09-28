@@ -28,5 +28,10 @@
 
     </div>
 
+    <div> 
+    <a href="{{ route('customers.create') }}" class="text-blue-500 hover:underline">Create New Customer </a>
+    
+    </div>
+
 
 </x-layout>

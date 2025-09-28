@@ -38,7 +38,7 @@ class AuthController extends Controller
 
         Auth::login($user);
 
-        return redirect()->route('sample');
+        return redirect()->route('dashboard');
 
     }
 }
