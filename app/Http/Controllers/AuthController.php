@@ -20,13 +20,7 @@ class AuthController extends Controller
 
     }
 
-    public function register()
-    {
-       
-
-    }
-
-    public function login(Request $request)
+    public function register(Request $request)
     {
         $validate = $request->validate([
             'name'=>'required|string|max:255',
@@ -40,5 +34,22 @@ class AuthController extends Controller
 
         return redirect()->route('dashboard');
 
+    }
+
+    public function login(Request $request)
+    {
+        $credentials = $request->validate([
+            'email'=>'required|email',
+            'password'=>'required'
+        ]);
+
+        if (Auth::attempt($credentials)) {
+            $request->session()->regenerate(); // prevent session fixation
+            return redirect()->route('dashboard');
+        }
+
+        return back()->withErrors([
+            'email' => 'The provided credentials do not match our records.',
+        ]);
     }
 }
