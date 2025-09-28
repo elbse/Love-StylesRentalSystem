@@ -28,16 +28,17 @@ Route::middleware('auth')->group(function () {
     Route::get('/customers/create', [CustomerController::class, 'create'])->name('customers.create');
     Route::post('/customers', [CustomerController::class, 'store'])->name('customers.store');
     Route::get('/customers', [CustomerController::class, 'index'])->name('customers.index');
-    Route::get('/register',[AuthController::class, 'showRegister'])->name('show.register');
 
 });
 
-Route::get('/login',[AuthController::class, 'showLogin'])->name('show.login');
+Route::get('/register',[AuthController::class, 'showRegister'])->name('show.register')->middleware('guest');
+Route::get('/login',[AuthController::class, 'showLogin'])->name('show.login')->middleware('guest');
 Route::post('/login',[AuthController::class, 'login'])->name('login');
+Route::post('/logout',[AuthController::class, 'logout'])->name('logout');
 
-Route::get('dashboard', function(){
+Route::get('/dashboard', function(){
     return view('dashboard');
-})->name('dashboard');
+})->name('dashboard')->middleware('auth');
 
 Route::get('/', function () {
     return view('auth.login');
