@@ -30,8 +30,8 @@
     </div>
 
     <div> 
-    <a href="{{ route('customers.create') }}" class="text-blue-500 hover:underline">Create New Customer </a>
-    
+    {{-- <a href="{{ route('customers.create') }}" class="text-blue-500 hover:underline">Create New Customer </a>
+     --}}
     </div>
     
     <div class="grid grid-cols-4 gap-8">
@@ -102,6 +102,8 @@
         </div>
 
         <x-action-panel class="col-start-1" />
+
+        
     
     
     </div>
