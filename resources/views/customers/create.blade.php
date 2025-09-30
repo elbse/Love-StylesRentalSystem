@@ -90,8 +90,8 @@
             </select>
         </div> --}}
 
-        <button type="submit" class="bg-green-600 text-white px-4 py-2 rounded">Save Customer</button>
+        <button :href="route('customers.index')" type="submit" class="bg-green-600 text-white px-4 py-2 rounded">Save Customer</button>
 
-        <button type="submit" class="bg-red-600 text-white px-4 py-2 rounded">Cancel</button>
+        <a href="{{ route('customers.index') }}" class="bg-red-600 text-white px-4 py-2 rounded">Cancel</a>
     </form>
 </x-layout>

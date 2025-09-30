@@ -10,8 +10,9 @@
     </div>
 
     <!-- Top right icon -->
-    <div class="absolute top-4 right-4 {{ $color }} rounded-full w-12 h-12 flex items-center justify-center shadow-md">
-        <i class="{{ $icon }} text-white text-xl"></i>
+    <div class="absolute top-4 right-4 {{ $color }} rounded-full w-12 h-12 flex items-center justify-center shadow-md opacity-50">
+        <img src="{{ asset($symbol) }}" alt="symbol" class="w-10 h-6 object-contain">
+        
     </div>
 
     <div class="relative text-white">
@@ -19,4 +20,3 @@
     </div>
 </div>
 
-{{-- color="bg-gradient-to-r from-[#A4B1FF] to-[#5E72E4]" --}}
