@@ -29,12 +29,12 @@
 
     </div>
 
-    <div> 
-    {{-- <a href="{{ route('customers.create') }}" class="text-blue-500 hover:underline">Create New Customer </a>
-     --}}
-    </div>
+    {{-- <div> 
+    <a href="{{ route('customers.create') }}" class="text-blue-500 hover:underline">Create New Customer </a>
     
-    <div class="grid grid-cols-4 gap-8">
+    </div> --}}
+    
+    <div class="m-4 grid grid-cols-4 gap-8 -ml-1">
 
 
 
@@ -77,23 +77,6 @@
                     </td>
                 </tr>
 
-                <tr>
-                    <td class="px-4 py-3 flex items-center space-x-2">
-                        <img src="{{ asset('images/avatar.png') }}" 
-                             alt="User" 
-                             class="w-8 h-8 rounded-full border">
-                        <span>Jackeline China</span>
-                    </td>
-                    <td class="px-4 py-3">+639090909090</td>
-                    <td class="px-4 py-3">jchina@gmail.com</td>
-                    <td class="px-4 py-3">
-                        <span class="px-2 py-1 text-sm rounded-full bg-green-100 text-green-700">Good</span>
-                    </td>
-                    <td class="px-4 py-3">Medium</td>
-                    <td class="px-4 py-3">
-                        <button class="text-gray-600 hover:text-purple-600">⋮</button>
-                    </td>
-                </tr>
 
                 <!-- More rows go here -->
                     </tbody>
@@ -103,9 +86,6 @@
 
         <x-action-panel class="col-start-1" />
 
-        
-    
-    
     </div>
     
 
