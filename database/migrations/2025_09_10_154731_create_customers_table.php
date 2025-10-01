@@ -19,7 +19,7 @@ return new class extends Migration
             $table->string('address');
             $table->string('contact_number');
             $table->json('measurement');
-            $table->foreignId('status_id')->constrained('customer_status', 'status_id')->onDelete('cascade');
+            $table->foreignId('status_id')->constrained('customer_status', 'status_id')->cascadeOnDelete(); 
             $table->timestamps();
         });
     }

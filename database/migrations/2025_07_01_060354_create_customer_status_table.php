@@ -12,10 +12,10 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('customer_status', function (Blueprint $table) {
-            $table->id('status_id');
-            $table->string('status_name');
-            $table->string('reason');
-            $table->timestamps();
+            $table->id('status_id'); // Primary key
+                $table->string('status_name');
+                $table->string('reason')->nullable(); // make nullable if not always needed
+                $table->timestamps();
         });
     }
 
@@ -24,6 +24,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('customer_statuses');
+        Schema::dropIfExists('customer_status');
     }
 };

@@ -17,7 +17,18 @@ class CustomerFactory extends Factory
     public function definition(): array
     {
         return [
-            //
+        'full_name' => fake()->name(),
+        'email' => fake()->unique()->safeEmail(),
+        'address' => fake()->address(),
+        'contact_number' => fake()->phoneNumber(),
+        'measurement' => [
+            'height' => fake()->numberBetween(150, 200),
+            'weight' => fake()->numberBetween(50, 100),
+            'chest'  => fake()->numberBetween(80, 120),
+            'waist'  => fake()->numberBetween(60, 100),
+            'hips'   => fake()->numberBetween(80, 120),
+        ],
+         'status_id' => CustomerStatus::factory(),
         ];
     }
 }
