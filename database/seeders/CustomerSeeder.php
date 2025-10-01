@@ -5,6 +5,7 @@ namespace Database\Seeders;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 use App\Models\Customer;
+use App\Models\CustomerStatus;
 
 class CustomerSeeder extends Seeder
 {
@@ -13,15 +14,19 @@ class CustomerSeeder extends Seeder
      */
    public function run(): void
     {
-        // Create a default status
-        \App\Models\CustomerStatus::factory()->create([
-            'status_name' => 'Active',
-            'reason' => 'Default',
-        ]);
+        // Seed some customer statuses if none exist
+        if (CustomerStatus::count() === 0) {
+            CustomerStatus::factory()->create([
+                'status_name' => 'Active',
+                'reason' => 'Default',
+            ]);
+            CustomerStatus::factory()->create([
+                'status_name' => 'Inactive',
+                'reason' => 'Created by seeder',
+            ]);
+        }
 
-        // Create 20 customers linked to that status
-        \App\Models\Customer::factory(20)->create([
-            'status_id' => 1, // ensures FK matches the created status
-        ]);
+        // Create customers (will pick existing status_id or create via factory)
+        Customer::factory()->count(20)->create();
     }
 }

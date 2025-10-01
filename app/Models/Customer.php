@@ -8,6 +8,8 @@ use Illuminate\Database\Eloquent\Model;
 class Customer extends Model
 {
     use HasFactory;
+    
+    protected $primaryKey = 'customer_id';
 
     protected $fillable = [
         'full_name',
@@ -21,4 +23,6 @@ class Customer extends Model
     protected $casts = [
         'measurement' => 'array',
     ];
+
+    
 }

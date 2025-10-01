@@ -8,4 +8,12 @@ use Illuminate\Database\Eloquent\Model;
 class CustomerStatus extends Model
 {
     use HasFactory;
+
+    protected $table = 'customer_status';
+    protected $primaryKey = 'status_id';
+
+    protected $fillable = [
+        'status_name',
+        'reason',
+    ];
 }

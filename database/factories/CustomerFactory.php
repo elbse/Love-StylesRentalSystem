@@ -2,6 +2,8 @@
 
 namespace Database\Factories;
 
+use App\Models\Customer;
+use App\Models\CustomerStatus;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
@@ -28,7 +30,9 @@ class CustomerFactory extends Factory
             'waist'  => fake()->numberBetween(60, 100),
             'hips'   => fake()->numberBetween(80, 120),
         ],
-         'status_id' => CustomerStatus::factory(),
+            // Ensure a valid foreign key to customer_status table
+            'status_id' => CustomerStatus::query()->inRandomOrder()->value('status_id')
+                ?? CustomerStatus::factory(),
         ];
     }
 }
