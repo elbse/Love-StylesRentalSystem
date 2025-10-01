@@ -19,10 +19,10 @@
             <i class="fas fa-bolt"></i>
         </div>
         <div class="flex flex-col space-y-2">
-            {{-- <x-button :href="route('items.index')">Item</x-button> --}}
+            <x-button>Item</x-button>
             <x-button :href="route('bookings.index')" class="bg-purple-600 text-black hover:bg-purple-800">Book</x-button>
             <x-button :href="route('billings.index')" class="bg-purple-600 text-black hover:bg-purple-800">Pay</x-button>
-            {{-- <x-button :href="route('returns.index')" class="bg-purple-600 text-white hover:bg-purple-800">Return</x-button> --}}
+            <x-button  class="bg-purple-600 text-black hover:bg-purple-800">Return</x-button>
         </div>
     </div>
 </div>

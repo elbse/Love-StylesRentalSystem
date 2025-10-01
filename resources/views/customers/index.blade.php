@@ -1,17 +1,9 @@
 <x-layout :title="$title">
 
     @if (session('success'))
-    <div id="flash-success" class="m-4 px-4 py-2 rounded bg-green-100 text-green-800 border border-green-300" role="status" aria-live="polite">
+    <div x-data="{ show: true }" x-show="show" x-init="setTimeout(() => show = false, 3000)" class="m-4 px-4 py-2 rounded bg-green-100 text-green-800 border border-green-300" role="status" aria-live="polite">
         {{ session('success') }}
     </div>
-    <script>
-    document.addEventListener('DOMContentLoaded', function () {
-        var el = document.getElementById('flash-success');
-        if (el) {
-            setTimeout(function(){ el.style.display = 'none'; }, 3000);
-        }
-    });
-    </script>
     @endif
 
     <h2 class="mb-4 text-xl font-bold">Customer Management</h2>
@@ -116,7 +108,7 @@
             customers
         </div>
 
-        <div class="flex items-center gap-4">
+        <div class="flex items-center gap-2">
             <form method="GET" action="{{ route('customers.index') }}" class="flex items-center gap-2">
                 <label for="per_page" class="text-sm text-gray-600">Rows per page</label>
                 <select id="per_page" name="per_page" class="border rounded-md px-2 py-1 text-sm" onchange="this.form.submit()">
