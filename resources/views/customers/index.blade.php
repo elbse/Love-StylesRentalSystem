@@ -58,34 +58,62 @@
                 </tr>
             </thead>
             <tbody class="divide-y divide-gray-200">
-                <!-- Example Row -->
+                @forelse($customers as $customer)
                 <tr>
                     <td class="px-4 py-3 flex items-center space-x-2">
-                        <img src="{{ asset('images/avatar.png') }}" 
-                             alt="User" 
-                             class="w-8 h-8 rounded-full border">
-                        <span>Jackie Chan</span>
+                        <img src="{{ asset('images/avatar.png') }}" alt="User" class="w-8 h-8 rounded-full border">
+                        <span>{{ $customer->full_name }}</span>
                     </td>
-                    <td class="px-4 py-3">+639090909090</td>
-                    <td class="px-4 py-3">jchan@gmail.com</td>
+                    <td class="px-4 py-3">{{ $customer->contact_number }}</td>
+                    <td class="px-4 py-3">{{ $customer->email }}</td>
                     <td class="px-4 py-3">
-                        <span class="px-2 py-1 text-sm rounded-full bg-green-100 text-green-700">Good</span>
+                        <span class="px-2 py-1 text-sm rounded-full bg-green-100 text-green-700">{{ $customer->status_id }}</span>
                     </td>
-                    <td class="px-4 py-3">Large</td>
+                    <td class="px-4 py-3">
+                        @php($m = $customer->measurement)
+                        {{ is_array($m) ? ($m['chest'] ?? ($m['size'] ?? '—')) : '—' }}
+                    </td>
                     <td class="px-4 py-3">
                         <button class="text-gray-600 hover:text-purple-600">⋮</button>
                     </td>
                 </tr>
-
-
-                <!-- More rows go here -->
-                    </tbody>
+                @empty
+                <tr>
+                    <td colspan="6" class="px-4 py-6 text-center text-gray-500">No customers found.</td>
+                </tr>
+                @endforelse
+            </tbody>
                 </table>
             </div>
         </div>
 
         <x-action-panel class="col-start-1" />
 
+    </div>
+
+    <div class="mt-6 flex items-center justify-between">
+        <div class="text-sm text-gray-600">
+            Showing
+            <span class="font-semibold">{{ $customers->firstItem() ?? 0 }}</span>
+            to
+            <span class="font-semibold">{{ $customers->lastItem() ?? 0 }}</span>
+            of
+            <span class="font-semibold">{{ $customers->total() }}</span>
+            customers
+        </div>
+
+        <div class="flex items-center gap-4">
+            <form method="GET" action="{{ route('customers.index') }}" class="flex items-center gap-2">
+                <label for="per_page" class="text-sm text-gray-600">Rows per page</label>
+                <select id="per_page" name="per_page" class="border rounded-md px-2 py-1 text-sm" onchange="this.form.submit()">
+                    <option value="5" {{ ($perPage ?? 5) == 5 ? 'selected' : '' }}>5</option>
+                    <option value="10" {{ ($perPage ?? 5) == 10 ? 'selected' : '' }}>10</option>
+                    <option value="15" {{ ($perPage ?? 5) == 15 ? 'selected' : '' }}>15</option>
+                </select>
+            </form>
+
+            {{ $customers->links() }}
+        </div>
     </div>
     
 

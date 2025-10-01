@@ -12,8 +12,14 @@ class CustomerController extends Controller
      */
     public function index()
     {
+        $requestedPerPage = (int) request('per_page');
+        $perPage = in_array($requestedPerPage, [5, 10, 15], true) ? $requestedPerPage : 5;
 
-        return view('customers.index', ['title' => 'Customer Management'], ["customers"=>Customer::all()]);
+        $customer = Customer::orderBy('customer_id', 'desc')
+            ->paginate($perPage)
+            ->withQueryString();
+
+        return view('customers.index', ['title' => 'Customer Management', 'perPage' => $perPage], ["customers"=> $customer]);
     }
     
     /**
