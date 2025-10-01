@@ -1,5 +1,19 @@
 <x-layout :title="$title">
 
+    @if (session('success'))
+    <div id="flash-success" class="m-4 px-4 py-2 rounded bg-green-100 text-green-800 border border-green-300" role="status" aria-live="polite">
+        {{ session('success') }}
+    </div>
+    <script>
+    document.addEventListener('DOMContentLoaded', function () {
+        var el = document.getElementById('flash-success');
+        if (el) {
+            setTimeout(function(){ el.style.display = 'none'; }, 3000);
+        }
+    });
+    </script>
+    @endif
+
     <h2 class="mb-4 text-xl font-bold">Customer Management</h2>
 
     <div class="flex gap-6 ">
