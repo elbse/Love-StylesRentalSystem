@@ -21,6 +21,7 @@ return new class extends Migration
             $table->json('measurement');
             $table->foreignId('status_id')->constrained('customer_status', 'status_id')->cascadeOnDelete(); 
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 
@@ -29,6 +30,8 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('customers');
+        Schema::table('customers', function (Blueprint $table) {
+            $table->dropSoftDeletes();
+        });
     }
 };

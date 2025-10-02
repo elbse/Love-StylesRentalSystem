@@ -54,7 +54,7 @@
                             $classes = trim($customClass . ' ' . $baseBtn);
                         @endphp
 
-                        @if($url && $method === 'GET')
+                      @if($url && $method === 'GET')
                             <a href="{{ $url }}" class="{{ $classes }} {{ $span }}">{{ $label }}</a>
                         @elseif($url)
                             <form action="{{ $url }}" method="POST" class="{{ $span }}">
@@ -64,9 +64,18 @@
                                 @endif
                                 <button type="submit" class="w-full {{ $classes }}">{{ $label }}</button>
                             </form>
+                        @elseif($method === 'MODAL')
+                            <button 
+                                type="button" 
+                                class="{{ $classes }} {{ $span }}" 
+                                @click="$dispatch('open-deactivate-modal', { id: '{{ $entityId }}', name: '{{ $entityName }}' }); open = false">
+                                {{ $label }}
+                            </button>
                         @else
                             <button type="button" class="{{ $classes }} {{ $span }}" @click="open = false">{{ $label }}</button>
                         @endif
+
+
                     @empty
                         <button type="button" class="col-span-2 px-4 py-2 rounded bg-gray-600 text-white hover:bg-gray-700" @click="open = false">Close</button>
                     @endforelse

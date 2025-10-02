@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Models\Customer;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
 
 class CustomerController extends Controller
 {
@@ -106,8 +108,47 @@ class CustomerController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Customer $customer)
+    public function destroy(Request $request)
     {
-        //
+        $request->validate([
+            'customer_id' => 'required|exists:customers,customer_id',
+            'password' => 'required',
+        ]);
+
+        // Verify user password
+        if (!Hash::check($request->password, Auth::user()->password)) {
+            return back()->withErrors(['password' => 'Incorrect password.']);
+        }
+
+        // Only find non-deleted customers
+        $customer = Customer::where('customer_id', $request->customer_id)->firstOrFail();
+
+        // Soft delete the customer
+        $customer->delete();
+
+        return back()->with('success', "Customer {$customer->full_name} was deactivated successfully.");
     }
+
+    public function deactivate(Request $request)
+    {
+            $request->validate([
+                'customer_id' => 'required|exists:customers,customer_id',
+                'password' => 'required',
+            ]);
+
+            // Check if password is correct
+            if (!Hash::check($request->password, Auth::user()->password)) {
+                return back()->withErrors(['password' => 'Incorrect password.']);
+            }
+
+            // Soft delete customer
+            $customer = Customer::findOrFail($request->customer_id);
+            $customer->delete();
+
+            return back()->with('success', 'Customer has been deactivated successfully.');
+        }
+
+
+
+    
 }
