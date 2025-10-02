@@ -32,7 +32,7 @@ Route::middleware('auth')->group(function () {
     Route::get('/customers/{customer_name}/edit', [CustomerController::class, 'edit'])->name('customers.edit');
     Route::put('/customers/{customer_id}', [CustomerController::class, 'update'])->name('customers.update');
     Route::delete('/customers/{customer_id}', [CustomerController::class, 'destroy'])->name('customers.destroy');
-    Route::post('/customers/deactivate', [CustomerController::class, 'deactivate'])->name('customers.deactivate');
+    Route::post('/customers/deactivate', [CustomerController::class, 'destroy'])->name('customers.deactivate');
     
 });
 

@@ -109,25 +109,29 @@ class CustomerController extends Controller
      * Remove the specified resource from storage.
      */
     public function destroy(Request $request)
-    {
-        $request->validate([
-            'customer_id' => 'required|exists:customers,customer_id',
-            'password' => 'required',
-        ]);
+{
+    $request->validate([
+        'customer_id' => 'required|exists:customers,customer_id',
+        'password' => 'required',
+    ]);
 
-        // Verify user password
-        if (!Hash::check($request->password, Auth::user()->password)) {
-            return back()->withErrors(['password' => 'Incorrect password.']);
-        }
-
-        // Only find non-deleted customers
-        $customer = Customer::where('customer_id', $request->customer_id)->firstOrFail();
-
-        // Soft delete the customer
-        $customer->delete();
-
-        return back()->with('success', "Customer {$customer->full_name} was deactivated successfully.");
+    if (!Hash::check($request->password, Auth::user()->password)) {
+        return back()
+            ->withErrors(['password' => 'Incorrect password.'])
+            ->withInput([
+                'customer_id' => $request->customer_id,
+                'customer_name' => $request->customer_name,
+            ]);
     }
+
+    $customer = Customer::findOrFail($request->customer_id);
+    $customer->delete();
+
+    return redirect()->route('customers.index')->with('success', 'Customer deactivated successfully.');
+}
+    /**
+     * Deactivate (soft delete) the specified customer.
+     */
 
     public function deactivate(Request $request)
     {
