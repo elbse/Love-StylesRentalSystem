@@ -24,5 +24,10 @@ class Customer extends Model
         'measurement' => 'array',
     ];
 
+    public function status()
+    {
+        return $this->belongsTo(CustomerStatus::class, 'status_id');
+    }
+
     
 }

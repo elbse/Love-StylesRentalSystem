@@ -1,4 +1,6 @@
 <x-layout :title="$title">
+<script src="//unpkg.com/alpinejs" defer></script>
+
 
     @if (session('success'))
     <div x-data="{ show: true }" x-show="show" x-init="setTimeout(() => show = false, 3000)" class="m-4 px-4 py-2 rounded bg-green-100 text-green-800 border border-green-300" role="status" aria-live="polite">
@@ -49,13 +51,15 @@
                     <th class="px-4 py-2 text-left">Name</th>
                     <th class="px-4 py-2 text-left">Contact No.</th>
                     <th class="px-4 py-2 text-left">Email</th>
-                    <th class="px-4 py-2 text-left">Type</th>
+                    <th class="px-4 py-2 text-left">Status</th>
                     <th class="px-4 py-2 text-left">Size</th>
                     <th class="px-4 py-2 text-left">Action</th>
                 </tr>
             </thead>
             <tbody class="divide-y divide-gray-200">
                 @forelse($customers as $customer)
+
+                
                 <tr>
                     <td class="px-4 py-3 flex items-center space-x-2">
                         <img src="{{ asset('images/avatar.png') }}" alt="User" class="w-8 h-8 rounded-full border">
@@ -64,17 +68,44 @@
                     <td class="px-4 py-3">{{ $customer->contact_number }}</td>
                     <td class="px-4 py-3">{{ $customer->email }}</td>
                     <td class="px-4 py-3">
-                        <span class="px-2 py-1 text-sm rounded-full bg-green-100 text-green-700">{{ $customer->status_id }}</span>
+                        @php
+                            $statusColors = [
+                                'Active' => 'bg-green-600 text-white',
+                                'Inactive' => 'bg-gray-500 text-white',
+                                'Pending' => 'bg-yellow-500 text-white',
+                                'Cancelled' => 'bg-red-600 text-white',
+                            ];
+                            $status = $customer->status->status_name ?? 'Unknown';
+                            $class = $statusColors[$status] ?? 'bg-blue-600 text-white';
+                        @endphp
+
+                        <span class="inline-block px-3 py-1 text-sm font-semibold rounded-full {{ $class }}">
+                            {{ $status }}
+                        </span>
                     </td>
+
+
+
                     <td class="px-4 py-3">
                         @php($m = $customer->measurement)
                         {{ is_array($m) ? ($m['chest'] ?? ($m['size'] ?? '—')) : '—' }}
                     </td>
-                    <td class="px-4 py-3">
-                        <button class="text-gray-600 hover:text-purple-600 cursor-pointer">⋮</button>
+                   <td class="px-4 py-3">
 
-                        
-                    </td>
+                <div x-data="{ open: false }">
+                    <x-action-button 
+                        :entity-id="$customer->customer_id"
+                        :entity-name="$customer->full_name"
+                        title="Customer Actions"
+                        :actions="[
+                            ['label' => 'View', 'url' => route('customers.show', $customer->customer_id), 'method' => 'GET'],
+                            ['label' => 'Edit', 'url' => route('customers.edit', $customer->customer_id), 'method' => 'GET'],
+                            ['label' => 'Delete', 'url' => route('customers.destroy', $customer->customer_id), 'method' => 'DELETE','full' => true],
+                        ]"
+                    />
+                </div>
+                </td>   
+
                 </tr>
                 @empty
                 <tr>

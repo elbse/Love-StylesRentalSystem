@@ -28,8 +28,14 @@ Route::middleware('auth')->group(function () {
     Route::get('/customers/create', [CustomerController::class, 'create'])->name('customers.create');
     Route::post('/customers', [CustomerController::class, 'store'])->name('customers.store');
     Route::get('/customers', [CustomerController::class, 'index'])->name('customers.index');
-
+    Route::get('/customers/{customer_id}', [CustomerController::class, 'show'])->name('customers.show');
+    Route::get('/customers/{customer_name}/edit', [CustomerController::class, 'edit'])->name('customers.edit');
+    Route::put('/customers/{customer_id}', [CustomerController::class, 'update'])->name('customers.update');
+    Route::delete('/customers/{customer_id}', [CustomerController::class, 'destroy'])->name('customers.destroy');
+    
 });
+
+
 
 Route::get('/register',[AuthController::class, 'showRegister'])->name('show.register')->middleware('guest');
 Route::get('/login',[AuthController::class, 'showLogin'])->name('show.login')->middleware('guest');
