@@ -6,8 +6,6 @@
     </div>
     @endif
 
-    <h2 class="mb-4 text-xl font-bold">Customer Management</h2>
-
     <div class="flex gap-6 ">
         <x-kpi-card icon="fas fa-calendar-check" color="bg-[#C16BFF]" symbol="images/vector_peso.png"  background="bg-gradient-to-r from-[#C16BFF] to-[#6A0DAD]">
             <h3 class="text-sm text-gray-200">Reservations</h3>

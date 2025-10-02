@@ -7,8 +7,8 @@
         </div>
         <div class="flex flex-row space-x-2">
             
-            <x-button :href="route('customers.create')" class="w-xl">New</x-button>
-            <x-button :href="route('customers.create')" class="w-xl">Reports</x-button>
+            <x-button :href="route('customers.create')" class="w-xl hover:bg-purple-800 hover:text-black">New</x-button>
+            <x-button :href="route('customers.create')" class="w-xl hover:bg-purple-800 hover:text-black">Reports</x-button>
         </div>
     </div>
 
@@ -19,10 +19,10 @@
             <i class="fas fa-bolt"></i>
         </div>
         <div class="flex flex-col space-y-2">
-            <x-button>Item</x-button>
-            <x-button :href="route('bookings.index')" class="bg-purple-600 text-black hover:bg-purple-800">Book</x-button>
-            <x-button :href="route('billings.index')" class="bg-purple-600 text-black hover:bg-purple-800">Pay</x-button>
-            <x-button  class="bg-purple-600 text-black hover:bg-purple-800">Return</x-button>
+            <x-button class="bg-purple-600 text-black hover:bg-purple-800 hover:text-black">Item</x-button>
+            <x-button :href="route('bookings.index')" class="bg-purple-600 text-black hover:bg-purple-800 hover:text-black">Book</x-button>
+            <x-button :href="route('billings.index')" class="bg-purple-600 text-black hover:bg-purple-800 hover:text-black">Pay</x-button>
+            <x-button class="bg-purple-600 text-black hover:bg-purple-800 hover:text-black">Return</x-button>
         </div>
     </div>
 </div>
