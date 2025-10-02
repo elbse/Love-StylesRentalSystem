@@ -33,14 +33,7 @@
 
     </div>
 
-    {{-- <div> 
-    <a href="{{ route('customers.create') }}" class="text-blue-500 hover:underline">Create New Customer </a>
-    
-    </div> --}}
-    
     <div class="m-4 grid grid-cols-4 gap-8 -ml-1">
-
-
 
         <div class="bg-white rounded-xl shadow-md overflow-hidden col-span-3">
     <!-- Header -->
@@ -78,7 +71,9 @@
                         {{ is_array($m) ? ($m['chest'] ?? ($m['size'] ?? '—')) : '—' }}
                     </td>
                     <td class="px-4 py-3">
-                        <button class="text-gray-600 hover:text-purple-600">⋮</button>
+                        <button class="text-gray-600 hover:text-purple-600 cursor-pointer">⋮</button>
+
+                        
                     </td>
                 </tr>
                 @empty
