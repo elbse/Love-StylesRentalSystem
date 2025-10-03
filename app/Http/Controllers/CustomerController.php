@@ -84,8 +84,17 @@ class CustomerController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(Customer $customer)
+    public function show($customer_id)
     {
+        $customer = Customer::where('customer_id', $customer_id)->first();
+        
+        if (!$customer) {
+            abort(404, 'Customer not found');
+        }
+        
+        // Debug: Check what customer_id value is
+        \Log::info('Customer ID: ' . $customer->customer_id);
+        
         return view('customers.show', compact('customer'));
     }
 

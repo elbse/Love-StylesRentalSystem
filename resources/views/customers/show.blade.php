@@ -109,15 +109,15 @@
 
                     <!-- Action buttons -->
                     <div class="mt-8 flex justify-end space-x-3">
-                        <a href="{{ route('customers.index') }}" 
-                           class="inline-flex items-center justify-center px-6 py-2.5 border border-gray-300 rounded-lg text-sm font-medium text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-slate-500 transition-all">
-                            Back to List
-                        </a>
-                        {{-- <a href="{{ route('customers.edit', ['customer_id' => $customer->customer_id]) }}">
-                            Edit
-                        </a> --}}
-
-                    </div>
+                    <a href="{{ route('customers.index') }}" 
+                    class="inline-flex items-center justify-center px-6 py-2.5 border border-gray-300 rounded-lg text-sm font-medium text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-slate-500 transition-all">
+                        Back to List
+                    </a>
+                    <a href="{{ route('customers.edit', $customer->customer_id) }}"
+                    class="inline-flex items-center justify-center px-6 py-2.5 border border-slate-600 rounded-lg text-sm font-medium text-white bg-slate-600 hover:bg-slate-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-slate-500 transition-all">
+                        Edit
+                    </a>
+                </div>
                 @else
                     <p class="text-red-600">Customer not found.</p>
                 @endif
