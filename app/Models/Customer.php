@@ -11,6 +11,8 @@ class Customer extends Model
     use HasFactory, SoftDeletes;
     
     protected $primaryKey = 'customer_id';
+    public $incrementing = true;
+    protected $keyType = 'int';
 
     protected $fillable = [
         'full_name',

@@ -29,7 +29,7 @@ Route::middleware('auth')->group(function () {
     Route::post('/customers', [CustomerController::class, 'store'])->name('customers.store');
     Route::get('/customers', [CustomerController::class, 'index'])->name('customers.index');
     Route::get('/customers/{customer_id}', [CustomerController::class, 'show'])->name('customers.show');
-    Route::get('/customers/{customer_name}/edit', [CustomerController::class, 'edit'])->name('customers.edit');
+    Route::get('/customers/{customer_id}/edit', [CustomerController::class, 'edit'])->name('customers.edit');
     Route::put('/customers/{customer_id}', [CustomerController::class, 'update'])->name('customers.update');
     Route::delete('/customers/{customer_id}', [CustomerController::class, 'destroy'])->name('customers.destroy');
     Route::post('/customers/deactivate', [CustomerController::class, 'destroy'])->name('customers.deactivate');
