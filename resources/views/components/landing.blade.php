@@ -6,48 +6,57 @@
     <title>Love & Styles Rental System</title>
 
     <link rel="shortcut icon" href="{{ asset('lsrs_logo.png') }}?v=1" type="image/png">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inria+Serif:ital,wght@0,300;0,400;0,700;1,300;1,400;1,700&display=swap" rel="stylesheet">
 
     @vite('resources/css/app.css')
 </head>
-<body class="h-screen flex flex-col">
+<body class="h-screen flex flex-col overflow-hidden">
 
     <!-- Hero Section -->
-    <section class="relative flex-1 flex items-center">
+    <section class="relative flex-1">
 
         <!-- Background Collage -->
         <div class="absolute inset-0">
-            <img src="/images/landing_background.png" alt="Collage" 
+            <img src="/images/container.png" alt="Collage" 
                  class="w-full h-full object-cover">
-            <div class="absolute inset-0 bg-black/40"></div>
+            <div class="absolute inset-0 bg-black/30"></div>
         </div>
 
-        <!-- Hero Content Wrapper -->
-        <div class="relative flex flex-1 items-center px-12 z-10">
-            <!-- Left: Lady Image + Tagline -->
-            <div class="flex flex-col justify-center w-1/2 space-y-6 text-white">
-                <img src="/images/landing_character.png" class="w-full max-w-none drop-shadow-2xl mb-6 ">
-                    
+        <!-- Content Wrapper -->
+        <div class="relative h-full flex items-center justify-between px-16 z-10">
+            
+            <!-- Left: Image + Tagline -->
+            <div class="relative flex flex-col justify-center text-white max-w-3xl">
+                <!-- Larger Image -->
+                <img src="/images/main_visual.png" 
+                    alt="Model" 
+                    class="w-[150%] max-w-none drop-shadow-2xl relative z-0 left-[-20%] ">
 
-                <h2 class="text-4xl md:text-5xl font-bold leading-snug">
-                    Your Trusted Partner <br> in Timeless Style.
+                <!-- Quote Text Overlapping the Image -->
+                <h2 class="absolute top-180 left-4 text-6xl md:text-7xl font-bold leading-tight font-inria z-10 drop-shadow-lg">
+                    Your Trusted Partner<br>in Timeless Style.
                 </h2>
             </div>
 
-            <!-- Right: Login Slot -->
-            <div class="flex justify-center w-1/2">
+
+            <!-- Right: Login Card -->
+            <div class="flex items-center -mt-90 mr-2">
                 {{ $slot }}
             </div>
         </div>
-    </section>
 
-    <!-- Footer -->
-    <footer class="bg-white py-4 px-6 flex items-center justify-center space-x-4 shadow-inner">
-        <img src="images/pod_logo.png" alt="Logo" class="w-12 h-12">
-        <p class="text-gray-700 max-w-lg text-sm">
-            Most trusted by people for delivering timeless style and elegant formal wear 
-            for every occasion.
-        </p>
-    </footer>
+        <!-- Footer Badge - Bottom Right Corner -->
+        <div class="absolute right-8 bg-white rounded-2xl py-4 px-6 flex items-center space-x-4 shadow-2xl max-w-md -mt-80 mr-2">
+
+            <img src="images/pod_logo.png" alt="Logo" class="w-14 h-14 flex-shrink-0">
+            <p class="text-gray-800 text-sm leading-relaxed">
+                Most trusted by people for delivering timeless style and elegant formal wear 
+                for every occasion.
+            </p>
+        </div>
+    </section>
 
 </body>
 </html>
