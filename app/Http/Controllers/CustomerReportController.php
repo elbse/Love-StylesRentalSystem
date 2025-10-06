@@ -173,7 +173,7 @@ class CustomerReportController extends Controller
     }
 
     /**
-     * Export customer data to CSV
+     * Export comprehensive customer report data to CSV
      */
     public function exportCsv(Request $request)
     {
@@ -188,21 +188,49 @@ class CustomerReportController extends Controller
             $endDate = Carbon::parse($endDate)->endOfMonth();
         }
 
-        $customers = Customer::with(['status', 'reservations.rental.payments'])
+        // Get all data for comprehensive report
+        $customers = Customer::with(['status', 'reservations.rental.payments', 'reservations.rental.status'])
             ->whereBetween('created_at', [$startDate, $endDate])
             ->get();
 
-        $filename = 'customer_report_' . Carbon::now()->format('Y-m-d_H-i-s') . '.csv';
+        // Get summary statistics
+        $totalCustomers = Customer::count();
+        $activeCustomers = Customer::whereHas('status', function($query) {
+            $query->where('status_name', 'Active');
+        })->count();
+        $totalRentals = Rental::count();
+        $activeRentals = Rental::join('rental_status', 'rentals.status_id', '=', 'rental_status.status_id')
+            ->where('rental_status.status_name', 'Active')
+            ->count();
+        $totalRevenue = Payment::sum('amount');
+
+        $filename = 'comprehensive_customer_report_' . Carbon::now()->format('Y-m-d_H-i-s') . '.csv';
 
         $headers = [
             'Content-Type' => 'text/csv',
             'Content-Disposition' => 'attachment; filename="' . $filename . '"',
         ];
 
-        $callback = function() use ($customers) {
+        $callback = function() use ($customers, $totalCustomers, $activeCustomers, $totalRentals, $activeRentals, $totalRevenue, $startDate, $endDate) {
             $file = fopen('php://output', 'w');
             
-            // CSV Headers
+            // Report Summary Section
+            fputcsv($file, ['COMPREHENSIVE CUSTOMER REPORT']);
+            fputcsv($file, ['Generated on:', Carbon::now()->format('Y-m-d H:i:s')]);
+            fputcsv($file, ['Report Period:', $startDate->format('Y-m-d') . ' to ' . $endDate->format('Y-m-d')]);
+            fputcsv($file, []);
+            
+            // Summary Statistics
+            fputcsv($file, ['SUMMARY STATISTICS']);
+            fputcsv($file, ['Total Customers', $totalCustomers]);
+            fputcsv($file, ['Active Customers', $activeCustomers]);
+            fputcsv($file, ['Total Rentals', $totalRentals]);
+            fputcsv($file, ['Active Rentals', $activeRentals]);
+            fputcsv($file, ['Total Revenue', '₱' . number_format($totalRevenue, 2)]);
+            fputcsv($file, []);
+            
+            // Customer Details Section
+            fputcsv($file, ['CUSTOMER DETAILS']);
             fputcsv($file, [
                 'Customer ID',
                 'Full Name',
@@ -221,7 +249,7 @@ class CustomerReportController extends Controller
                 'Hips'
             ]);
 
-            // CSV Data
+            // Customer Data
             foreach ($customers as $customer) {
                 $totalSpent = $customer->reservations
                     ->filter(function($reservation) {
@@ -260,6 +288,108 @@ class CustomerReportController extends Controller
                     $measurements['chest'] ?? '',
                     $measurements['waist'] ?? '',
                     $measurements['hips'] ?? ''
+                ]);
+            }
+
+            fputcsv($file, []);
+            
+            // Rental History Section
+            fputcsv($file, ['RENTAL HISTORY DETAILS']);
+            fputcsv($file, [
+                'Rental ID',
+                'Customer Name',
+                'Item Name',
+                'Released Date',
+                'Due Date',
+                'Return Date',
+                'Status',
+                'Total Payments',
+                'Penalty Fee',
+                'Days Rented'
+            ]);
+
+            // Rental History Data
+            $rentals = Rental::with(['reservation.customer', 'reservation.item', 'status', 'payments'])
+                ->whereBetween('released_date', [$startDate, $endDate])
+                ->get();
+
+            foreach ($rentals as $rental) {
+                $totalPayments = $rental->payments->sum('amount');
+                $daysRented = $rental->return_date ? 
+                    $rental->released_date->diffInDays($rental->return_date) : 
+                    $rental->released_date->diffInDays(now());
+
+                fputcsv($file, [
+                    $rental->rental_id,
+                    $rental->reservation->customer->full_name ?? 'Unknown',
+                    $rental->reservation->item->name ?? 'Unknown Item',
+                    $rental->released_date->format('Y-m-d'),
+                    $rental->due_date->format('Y-m-d'),
+                    $rental->return_date ? $rental->return_date->format('Y-m-d') : 'Not Returned',
+                    $rental->status->status_name ?? 'Unknown',
+                    number_format($totalPayments, 2),
+                    number_format($rental->penalty_fee, 2),
+                    $daysRented
+                ]);
+            }
+
+            fputcsv($file, []);
+            
+            // Payment Details Section
+            fputcsv($file, ['PAYMENT DETAILS']);
+            fputcsv($file, [
+                'Payment ID',
+                'Customer Name',
+                'Rental ID',
+                'Amount',
+                'Payment Type',
+                'Payment Method',
+                'Payment Date',
+                'Status',
+                'Invoice Number'
+            ]);
+
+            // Payment Data
+            $payments = Payment::with(['rental.reservation.customer', 'rental.reservation', 'status', 'invoice'])
+                ->whereBetween('payment_date', [$startDate, $endDate])
+                ->get();
+
+            foreach ($payments as $payment) {
+                fputcsv($file, [
+                    $payment->payment_id,
+                    $payment->rental->reservation->customer->full_name ?? 'Unknown',
+                    $payment->rental_id,
+                    number_format($payment->amount, 2),
+                    $payment->payment_type,
+                    $payment->payment_method,
+                    $payment->payment_date->format('Y-m-d'),
+                    $payment->status->status_name ?? 'Unknown',
+                    $payment->invoice->invoice_number ?? 'N/A'
+                ]);
+            }
+
+            fputcsv($file, []);
+            
+            // Monthly Summary Section
+            fputcsv($file, ['MONTHLY SUMMARY (Last 12 Months)']);
+            fputcsv($file, ['Month', 'New Customers', 'New Rentals', 'Revenue', 'New Reservations']);
+
+            for ($i = 11; $i >= 0; $i--) {
+                $month = Carbon::now()->subMonths($i);
+                $monthStart = $month->copy()->startOfMonth();
+                $monthEnd = $month->copy()->endOfMonth();
+                
+                $monthlyCustomers = Customer::whereBetween('created_at', [$monthStart, $monthEnd])->count();
+                $monthlyRentals = Rental::whereBetween('released_date', [$monthStart, $monthEnd])->count();
+                $monthlyRevenue = Payment::whereBetween('payment_date', [$monthStart, $monthEnd])->sum('amount');
+                $monthlyReservations = Reservation::whereBetween('reservation_date', [$monthStart, $monthEnd])->count();
+
+                fputcsv($file, [
+                    $month->format('M Y'),
+                    $monthlyCustomers,
+                    $monthlyRentals,
+                    number_format($monthlyRevenue, 2),
+                    $monthlyReservations
                 ]);
             }
 
