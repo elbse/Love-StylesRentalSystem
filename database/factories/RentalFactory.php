@@ -24,16 +24,23 @@ class RentalFactory extends Factory
     {
         $releasedDate = $this->faker->dateTimeBetween('-6 months', 'now');
         $dueDate = $this->faker->dateTimeBetween($releasedDate, '+30 days');
-        $returnDate = $this->faker->optional(0.8)->dateTimeBetween($releasedDate, $dueDate);
         
-        // Calculate penalty fee if overdue
+        // 60% chance of being active (no return date and not overdue)
+        $isActive = $this->faker->boolean(60);
+        $returnDate = null;
         $penaltyFee = 0;
-        if ($returnDate && $returnDate > $dueDate) {
-            $daysOverdue = $returnDate->diffInDays($dueDate);
-            $penaltyFee = $daysOverdue * 50; // 50 pesos per day overdue
-        } elseif (!$returnDate && now() > $dueDate) {
-            $daysOverdue = now()->diffInDays($dueDate);
-            $penaltyFee = $daysOverdue * 50;
+        
+        if (!$isActive) {
+            // 40% chance of being completed or overdue
+            $returnDate = $this->faker->optional(0.7)->dateTimeBetween($releasedDate, $dueDate);
+            
+            if ($returnDate && $returnDate > $dueDate) {
+                $daysOverdue = $returnDate->diffInDays($dueDate);
+                $penaltyFee = $daysOverdue * 50; // 50 pesos per day overdue
+            } elseif (!$returnDate && now() > $dueDate) {
+                $daysOverdue = now()->diffInDays($dueDate);
+                $penaltyFee = $daysOverdue * 50;
+            }
         }
         
         return [

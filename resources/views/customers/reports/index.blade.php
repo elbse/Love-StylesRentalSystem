@@ -42,16 +42,6 @@
             </div>
         </div>
 
-        <!-- Debug Information (Temporary) -->
-        <div class="bg-yellow-50 border border-yellow-200 rounded-lg p-4 mb-6">
-            <h4 class="font-semibold text-yellow-800 mb-2">Debug Information:</h4>
-            <p class="text-sm text-yellow-700">Total Rentals: {{ $totalRentals }}</p>
-            <p class="text-sm text-yellow-700">Active Rentals: {{ $activeRentals }}</p>
-            <p class="text-sm text-yellow-700">Completed Rentals: {{ $completedRentals }}</p>
-            <p class="text-sm text-yellow-700">Overdue Rentals: {{ $overdueRentals }}</p>
-            <p class="text-sm text-yellow-700">Rental Statuses Found: {{ $rentalStatusData->keys()->implode(', ') }}</p>
-        </div>
-
         <!-- Key Metrics Cards -->
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
             <!-- Total Customers -->

@@ -38,8 +38,8 @@ class RentalHistorySeeder extends Seeder
         $reservationStatuses = ReservationStatus::all()->keyBy('status_name');
         $paymentStatuses = PaymentStatus::all()->keyBy('status_name');
 
-        // Create 50 rental histories
-        for ($i = 0; $i < 50; $i++) {
+        // Create 100 rental histories
+        for ($i = 0; $i < 100; $i++) {
             $customer = $customers->random();
             $inventory = $inventories->random();
             $user = $users->random();
@@ -59,27 +59,40 @@ class RentalHistorySeeder extends Seeder
                 'end_date' => $endDate,
             ]);
 
-            // Create rental (80% chance)
-            if (rand(1, 10) <= 8) {
+            // Create rental (90% chance)
+            if (rand(1, 10) <= 9) {
                 $releasedDate = $startDate->copy()->addDays(rand(0, 2));
                 $dueDate = $releasedDate->copy()->addDays(rand(3, 14));
                 $returnDate = null;
                 $penaltyFee = 0;
                 
-                // Determine if rental is completed (70% chance)
-                if (rand(1, 10) <= 7) {
-                    $returnDate = $dueDate->copy()->addDays(rand(-2, 5));
-                    if ($returnDate > $dueDate) {
-                        $penaltyFee = $returnDate->diffInDays($dueDate) * 50;
-                    }
+                // Determine rental status with more active rentals
+                $statusRoll = rand(1, 10);
+                $rentalStatus = 'Active'; // Default to active
+                
+                if ($statusRoll <= 2) {
+                    // 20% chance - Completed
+                    $returnDate = $dueDate->copy()->addDays(rand(-2, 2));
+                    $rentalStatus = 'Completed';
+                } elseif ($statusRoll <= 3) {
+                    // 10% chance - Overdue
+                    $returnDate = $dueDate->copy()->addDays(rand(1, 10));
+                    $penaltyFee = $returnDate->diffInDays($dueDate) * 50;
+                    $rentalStatus = 'Overdue';
+                } elseif ($statusRoll <= 4) {
+                    // 10% chance - Returned
+                    $returnDate = $dueDate->copy()->addDays(rand(-1, 1));
+                    $rentalStatus = 'Returned';
+                } elseif ($statusRoll <= 5) {
+                    // 10% chance - Cancelled
+                    $rentalStatus = 'Cancelled';
+                } else {
+                    // 50% chance - Active (no return date, not overdue)
+                    $rentalStatus = 'Active';
                 }
                 
-                // Determine rental status
-                $rentalStatus = 'Active';
-                if ($returnDate) {
-                    $rentalStatus = $penaltyFee > 0 ? 'Overdue' : 'Completed';
-                } elseif (now() > $dueDate) {
-                    $rentalStatus = 'Overdue';
+                // If rental is overdue and no return date, calculate penalty
+                if ($rentalStatus === 'Active' && now() > $dueDate) {
                     $penaltyFee = now()->diffInDays($dueDate) * 50;
                 }
                 
