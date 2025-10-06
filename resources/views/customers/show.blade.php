@@ -109,6 +109,129 @@
                         </div>
                     </div>
 
+                    <!-- Rental History Section -->
+                    <div class="mt-8">
+                        <div class="bg-gradient-to-br from-slate-50 to-gray-50 p-5 rounded-xl border border-gray-200 shadow-sm">
+                            <div class="flex items-center gap-2 pb-3 border-b border-gray-200 mb-4">
+                                <svg class="w-5 h-5 text-slate-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-3 7h3m-3 4h3m-6-4h.01M9 16h.01M9 12h.01M12 12h.01M15 12h.01M12 8h.01M9 8h.01M7 8h.01"/>
+                                </svg>
+                                <h3 class="text-lg font-semibold text-gray-900">Rental History</h3>
+                            </div>
+
+                            <!-- Rental History Table -->
+                            <div class="overflow-x-auto">
+                                <table class="min-w-full border-collapse">
+                                    <thead>
+                                        <tr class="bg-gray-100 text-gray-700">
+                                            <th class="px-4 py-3 text-left text-sm font-medium">Rental ID</th>
+                                            <th class="px-4 py-3 text-left text-sm font-medium">Item</th>
+                                            <th class="px-4 py-3 text-left text-sm font-medium">Rental Date</th>
+                                            <th class="px-4 py-3 text-left text-sm font-medium">Return Date</th>
+                                            <th class="px-4 py-3 text-left text-sm font-medium">Status</th>
+                                            <th class="px-4 py-3 text-left text-sm font-medium">Amount</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody class="divide-y divide-gray-200">
+                                        <!-- Sample rental history data - replace with actual data from controller -->
+                                        <tr>
+                                            <td class="px-4 py-3 text-sm text-gray-900">#R001</td>
+                                            <td class="px-4 py-3 text-sm text-gray-900">Evening Gown - Black</td>
+                                            <td class="px-4 py-3 text-sm text-gray-900">2024-01-15</td>
+                                            <td class="px-4 py-3 text-sm text-gray-900">2024-01-20</td>
+                                            <td class="px-4 py-3">
+                                                <span class="inline-block px-2 py-1 text-xs font-semibold rounded-full bg-green-100 text-green-800">
+                                                    Completed
+                                                </span>
+                                            </td>
+                                            <td class="px-4 py-3 text-sm text-gray-900">₱2,500.00</td>
+                                        </tr>
+                                        <tr>
+                                            <td class="px-4 py-3 text-sm text-gray-900">#R002</td>
+                                            <td class="px-4 py-3 text-sm text-gray-900">Suit - Navy Blue</td>
+                                            <td class="px-4 py-3 text-sm text-gray-900">2024-02-10</td>
+                                            <td class="px-4 py-3 text-sm text-gray-900">2024-02-15</td>
+                                            <td class="px-4 py-3">
+                                                <span class="inline-block px-2 py-1 text-xs font-semibold rounded-full bg-green-100 text-green-800">
+                                                    Completed
+                                                </span>
+                                            </td>
+                                            <td class="px-4 py-3 text-sm text-gray-900">₱1,800.00</td>
+                                        </tr>
+                                        <tr>
+                                            <td class="px-4 py-3 text-sm text-gray-900">#R003</td>
+                                            <td class="px-4 py-3 text-sm text-gray-900">Wedding Dress - White</td>
+                                            <td class="px-4 py-3 text-sm text-gray-900">2024-03-05</td>
+                                            <td class="px-4 py-3 text-sm text-gray-900">—</td>
+                                            <td class="px-4 py-3">
+                                                <span class="inline-block px-2 py-1 text-xs font-semibold rounded-full bg-yellow-100 text-yellow-800">
+                                                    Active
+                                                </span>
+                                            </td>
+                                            <td class="px-4 py-3 text-sm text-gray-900">₱5,000.00</td>
+                                        </tr>
+                                        <!-- Empty state if no rentals -->
+                                        <tr class="hidden">
+                                            <td colspan="6" class="px-4 py-6 text-center text-gray-500">
+                                                <div class="flex flex-col items-center">
+                                                    <svg class="w-12 h-12 text-gray-300 mb-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"/>
+                                                    </svg>
+                                                    <p class="text-sm">No rental history found</p>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+
+                            <!-- Rental Statistics -->
+                            <div class="mt-6 grid grid-cols-1 md:grid-cols-3 gap-4">
+                                <div class="bg-white p-4 rounded-lg border border-gray-200">
+                                    <div class="flex items-center">
+                                        <div class="p-2 bg-blue-100 rounded-lg">
+                                            <svg class="w-5 h-5 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"/>
+                                            </svg>
+                                        </div>
+                                        <div class="ml-3">
+                                            <p class="text-sm font-medium text-gray-600">Total Rentals</p>
+                                            <p class="text-lg font-semibold text-gray-900">3</p>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <div class="bg-white p-4 rounded-lg border border-gray-200">
+                                    <div class="flex items-center">
+                                        <div class="p-2 bg-green-100 rounded-lg">
+                                            <svg class="w-5 h-5 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                                            </svg>
+                                        </div>
+                                        <div class="ml-3">
+                                            <p class="text-sm font-medium text-gray-600">Total Spent</p>
+                                            <p class="text-lg font-semibold text-gray-900">₱9,300.00</p>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <div class="bg-white p-4 rounded-lg border border-gray-200">
+                                    <div class="flex items-center">
+                                        <div class="p-2 bg-yellow-100 rounded-lg">
+                                            <svg class="w-5 h-5 text-yellow-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                                            </svg>
+                                        </div>
+                                        <div class="ml-3">
+                                            <p class="text-sm font-medium text-gray-600">Active Rentals</p>
+                                            <p class="text-lg font-semibold text-gray-900">1</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
                     <!-- Action buttons -->
                     <div class="mt-8 flex justify-end space-x-3">
                     <a href="{{ route('customers.index') }}" 
