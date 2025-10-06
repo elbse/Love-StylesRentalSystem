@@ -5,6 +5,7 @@ use App\Http\Controllers\RentalController;
 use App\Http\Controllers\PaymentController;
 use App\Http\Controllers\InventoryController;
 use App\Http\Controllers\CustomerController;
+use App\Http\Controllers\CustomerReportController;
 use App\Http\Controllers\AuthController;
 use Illuminate\Support\Facades\Route;
 
@@ -47,6 +48,10 @@ Route::middleware('auth')->group(function () {
     
     // Inventory
     Route::get('/inventory', [InventoryController::class, 'index'])->name('inventory.index');
+    
+    // Customer Reports (must be before customer routes to avoid conflicts)
+    Route::get('/customers/reports', [CustomerReportController::class, 'index'])->name('customers.reports.index');
+    Route::get('/customers/reports/export', [CustomerReportController::class, 'exportCsv'])->name('customers.reports.export');
     
     // Customer
     Route::get('/customer', [CustomerController::class, 'index'])->name('customer.index');

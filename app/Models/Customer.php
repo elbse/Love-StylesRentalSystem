@@ -32,6 +32,11 @@ class Customer extends Model
         return $this->belongsTo(CustomerStatus::class, 'status_id');
     }
 
+    public function reservations()
+    {
+        return $this->hasMany(Reservation::class, 'customer_id');
+    }
+
     // Scope for filtering and fuzzy searching
     public function scopeFilter($query, array $filters)
     {

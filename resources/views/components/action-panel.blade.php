@@ -7,7 +7,7 @@
         </div>
         <div class="flex flex-row space-x-2">
             <x-button :href="route('customers.create')" class="w-xl hover:bg-purple-800 hover:text-black">New Customer</x-button>
-            <x-button :href="route('dashboard')" class="w-xl hover:bg-purple-800 hover:text-black">Reports</x-button>
+            <x-button :href="route('customers.reports.index')" class="w-xl hover:bg-purple-800 hover:text-black">Reports</x-button>
         </div>
     </div>
 
