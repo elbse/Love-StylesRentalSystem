@@ -132,6 +132,14 @@ class CustomerReportController extends Controller
                 ];
             });
 
+        // Overdue rentals with customer details
+        $overdueRentalsCollection = Rental::with(['reservation.customer', 'reservation.item', 'status'])
+            ->whereHas('status', function($query) {
+                $query->where('status_name', 'Overdue');
+            })
+            ->orderBy('due_date', 'asc')
+            ->get();
+
         // Calculate percentages for customer status
         $totalCustomersForPercentage = $customerStatusData->sum('count');
         $customerStatusData = $customerStatusData->map(function($item) use ($totalCustomersForPercentage) {
@@ -157,6 +165,7 @@ class CustomerReportController extends Controller
             'activeRentals',
             'completedRentals',
             'overdueRentals',
+            'overdueRentalsCollection',
             'totalRevenue',
             'monthlyRevenue',
             'averageRentalValue',
