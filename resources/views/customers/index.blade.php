@@ -215,7 +215,7 @@
 
                     <td class="px-4 py-3">
                         @php($m = $customer->measurement)
-                        {{ is_array($m) ? ($m['chest'] ?? ($m['size'] ?? '—')) : '—' }}
+                        {{ is_array($m) ? ($m['size'] ?? ($m['chest'] ?? '—')) : '—' }}
                     </td>
                    <td class="px-4 py-3 text-center">
 

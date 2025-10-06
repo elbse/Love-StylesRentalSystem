@@ -49,7 +49,7 @@
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                         <div>
                             <label for="size" class="block text-sm font-medium text-gray-700">Size</label>
-                            <input id="size" name="size" type="text" value="{{ old('size', $customer->measurement['size'] ?? '') }}" class="mt-1 block w-full border rounded-md px-3 py-2 @error('size') border-red-500 @enderror">
+                            <input id="size" name="size" type="text" value="{{ old('size', $customer->measurement['size'] ?? $customer->measurement['chest'] ?? '') }}" class="mt-1 block w-full border rounded-md px-3 py-2 @error('size') border-red-500 @enderror">
                             @error('size')
                             <p class="text-red-600 text-sm mt-1">{{ $message }}</p>
                             @enderror
