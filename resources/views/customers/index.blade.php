@@ -36,6 +36,25 @@
 
     </div>
 
+    <form method="GET" action="{{ route('customers.index') }}" class="m-4 mr-4 ml-auto mb-2 flex items-center gap-3">
+        <div class="relative w-full md:w-96">
+            <span class="absolute inset-y-0 left-0 pl-3 flex items-center text-gray-400">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+                    <path fill-rule="evenodd" d="M8 4a4 4 0 100 8 4 4 0 000-8zM2 8a6 6 0 1110.89 3.476l3.817 3.817a1 1 0 01-1.414 1.414l-3.817-3.817A6 6 0 012 8z" clip-rule="evenodd" />
+                </svg>
+            </span>
+            <input type="text" name="q" value="{{ request('q') }}" placeholder="Search by name, email, or contact" class="w-full border rounded-lg pl-10 pr-10 py-2 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-purple-500" />
+            @if(request('q'))
+                <a href="{{ route('customers.index', array_filter(request()->except('page', 'q'))) }}" class="absolute inset-y-0 right-0 pr-3 flex items-center text-gray-400 hover:text-gray-600" title="Clear search">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+                        <path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd" />
+                    </svg>
+                </a>
+            @endif
+        </div>
+        <button type="submit" class="px-4 py-2 bg-purple-600 hover:bg-purple-700 text-white rounded-lg">Search</button>
+    </form>
+
     <div class="m-4 grid grid-cols-4 gap-8 -ml-1">
 
         <div class="bg-white rounded-xl shadow-md overflow-hidden col-span-3">
@@ -43,6 +62,8 @@
     <div class="bg-gradient-to-r from-purple-600 to-purple-800 text-white p-4">
         <h2 class="text-xl font-semibold">Customers</h2>
     </div>
+
+    
 
     <!-- Table -->
     <div class="overflow-x-auto">

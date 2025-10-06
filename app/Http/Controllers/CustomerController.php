@@ -19,9 +19,18 @@ class CustomerController extends Controller
         $requestedPerPage = (int) request('per_page');
         $perPage = in_array($requestedPerPage, [5, 10, 15], true) ? $requestedPerPage : 5;
 
-        $customer = Customer::orderBy('customer_id', 'desc')
-            ->paginate($perPage)
-            ->withQueryString();
+        $query = Customer::query()->orderBy('customer_id', 'desc');
+
+        $search = trim((string) request('q'));
+        if ($search !== '') {
+            $query->where(function ($q) use ($search) {
+                $q->where('full_name', 'like', "%{$search}%")
+                  ->orWhere('email', 'like', "%{$search}%")
+                  ->orWhere('contact_number', 'like', "%{$search}%");
+            });
+        }
+
+        $customer = $query->paginate($perPage)->withQueryString();
 
         return view('customers.index', ['title' => 'Customer Management', 'perPage' => $perPage], ["customers"=> $customer]);
     }

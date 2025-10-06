@@ -7,6 +7,7 @@
             </div>
 
             <div class="p-5 md:p-6">
+              
                 @if($customer)
                     <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
                         <!-- Left side: Customer Info -->
