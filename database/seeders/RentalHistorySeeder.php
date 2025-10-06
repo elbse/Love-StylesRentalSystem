@@ -40,14 +40,31 @@ class RentalHistorySeeder extends Seeder
 
         // Create 100 rental histories
         for ($i = 0; $i < 100; $i++) {
-            $customer = $customers->random();
+            // Select a customer without overdue rentals
+            $availableCustomers = $customers->filter(function($customer) {
+                return !$customer->hasOverdueRentals();
+            });
+            
+            // If no customers without overdue rentals, select any customer
+            if ($availableCustomers->isEmpty()) {
+                $customer = $customers->random();
+            } else {
+                $customer = $availableCustomers->random();
+            }
+            
             $inventory = $inventories->random();
             $user = $users->random();
             
-            // Create reservation
-            $reservationDate = Carbon::now()->subMonths(rand(1, 6))->subDays(rand(0, 30));
-            $startDate = $reservationDate->copy()->addDays(rand(1, 7));
-            $endDate = $startDate->copy()->addDays(rand(1, 14));
+            // Create reservation with varied dates (some recent, some old)
+            $isRecent = rand(1, 10) <= 3; // 30% chance of recent rental
+            if ($isRecent) {
+                $reservationDate = Carbon::now()->subDays(rand(1, 14));
+                $startDate = $reservationDate->copy()->addDays(rand(1, 3));
+            } else {
+                $reservationDate = Carbon::now()->subMonths(rand(1, 6))->subDays(rand(0, 30));
+                $startDate = $reservationDate->copy()->addDays(rand(1, 7));
+            }
+            $endDate = $startDate->copy()->addDays(7); // Fixed 7-day rental period
             
             $reservation = Reservation::create([
                 'customer_id' => $customer->customer_id,
@@ -62,38 +79,41 @@ class RentalHistorySeeder extends Seeder
             // Create rental (90% chance)
             if (rand(1, 10) <= 9) {
                 $releasedDate = $startDate->copy()->addDays(rand(0, 2));
-                $dueDate = $releasedDate->copy()->addDays(rand(3, 14));
+                $dueDate = $releasedDate->copy()->addDays(7); // Fixed 7-day rental period
                 $returnDate = null;
                 $penaltyFee = 0;
                 
-                // Determine rental status with more active rentals
+                // Determine rental status based on 7-day rental period
                 $statusRoll = rand(1, 10);
                 $rentalStatus = 'Active'; // Default to active
                 
-                if ($statusRoll <= 2) {
-                    // 20% chance - Completed
-                    $returnDate = $dueDate->copy()->addDays(rand(-2, 2));
+                if ($statusRoll <= 3) {
+                    // 30% chance - Completed (returned within 7 days)
+                    $returnDate = $releasedDate->copy()->addDays(rand(1, 7));
                     $rentalStatus = 'Completed';
-                } elseif ($statusRoll <= 3) {
-                    // 10% chance - Overdue
-                    $returnDate = $dueDate->copy()->addDays(rand(1, 10));
-                    $penaltyFee = $returnDate->diffInDays($dueDate) * 50;
-                    $rentalStatus = 'Overdue';
                 } elseif ($statusRoll <= 4) {
-                    // 10% chance - Returned
-                    $returnDate = $dueDate->copy()->addDays(rand(-1, 1));
+                    // 10% chance - Returned (returned exactly on due date)
+                    $returnDate = $dueDate->copy();
                     $rentalStatus = 'Returned';
                 } elseif ($statusRoll <= 5) {
                     // 10% chance - Cancelled
                     $rentalStatus = 'Cancelled';
                 } else {
-                    // 50% chance - Active (no return date, not overdue)
-                    $rentalStatus = 'Active';
+                    // 50% chance - Active or Overdue
+                    if (now() > $dueDate) {
+                        // Rental is overdue (past 7 days)
+                        $rentalStatus = 'Overdue';
+                        $penaltyFee = now()->diffInDays($dueDate) * 50; // 50 pesos per day overdue
+                    } else {
+                        // Rental is still active (within 7 days)
+                        $rentalStatus = 'Active';
+                    }
                 }
                 
-                // If rental is overdue and no return date, calculate penalty
-                if ($rentalStatus === 'Active' && now() > $dueDate) {
-                    $penaltyFee = now()->diffInDays($dueDate) * 50;
+                // Handle overdue returns (returned after 7 days)
+                if ($statusRoll <= 2 && $returnDate && $returnDate > $dueDate) {
+                    $rentalStatus = 'Overdue';
+                    $penaltyFee = $returnDate->diffInDays($dueDate) * 50;
                 }
                 
                 $rentalData = [

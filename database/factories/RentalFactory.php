@@ -23,7 +23,7 @@ class RentalFactory extends Factory
     public function definition(): array
     {
         $releasedDate = $this->faker->dateTimeBetween('-6 months', 'now');
-        $dueDate = $this->faker->dateTimeBetween($releasedDate, '+30 days');
+        $dueDate = $releasedDate->copy()->addDays(7); // Fixed 7-day rental period
         
         // 60% chance of being active (no return date and not overdue)
         $isActive = $this->faker->boolean(60);
