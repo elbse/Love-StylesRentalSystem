@@ -3,6 +3,10 @@
 namespace App\Http\Controllers;
 
 use App\Models\Customer;
+use App\Models\Rental;
+use App\Models\RentalStatus;
+use App\Models\ReservationStatus;
+use App\Models\PaymentStatus;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
@@ -105,10 +109,22 @@ class CustomerController extends Controller
             abort(404, 'Customer not found');
         }
         
-        // Debug: Check what customer_id value is
-        Log::info('Customer ID: ' . $customer->customer_id);
+        // Get rental history for this customer
+        $rentals = Rental::with(['reservation.item', 'status', 'payments'])
+            ->whereHas('reservation', function($query) use ($customer_id) {
+                $query->where('customer_id', $customer_id);
+            })
+            ->orderBy('released_date', 'desc')
+            ->get();
         
-        return view('customers.show', compact('customer'));
+        // Calculate rental statistics
+        $totalRentals = $rentals->count();
+        $totalSpent = $rentals->sum(function($rental) {
+            return $rental->payments->sum('amount');
+        });
+        $activeRentals = $rentals->where('status.status_name', 'Active')->count();
+        
+        return view('customers.show', compact('customer', 'rentals', 'totalRentals', 'totalSpent', 'activeRentals'));
     }
 
     /**

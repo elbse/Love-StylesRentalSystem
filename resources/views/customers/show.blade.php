@@ -69,33 +69,35 @@
                                     <h3 class="text-lg font-semibold text-gray-900">Measurements</h3>
                                 </div>
 
-                                @php($measurements = $customer->measurement ?? [])
+                                @php
+                                    $measurements = is_array($customer->measurement) ? $customer->measurement : (is_string($customer->measurement) ? json_decode($customer->measurement, true) : []);
+                                @endphp
                                 <div class="space-y-3">
-                                    @if(isset($measurements['size']))
+                                    @if(!empty($measurements['size']))
                                     <div>
                                         <span class="text-sm font-medium text-gray-600">Size:</span>
                                         <span class="text-sm text-gray-900">{{ $measurements['size'] }}</span>
                                     </div>
                                     @endif
-                                    @if(isset($measurements['height']))
+                                    @if(!empty($measurements['height']))
                                     <div>
                                         <span class="text-sm font-medium text-gray-600">Height:</span>
                                         <span class="text-sm text-gray-900">{{ $measurements['height'] }}</span>
                                     </div>
                                     @endif
-                                    @if(isset($measurements['chest']))
+                                    @if(!empty($measurements['chest']))
                                     <div>
                                         <span class="text-sm font-medium text-gray-600">Chest:</span>
                                         <span class="text-sm text-gray-900">{{ $measurements['chest'] }}</span>
                                     </div>
                                     @endif
-                                    @if(isset($measurements['waist']))
+                                    @if(!empty($measurements['waist']))
                                     <div>
                                         <span class="text-sm font-medium text-gray-600">Waist:</span>
                                         <span class="text-sm text-gray-900">{{ $measurements['waist'] }}</span>
                                     </div>
                                     @endif
-                                    @if(isset($measurements['hips']))
+                                    @if(!empty($measurements['hips']))
                                     <div>
                                         <span class="text-sm font-medium text-gray-600">Hips:</span>
                                         <span class="text-sm text-gray-900">{{ $measurements['hips'] }}</span>
@@ -133,54 +135,53 @@
                                         </tr>
                                     </thead>
                                     <tbody class="divide-y divide-gray-200">
-                                        <!-- Sample rental history data - replace with actual data from controller -->
-                                        <tr>
-                                            <td class="px-4 py-3 text-sm text-gray-900">#R001</td>
-                                            <td class="px-4 py-3 text-sm text-gray-900">Evening Gown - Black</td>
-                                            <td class="px-4 py-3 text-sm text-gray-900">2024-01-15</td>
-                                            <td class="px-4 py-3 text-sm text-gray-900">2024-01-20</td>
-                                            <td class="px-4 py-3">
-                                                <span class="inline-block px-2 py-1 text-xs font-semibold rounded-full bg-green-100 text-green-800">
-                                                    Completed
-                                                </span>
-                                            </td>
-                                            <td class="px-4 py-3 text-sm text-gray-900">₱2,500.00</td>
-                                        </tr>
-                                        <tr>
-                                            <td class="px-4 py-3 text-sm text-gray-900">#R002</td>
-                                            <td class="px-4 py-3 text-sm text-gray-900">Suit - Navy Blue</td>
-                                            <td class="px-4 py-3 text-sm text-gray-900">2024-02-10</td>
-                                            <td class="px-4 py-3 text-sm text-gray-900">2024-02-15</td>
-                                            <td class="px-4 py-3">
-                                                <span class="inline-block px-2 py-1 text-xs font-semibold rounded-full bg-green-100 text-green-800">
-                                                    Completed
-                                                </span>
-                                            </td>
-                                            <td class="px-4 py-3 text-sm text-gray-900">₱1,800.00</td>
-                                        </tr>
-                                        <tr>
-                                            <td class="px-4 py-3 text-sm text-gray-900">#R003</td>
-                                            <td class="px-4 py-3 text-sm text-gray-900">Wedding Dress - White</td>
-                                            <td class="px-4 py-3 text-sm text-gray-900">2024-03-05</td>
-                                            <td class="px-4 py-3 text-sm text-gray-900">—</td>
-                                            <td class="px-4 py-3">
-                                                <span class="inline-block px-2 py-1 text-xs font-semibold rounded-full bg-yellow-100 text-yellow-800">
-                                                    Active
-                                                </span>
-                                            </td>
-                                            <td class="px-4 py-3 text-sm text-gray-900">₱5,000.00</td>
-                                        </tr>
-                                        <!-- Empty state if no rentals -->
-                                        <tr class="hidden">
-                                            <td colspan="6" class="px-4 py-6 text-center text-gray-500">
-                                                <div class="flex flex-col items-center">
-                                                    <svg class="w-12 h-12 text-gray-300 mb-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"/>
-                                                    </svg>
-                                                    <p class="text-sm">No rental history found</p>
-                                                </div>
-                                            </td>
-                                        </tr>
+                                        @php
+                                            $statusColors = [
+                                                'Active' => 'bg-blue-100 text-blue-800',
+                                                'Completed' => 'bg-green-100 text-green-800',
+                                                'Overdue' => 'bg-red-100 text-red-800',
+                                                'Cancelled' => 'bg-gray-100 text-gray-800',
+                                                'Returned' => 'bg-purple-100 text-purple-800'
+                                            ];
+                                        @endphp
+                                        @if($rentals->count() > 0)
+                                            @foreach($rentals as $rental)
+                                                <tr>
+                                                    <td class="px-4 py-3 text-sm text-gray-900">#R{{ str_pad($rental->rental_id, 3, '0', STR_PAD_LEFT) }}</td>
+                                                    <td class="px-4 py-3 text-sm text-gray-900">
+                                                        {{ $rental->reservation->item->name ?? 'Unknown Item' }}
+                                                    </td>
+                                                    <td class="px-4 py-3 text-sm text-gray-900">
+                                                        {{ $rental->released_date->format('M d, Y') }}
+                                                    </td>
+                                                    <td class="px-4 py-3 text-sm text-gray-900">
+                                                        {{ $rental->return_date ? $rental->return_date->format('M d, Y') : '—' }}
+                                                    </td>
+                                                    <td class="px-4 py-3">
+                                                        @php
+                                                            $statusColor = $statusColors[$rental->status->status_name] ?? 'bg-gray-100 text-gray-800';
+                                                        @endphp
+                                                        <span class="inline-block px-2 py-1 text-xs font-semibold rounded-full {{ $statusColor }}">
+                                                            {{ $rental->status->status_name }}
+                                                        </span>
+                                                    </td>
+                                                    <td class="px-4 py-3 text-sm text-gray-900">
+                                                        ₱{{ number_format($rental->payments->sum('amount'), 2) }}
+                                                    </td>
+                                                </tr>
+                                            @endforeach
+                                        @else
+                                            <tr>
+                                                <td colspan="6" class="px-4 py-6 text-center text-gray-500">
+                                                    <div class="flex flex-col items-center">
+                                                        <svg class="w-12 h-12 text-gray-300 mb-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"/>
+                                                        </svg>
+                                                        <p class="text-sm">No rental history found</p>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                        @endif
                                     </tbody>
                                 </table>
                             </div>
@@ -196,7 +197,7 @@
                                         </div>
                                         <div class="ml-3">
                                             <p class="text-sm font-medium text-gray-600">Total Rentals</p>
-                                            <p class="text-lg font-semibold text-gray-900">3</p>
+                                            <p class="text-lg font-semibold text-gray-900">{{ $totalRentals }}</p>
                                         </div>
                                     </div>
                                 </div>
@@ -210,7 +211,7 @@
                                         </div>
                                         <div class="ml-3">
                                             <p class="text-sm font-medium text-gray-600">Total Spent</p>
-                                            <p class="text-lg font-semibold text-gray-900">₱9,300.00</p>
+                                            <p class="text-lg font-semibold text-gray-900">₱{{ number_format($totalSpent, 2) }}</p>
                                         </div>
                                     </div>
                                 </div>
@@ -224,7 +225,7 @@
                                         </div>
                                         <div class="ml-3">
                                             <p class="text-sm font-medium text-gray-600">Active Rentals</p>
-                                            <p class="text-lg font-semibold text-gray-900">1</p>
+                                            <p class="text-lg font-semibold text-gray-900">{{ $activeRentals }}</p>
                                         </div>
                                     </div>
                                 </div>
@@ -234,15 +235,15 @@
 
                     <!-- Action buttons -->
                     <div class="mt-8 flex justify-end space-x-3">
-                    <a href="{{ route('customers.index') }}" 
-                    class="inline-flex items-center justify-center px-6 py-2.5 border border-gray-300 rounded-lg text-sm font-medium text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-slate-500 transition-all">
-                        Back to List
-                    </a>
-                    <a href="{{ route('customers.edit', $customer->customer_id) }}"
-                    class="inline-flex items-center justify-center px-6 py-2.5 border border-slate-600 rounded-lg text-sm font-medium text-white bg-slate-600 hover:bg-slate-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-slate-500 transition-all">
-                        Edit
-                    </a>
-                </div>
+                        <a href="{{ route('customers.index') }}" 
+                        class="inline-flex items-center justify-center px-6 py-2.5 border border-gray-300 rounded-lg text-sm font-medium text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-slate-500 transition-all">
+                            Back to List
+                        </a>
+                        <a href="{{ route('customers.edit', $customer->customer_id) }}"
+                        class="inline-flex items-center justify-center px-6 py-2.5 border border-slate-600 rounded-lg text-sm font-medium text-white bg-slate-600 hover:bg-slate-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-slate-500 transition-all">
+                            Edit
+                        </a>
+                    </div>
                 @else
                     <p class="text-red-600">Customer not found.</p>
                 @endif

@@ -2,6 +2,7 @@
 
 namespace Database\Factories;
 
+use App\Models\RentalStatus;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
@@ -9,6 +10,8 @@ use Illuminate\Database\Eloquent\Factories\Factory;
  */
 class RentalStatusFactory extends Factory
 {
+    protected $model = RentalStatus::class;
+
     /**
      * Define the model's default state.
      *
@@ -17,7 +20,13 @@ class RentalStatusFactory extends Factory
     public function definition(): array
     {
         return [
-            //
+            'status_name' => $this->faker->randomElement([
+                'Active',
+                'Completed',
+                'Overdue',
+                'Cancelled',
+                'Returned'
+            ])
         ];
     }
 }
