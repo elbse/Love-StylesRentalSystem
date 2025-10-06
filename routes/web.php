@@ -32,18 +32,18 @@ Route::middleware('auth')->group(function () {
     Route::get('/customers/{customer_id}/edit', [CustomerController::class, 'edit'])->name('customers.edit');
     Route::put('/customers/{customer_id}', [CustomerController::class, 'update'])->name('customers.update');
     Route::delete('/customers/{customer_id}', [CustomerController::class, 'destroy'])->name('customers.destroy');
-    Route::post('/customers/deactivate', [CustomerController::class, 'destroy'])->name('customers.deactivate');
-    
+    Route::post('/customers/deactivate', [CustomerController::class, 'deactivate'])->name('customers.deactivate');
+    Route::post('/customers/reactivate', [CustomerController::class, 'reactivate'])->name('customers.reactivate');
 });
 
 
 
-Route::get('/register',[AuthController::class, 'showRegister'])->name('show.register')->middleware('guest');
-Route::get('/login',[AuthController::class, 'showLogin'])->name('show.login')->middleware('guest');
-Route::post('/login',[AuthController::class, 'login'])->name('login');
-Route::post('/logout',[AuthController::class, 'logout'])->name('logout');
+Route::get('/register', [AuthController::class, 'showRegister'])->name('show.register')->middleware('guest');
+Route::get('/login', [AuthController::class, 'showLogin'])->name('show.login')->middleware('guest');
+Route::post('/login', [AuthController::class, 'login'])->name('login');
+Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
 
-Route::get('/dashboard', function(){
+Route::get('/dashboard', function () {
     return view('dashboard');
 })->name('dashboard')->middleware('auth');
 

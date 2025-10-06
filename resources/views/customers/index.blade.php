@@ -63,7 +63,7 @@
                 
                 <tr>
                     <td class="px-4 py-3 flex items-center space-x-2">
-                        <img src="{{ asset('images/avatar.png') }}" alt="User" class="w-8 h-8 rounded-full border">
+                        <img src="https://ui-avatars.com/api/?name={{ urlencode($customer->full_name ?? 'User') }}&background=random&color=fff&size=64" alt="User" class="w-8 h-8 rounded-full border">
                         <span>{{ $customer->full_name }}</span>
                     </td>
                     <td class="px-4 py-3">{{ $customer->contact_number }}</td>
@@ -72,7 +72,8 @@
                         @php
                             $statusColors = [
                                 'Active' => 'bg-green-600 text-white',
-                                'Deativate' => 'bg-gray-500 text-white',
+                                'Deactivated' => 'bg-gray-500 text-white',
+                                'Inactive' => 'bg-gray-500 text-white',
                                 'Pending' => 'bg-yellow-500 text-white',
                                 'Cancelled' => 'bg-red-600 text-white',
                             ];
@@ -101,11 +102,13 @@
                         :actions="[
                             ['label' => 'View', 'url' => route('customers.show', $customer->customer_id), 'method' => 'GET'],
                             ['label' => 'Edit', 'url' => route('customers.edit', $customer->customer_id), 'method' => 'GET'],
-                            ['label' => 'Deactivate', 'method' => 'MODAL','full' => true],
+                            ((($customer->status->status_name ?? '') === 'Deactivated') || (($customer->status->status_name ?? '') === 'Inactive'))
+                                ? ['label' => 'Reactivate', 'method' => 'MODAL', 'full' => true]
+                                : ['label' => 'Deactivate', 'method' => 'MODAL', 'full' => true],
                         ]"
                     />
                 </div>
-                </td>   
+                </td>  
 
                 </tr>
                 @empty
@@ -148,35 +151,39 @@
     </div>
     
 
+<script>
+window.customerStatusMap = @json($customers->pluck('status.status_name','customer_id'));
+</script>
+
 <div 
     x-data="{ 
         open: false, 
         customerId: '', 
-        customerName: '' 
+        customerName: '',
+        mode: 'deactivate',
+        deactivateUrl: '{{ route('customers.deactivate') }}',
+        reactivateUrl: '{{ route('customers.reactivate') }}'
     }" 
-    x-init="
-        @if($errors->has('password') && old('customer_id'))
-            open = true;
-            customerId = '{{ old('customer_id', '') }}';
-            customerName = '{{ old('customer_name', '') }}';
-        @endif
-    "
+    
     x-on:open-deactivate-modal.window=" 
         open = true; 
         customerId = $event.detail.id; 
         customerName = $event.detail.name; 
+        mode = (window.customerStatusMap && (window.customerStatusMap[customerId] === 'Deactivated' || window.customerStatusMap[customerId] === 'Inactive')) ? 'reactivate' : 'deactivate';
     " 
     x-cloak 
     class="fixed inset-0 z-50 flex items-center justify-center bg-black/50" 
     x-show="open"
 >
     <div class="bg-white p-6 rounded-xl shadow-md w-96">
-        <h2 class="text-lg font-bold mb-3">Deactivate Customer</h2>
+        <h2 class="text-lg font-bold mb-3" x-text="mode === 'reactivate' ? 'Reactivate Customer' : 'Deactivate Customer'"></h2>
         <p class="text-sm mb-4">
-            Enter your password to deactivate <span class="font-semibold" x-text="customerName"></span>.
+            <span x-show="mode !== 'reactivate'">Are you sure you want to deactivate </span>
+            <span x-show="mode === 'reactivate'">Are you sure you want to reactivate </span>
+            <span class="font-semibold" x-text="customerName"></span>?
         </p>
 
-        <form method="POST" action="{{ route('customers.deactivate') }}">
+        <form method="POST" x-bind:action="mode === 'reactivate' ? reactivateUrl : deactivateUrl">
             @csrf
             <input type="hidden" name="customer_id" x-model="customerId">
             <input type="hidden" name="customer_name" x-model="customerName">
@@ -188,7 +195,6 @@
                 placeholder="Enter your password" 
                 required
             >
-
             @error('password')
                 <p class="text-red-600 text-sm mb-2">{{ $message }}</p>
             @enderror
@@ -197,9 +203,7 @@
                 <button type="button" @click="open = false" class="px-3 py-1 bg-gray-300 rounded">
                     Cancel
                 </button>
-                <button type="submit" class="px-3 py-1 bg-yellow-500 text-white rounded">
-                    Confirm
-                </button>
+                <button type="submit" class="px-3 py-1 bg-yellow-500 text-white rounded" x-text="mode === 'reactivate' ? 'Confirm Reactivate' : 'Confirm Deactivate'"></button>
             </div>
         </form>
     </div>

@@ -44,13 +44,7 @@
                     <div class="pb-2 border-b border-gray-200">
                         <h3 class="text-lg font-semibold text-gray-900">Customer Information</h3>
                     </div>
-
-                    <div>
-                        <label for="photo" class="block text-sm font-medium text-gray-700 mb-2">Customer Photo</label>
-                        <input type="file" name="photo" id="photo" 
-                        class="block w-full text-sm text-gray-600 file:mr-3 file:py-2 file:px-3 file:rounded-lg file:border-0 file:text-sm file:font-medium file:bg-slate-50 file:text-slate-700 hover:file:bg-slate-100 border border-gray-300 rounded-lg cursor-pointer bg-white focus:outline-none focus:ring-2 focus:ring-slate-500 focus:border-transparent transition-all">
-                    </div>
-
+ 
                     <div>
                         <label for="full_name" class="block text-sm font-medium text-gray-700 mb-2">Customer Name <span class="text-red-500">*</span></label>
                         <input type="text" name="full_name" id="full_name" 

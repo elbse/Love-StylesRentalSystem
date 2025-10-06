@@ -17,7 +17,7 @@
 
                             <div class="space-y-3">
                                 <div class="flex items-center space-x-3">
-                                    <img src="{{ asset('images/avatar.png') }}" alt="Customer" class="w-16 h-16 rounded-full border">
+                                    <img src="https://ui-avatars.com/api/?name={{ urlencode($customer->full_name ?? 'User') }}&background=random&color=fff&size=128" alt="Customer" class="w-16 h-16 rounded-full border">
                                     <div>
                                         <h4 class="text-xl font-bold text-gray-900">{{ $customer->full_name }}</h4>
                                         <p class="text-sm text-gray-600">Customer ID: {{ $customer->customer_id }}</p>
@@ -42,7 +42,8 @@
                                         @php
                                             $statusColors = [
                                                 'Active' => 'bg-green-600 text-white',
-                                                'Inactive' => 'bg-gray-500 text-white',
+                                            'Deactivated' => 'bg-gray-500 text-white',
+                                            'Inactive' => 'bg-gray-500 text-white',
                                                 'Pending' => 'bg-yellow-500 text-white',
                                                 'Cancelled' => 'bg-red-600 text-white',
                                             ];

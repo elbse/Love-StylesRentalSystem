@@ -176,24 +176,71 @@ class CustomerController extends Controller
 
     public function deactivate(Request $request)
     {
-            $request->validate([
-                'customer_id' => 'required|exists:customers,customer_id',
-                'password' => 'required',
-            ]);
+        $request->validate([
+            'customer_id' => 'required|exists:customers,customer_id',
+            'password' => 'required',
+        ]);
 
-            // Check if password is correct
-            if (!Hash::check($request->password, Auth::user()->password)) {
-                return back()->withErrors(['password' => 'Incorrect password.']);
-            }
-
-            // Soft delete customer
-            $customer = Customer::findOrFail($request->customer_id);
-            $customer->delete();
-
-            // return redirect()->route('customers.index')->with('success', 'Customer has been deactivated successfully.');
+        if (!Hash::check($request->password, Auth::user()->password)) {
+            return back()
+                ->withErrors(['password' => 'Incorrect password.'])
+                ->withInput([
+                    'customer_id' => $request->customer_id,
+                    'customer_name' => $request->customer_name,
+                ]);
         }
 
+        $customer = Customer::find($request->customer_id);
+        if ($customer) {
+            $customer->status_id = $this->getOrCreateStatusId('Deactivated');
+            $customer->save();
+            return redirect()->route('customers.index')->with('success', 'Customer deactivated.');
+        }
+        return redirect()->route('customers.index')->with('error', 'Customer not found.');
+    }
 
+    /**
+     * Reactivate (restore) the specified customer.
+     */
+    public function reactivate(Request $request)
+    {
+        $request->validate([
+            'customer_id' => 'required|exists:customers,customer_id',
+            'password' => 'required',
+        ]);
+
+        if (!Hash::check($request->password, Auth::user()->password)) {
+            return back()
+                ->withErrors(['password' => 'Incorrect password.'])
+                ->withInput([
+                    'customer_id' => $request->customer_id,
+                    'customer_name' => $request->customer_name,
+                ]);
+        }
+
+        $customer = Customer::find($request->customer_id);
+        if ($customer) {
+            $customer->status_id = $this->getOrCreateStatusId('Active');
+            $customer->save();
+            return redirect()->route('customers.index')->with('success', 'Customer reactivated.');
+        }
+        return redirect()->route('customers.index')->with('error', 'Customer not found.');
+    }
+
+    /**
+     * Ensure a CustomerStatus exists for the given name and return its id.
+     */
+    private function getOrCreateStatusId(string $statusName): int
+    {
+        $status = \App\Models\CustomerStatus::where('status_name', $statusName)->first();
+        if (!$status) {
+            $status = \App\Models\CustomerStatus::create([
+                'status_name' => $statusName,
+                'reason' => 'System generated',
+            ]);
+        }
+        return $status->status_id;
+    }
 
     
 }
