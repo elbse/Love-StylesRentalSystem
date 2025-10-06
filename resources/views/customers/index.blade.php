@@ -65,8 +65,205 @@
 
 
     @if (session('success'))
-    <div x-data="{ show: true }" x-show="show" x-init="setTimeout(() => show = false, 5000)" class="m-4 px-4 py-2 rounded bg-green-100 text-green-800 border border-green-300" role="status" aria-live="polite">
-        {{ session('success') }}
+    <div x-data="{ 
+        show: true, 
+        countdown: 5,
+        startCountdown() {
+            this.countdown = 5;
+            const timer = setInterval(() => {
+                this.countdown--;
+                if (this.countdown <= 0) {
+                    this.show = false;
+                    clearInterval(timer);
+                }
+            }, 1000);
+        }
+    }" 
+         x-init="startCountdown()"
+         x-show="show" 
+         x-transition:enter="transition ease-out duration-300"
+         x-transition:enter-start="opacity-0 transform scale-95"
+         x-transition:enter-end="opacity-100 transform scale-100"
+         x-transition:leave="transition ease-in duration-200"
+         x-transition:leave-start="opacity-100 transform scale-100"
+         x-transition:leave-end="opacity-0 transform scale-95"
+         class="mx-4 mb-6 p-5 rounded-xl bg-gradient-to-r from-green-50 to-emerald-50 border-l-4 border-green-500 shadow-lg" 
+         role="status" 
+         aria-live="polite">
+        <div class="flex items-center gap-4">
+            <div class="flex-shrink-0">
+                <div class="p-2 bg-green-100 rounded-full">
+                    <svg class="w-6 h-6 text-green-600" fill="currentColor" viewBox="0 0 20 20">
+                        <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/>
+                    </svg>
+                </div>
+            </div>
+            <div class="flex-1">
+                <div class="flex items-center justify-between mb-2">
+                    <h3 class="text-lg font-semibold text-green-800">Operation Successful!</h3>
+                    <div class="flex items-center gap-2">
+                        <span class="text-xs text-green-600 bg-green-100 px-2 py-1 rounded-full" x-text="`Auto-close in ${countdown}s`"></span>
+                        <button @click="show = false" class="text-green-600 hover:text-green-800 transition-colors duration-200 p-1 rounded-full hover:bg-green-100">
+                            <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
+                                <path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd"/>
+                            </svg>
+                        </button>
+                    </div>
+                </div>
+                <p class="text-sm text-green-700">{{ session('success') }}</p>
+            </div>
+        </div>
+    </div>
+    @endif
+
+    @if (session('error'))
+    <div x-data="{ 
+        show: true, 
+        countdown: 6,
+        startCountdown() {
+            this.countdown = 6;
+            const timer = setInterval(() => {
+                this.countdown--;
+                if (this.countdown <= 0) {
+                    this.show = false;
+                    clearInterval(timer);
+                }
+            }, 1000);
+        }
+    }" 
+         x-init="startCountdown()"
+         x-show="show" 
+         x-transition:enter="transition ease-out duration-300"
+         x-transition:enter-start="opacity-0 transform scale-95"
+         x-transition:enter-end="opacity-100 transform scale-100"
+         x-transition:leave="transition ease-in duration-200"
+         x-transition:leave-start="opacity-100 transform scale-100"
+         x-transition:leave-end="opacity-0 transform scale-95"
+         class="mx-4 mb-6 p-5 rounded-xl bg-gradient-to-r from-red-50 to-rose-50 border-l-4 border-red-500 shadow-lg" 
+         role="alert" 
+         aria-live="polite">
+        <div class="flex items-center gap-4">
+            <div class="flex-shrink-0">
+                <div class="p-2 bg-red-100 rounded-full">
+                    <svg class="w-6 h-6 text-red-600" fill="currentColor" viewBox="0 0 20 20">
+                        <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z" clip-rule="evenodd"/>
+                    </svg>
+                </div>
+            </div>
+            <div class="flex-1">
+                <div class="flex items-center justify-between mb-2">
+                    <h3 class="text-lg font-semibold text-red-800">Operation Failed!</h3>
+                    <div class="flex items-center gap-2">
+                        <span class="text-xs text-red-600 bg-red-100 px-2 py-1 rounded-full" x-text="`Auto-close in ${countdown}s`"></span>
+                        <button @click="show = false" class="text-red-600 hover:text-red-800 transition-colors duration-200 p-1 rounded-full hover:bg-red-100">
+                            <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
+                                <path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd"/>
+                            </svg>
+                        </button>
+                    </div>
+                </div>
+                <p class="text-sm text-red-700">{{ session('error') }}</p>
+            </div>
+        </div>
+    </div>
+    @endif
+
+    @if ($errors->any())
+    <div x-data="{ 
+        show: true, 
+        countdown: 8,
+        startCountdown() {
+            this.countdown = 8;
+            const timer = setInterval(() => {
+                this.countdown--;
+                if (this.countdown <= 0) {
+                    this.show = false;
+                    clearInterval(timer);
+                }
+            }, 1000);
+        }
+    }" 
+         x-init="startCountdown()"
+         x-show="show" 
+         x-transition:enter="transition ease-out duration-300"
+         x-transition:enter-start="opacity-0 transform scale-95"
+         x-transition:enter-end="opacity-100 transform scale-100"
+         x-transition:leave="transition ease-in duration-200"
+         x-transition:leave-start="opacity-100 transform scale-100"
+         x-transition:leave-end="opacity-0 transform scale-95"
+         class="mx-4 mb-6 p-5 rounded-xl bg-gradient-to-r from-red-50 to-rose-50 border-l-4 border-red-500 shadow-lg" 
+         role="alert" 
+         aria-live="polite">
+        <div class="flex items-start gap-4">
+            <div class="flex-shrink-0">
+                <div class="p-2 bg-red-100 rounded-full">
+                    <svg class="w-6 h-6 text-red-600" fill="currentColor" viewBox="0 0 20 20">
+                        <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z" clip-rule="evenodd"/>
+                    </svg>
+                </div>
+            </div>
+            <div class="flex-1">
+                <div class="flex items-center justify-between mb-2">
+                    <h3 class="text-lg font-semibold text-red-800">
+                        @if($errors->has('password'))
+                            Authentication Failed
+                        @else
+                            Validation Errors
+                        @endif
+                    </h3>
+                    <div class="flex items-center gap-2">
+                        <span class="text-xs text-red-600 bg-red-100 px-2 py-1 rounded-full" x-text="`Auto-close in ${countdown}s`"></span>
+                        <button @click="show = false" class="text-red-600 hover:text-red-800 transition-colors duration-200 p-1 rounded-full hover:bg-red-100">
+                            <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
+                                <path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd"/>
+                            </svg>
+                        </button>
+                    </div>
+                </div>
+                
+                @if($errors->has('password'))
+                    <div class="space-y-3">
+                        <p class="text-sm text-red-700">
+                            <strong>Password Verification Failed:</strong> The password you entered is incorrect.
+                        </p>
+                        <div class="bg-red-100 border border-red-200 rounded-lg p-3">
+                            <h4 class="text-sm font-medium text-red-800 mb-2">What to do next:</h4>
+                            <ul class="text-xs text-red-700 space-y-1">
+                                <li class="flex items-start gap-2">
+                                    <span class="text-red-500 mt-1">•</span>
+                                    <span>Double-check your password and try again</span>
+                                </li>
+                                <li class="flex items-start gap-2">
+                                    <span class="text-red-500 mt-1">•</span>
+                                    <span>Make sure Caps Lock is not enabled</span>
+                                </li>
+                                <li class="flex items-start gap-2">
+                                    <span class="text-red-500 mt-1">•</span>
+                                    <span>Contact your administrator if you've forgotten your password</span>
+                                </li>
+                            </ul>
+                        </div>
+                        <p class="text-xs text-red-600">
+                            <strong>Security Note:</strong> This action requires password verification to prevent unauthorized changes to customer accounts.
+                        </p>
+                    </div>
+                @else
+                    <div class="space-y-2">
+                        <p class="text-sm text-red-700 mb-3">
+                            <strong>Please correct the following issues:</strong>
+                        </p>
+                        <ul class="space-y-2">
+                            @foreach ($errors->all() as $error)
+                                <li class="text-sm text-red-700 flex items-start gap-2">
+                                    <span class="text-red-500 mt-1">•</span>
+                                    <span>{{ $error }}</span>
+                                </li>
+                            @endforeach
+                        </ul>
+                    </div>
+                @endif
+            </div>
+        </div>
     </div>
     @endif
 
@@ -104,27 +301,27 @@
             <div class="flex-1">
                 <label for="search" class="block text-sm font-medium text-gray-700 mb-2">Search Customers</label>
                 <div class="relative">
-                    <span class="absolute inset-y-0 left-0 pl-3 flex items-center text-gray-400">
-                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
-                            <path fill-rule="evenodd" d="M8 4a4 4 0 100 8 4 4 0 000-8zM2 8a6 6 0 1110.89 3.476l3.817 3.817a1 1 0 01-1.414 1.414l-3.817-3.817A6 6 0 012 8z" clip-rule="evenodd" />
-                        </svg>
-                    </span>
+            <span class="absolute inset-y-0 left-0 pl-3 flex items-center text-gray-400">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+                    <path fill-rule="evenodd" d="M8 4a4 4 0 100 8 4 4 0 000-8zM2 8a6 6 0 1110.89 3.476l3.817 3.817a1 1 0 01-1.414 1.414l-3.817-3.817A6 6 0 012 8z" clip-rule="evenodd" />
+                </svg>
+            </span>
                     <input type="text" 
                            id="search"
                            name="q" 
                            value="{{ request('q') }}" 
                            placeholder="Search by name, email, or contact" 
                            class="w-full border border-gray-300 rounded-lg pl-10 pr-10 py-2 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-purple-500" />
-                    @if(request('q'))
+            @if(request('q'))
                         <a href="{{ route('customers.index', array_filter(request()->except('page', 'q'))) }}" 
                            class="absolute inset-y-0 right-0 pr-3 flex items-center text-gray-400 hover:text-gray-600" 
                            title="Clear search">
-                            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
-                                <path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd" />
-                            </svg>
-                        </a>
-                    @endif
-                </div>
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+                        <path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd" />
+                    </svg>
+                </a>
+            @endif
+        </div>
             </div>
 
             <!-- Status Filter -->
@@ -156,7 +353,7 @@
                     Reset
                 </a>
             </div>
-        </form>
+    </form>
     </div>
 
     <div class="m-4 grid grid-cols-4 gap-8 -ml-1">
@@ -254,7 +451,7 @@
     <div class="bg-white rounded-lg shadow-md p-4 mt-6">
         <div class="flex flex-col lg:flex-row items-center justify-between gap-4">
             <!-- Results Info -->
-            <div class="text-sm text-gray-600">
+        <div class="text-sm text-gray-600">
                 <span class="font-medium text-gray-900">Showing</span>
                 <span class="font-semibold text-purple-600">{{ $customers->firstItem() ?? 0 }}</span>
                 <span class="font-medium text-gray-900">to</span>
@@ -262,12 +459,12 @@
                 <span class="font-medium text-gray-900">of</span>
                 <span class="font-semibold text-purple-600">{{ $customers->total() }}</span>
                 <span class="font-medium text-gray-900">customers</span>
-            </div>
+        </div>
 
             <!-- Pagination Controls -->
             <div class="flex flex-col sm:flex-row items-center gap-4">
                 <!-- Rows per page selector -->
-                <form method="GET" action="{{ route('customers.index') }}" class="flex items-center gap-2">
+            <form method="GET" action="{{ route('customers.index') }}" class="flex items-center gap-2">
                     <input type="hidden" name="q" value="{{ request('q') }}">
                     <input type="hidden" name="status" value="{{ request('status') }}">
                     <label for="per_page" class="text-sm font-medium text-gray-700">Rows per page:</label>
@@ -279,8 +476,8 @@
                         <option value="10" {{ ($perPage ?? 10) == 10 ? 'selected' : '' }}>10</option>
                         <option value="15" {{ ($perPage ?? 10) == 15 ? 'selected' : '' }}>15</option>
                         <option value="25" {{ ($perPage ?? 10) == 25 ? 'selected' : '' }}>25</option>
-                    </select>
-                </form>
+                </select>
+            </form>
 
                 <!-- Pagination Links -->
                 <div class="pagination-wrapper">
@@ -323,7 +520,7 @@ window.customerStatusMap = @json($customers->pluck('status.status_name','custome
             <span class="font-semibold" x-text="customerName"></span>?
         </p>
 
-        <form method="POST" x-bind:action="mode === 'reactivate' ? reactivateUrl : deactivateUrl">
+        <form method="POST" x-bind:action="mode === 'reactivate' ? reactivateUrl : deactivateUrl" @submit="open = false">
             @csrf
             <input type="hidden" name="customer_id" x-model="customerId">
             <input type="hidden" name="customer_name" x-model="customerName">
@@ -331,13 +528,10 @@ window.customerStatusMap = @json($customers->pluck('status.status_name','custome
             <input 
                 type="password" 
                 name="password" 
-                class="w-full border p-2 mb-3 rounded @error('password') border-red-500 @enderror" 
+                class="w-full border p-2 mb-3 rounded" 
                 placeholder="Enter your password" 
                 required
             >
-            @error('password')
-                <p class="text-red-600 text-sm mb-2">{{ $message }}</p>
-            @enderror
 
             <div class="flex justify-end space-x-2">
                 <button type="button" @click="open = false" class="px-3 py-1 bg-gray-300 rounded">
