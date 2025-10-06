@@ -36,6 +36,44 @@
         .rentals-dropdown-container {
             position: relative;
         }
+        
+        /* Ensure topbar and dropdown have proper z-index */
+        .topbar-container {
+            position: relative;
+            z-index: 1000;
+        }
+        
+        /* Ensure user dropdown appears above everything */
+        .user-dropdown {
+            z-index: 99999 !important;
+        }
+        
+        /* Force dropdown to be on top of everything */
+        .user-dropdown [x-show] {
+            z-index: 99999 !important;
+        }
+        
+        /* Additional z-index fixes for dropdown */
+        .user-dropdown > div {
+            z-index: 99999 !important;
+        }
+        
+        /* Ensure dropdown menu is always visible with fixed positioning */
+        .user-dropdown .fixed {
+            z-index: 999999 !important;
+            position: fixed !important;
+        }
+        
+        /* Override any conflicting z-index values */
+        .user-dropdown * {
+            z-index: 999999 !important;
+        }
+        
+        /* Ensure the dropdown appears above everything */
+        .user-dropdown [x-show] {
+            position: fixed !important;
+            z-index: 999999 !important;
+        }
     </style>
 </head>
 <body class="flex h-screen bg-gray-100">
@@ -46,7 +84,9 @@
      <!-- Main Content -->
     <div class="flex-1 flex flex-col min-h-0 ml-64 relative">
 
-        <x-topbar :title="$title ?? null" />
+        <div class="topbar-container">
+            <x-topbar :title="$title ?? null" />
+        </div>
 
 
  <!-- Page Content -->
