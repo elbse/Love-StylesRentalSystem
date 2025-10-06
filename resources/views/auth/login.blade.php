@@ -2,7 +2,7 @@
      <div class="bg-[#393939] relative rounded-2xl shadow-lg p-8 w-full max-w-md overflow-hidden">
 
 
-        <img src="/images/vector_one.png"
+        <img src="{{ asset('storage/images/vector_one.png') }}"
              alt="Decoration"
              class="absolute inset-0 w-full h-full object-cover -z-20 fill-white">
 

@@ -21,7 +21,7 @@
         <div class="flex flex-col space-y-2">
             <x-button class="bg-purple-600 text-black hover:bg-purple-800 hover:text-black">Item</x-button>
             <x-button :href="route('bookings.index')" class="bg-purple-600 text-black hover:bg-purple-800 hover:text-black">Book</x-button>
-            <x-button :href="route('billings.index')" class="bg-purple-600 text-black hover:bg-purple-800 hover:text-black">Pay</x-button>
+            <x-button :href="route('billing.index')" class="bg-purple-600 text-black hover:bg-purple-800 hover:text-black">Pay</x-button>
             <x-button class="bg-purple-600 text-black hover:bg-purple-800 hover:text-black">Return</x-button>
         </div>
     </div>
