@@ -77,6 +77,14 @@
                 <span>Bookings</span>
             </a>
         </nav>
+
+        <form method="POST" action="{{ route('logout') }}" class="p-4 border-t border-gray-700 bg-gray-900">
+            @csrf
+            <button type="submit" class="w-full flex items-center justify-center p-2 rounded bg-purple-600 hover:bg-purple-700 text-white">
+                <i class="fas fa-sign-out-alt mr-3"></i>
+                <span>Log out</span>
+            </button>
+        </form>
     </aside>
 
 
