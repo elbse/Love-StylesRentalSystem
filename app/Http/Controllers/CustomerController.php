@@ -6,6 +6,7 @@ use App\Models\Customer;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Log;
 
 class CustomerController extends Controller
 {
@@ -14,6 +15,7 @@ class CustomerController extends Controller
      */
     public function index()
     {
+        
         $requestedPerPage = (int) request('per_page');
         $perPage = in_array($requestedPerPage, [5, 10, 15], true) ? $requestedPerPage : 5;
 
@@ -93,7 +95,7 @@ class CustomerController extends Controller
         }
         
         // Debug: Check what customer_id value is
-        \Log::info('Customer ID: ' . $customer->customer_id);
+        Log::info('Customer ID: ' . $customer->customer_id);
         
         return view('customers.show', compact('customer'));
     }
@@ -101,17 +103,47 @@ class CustomerController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Customer $customer)
+    public function edit($customer_id)
     {
+        $customer = Customer::where('customer_id', $customer_id)->firstOrFail();
         return view('customers.edit', compact('customer'));
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Customer $customer)
+    public function update(Request $request, $customer_id)
     {
-        //
+        $customer = Customer::where('customer_id', $customer_id)->firstOrFail();
+
+        $validated = $request->validate([
+            'full_name' => 'required|string|max:255',
+            'email' => 'required|email|unique:customers,email,' . $customer->customer_id . ',customer_id',
+            'address' => 'required|string|max:500',
+            'contact_number' => 'required|string|max:20',
+            // optional measurement fields
+            'size' => 'nullable|string|max:10',
+            'height' => 'nullable|string|max:50',
+            'bust' => 'nullable|string|max:50',
+            'waist' => 'nullable|string|max:50',
+            'hips' => 'nullable|string|max:50',
+        ]);
+
+        $measurement = [
+            'size' => $validated['size'] ?? ($customer->measurement['size'] ?? null),
+            'height' => $validated['height'] ?? ($customer->measurement['height'] ?? null),
+            'chest' => $validated['bust'] ?? ($customer->measurement['chest'] ?? null),
+            'waist' => $validated['waist'] ?? ($customer->measurement['waist'] ?? null),
+            'hips' => $validated['hips'] ?? ($customer->measurement['hips'] ?? null),
+        ];
+
+        unset($validated['size'], $validated['height'], $validated['bust'], $validated['waist'], $validated['hips']);
+
+        $customer->update(array_merge($validated, [
+            'measurement' => $measurement,
+        ]));
+
+        return redirect()->route('customers.index')->with('success', 'Customer updated successfully.');
     }
 
     /**
@@ -158,7 +190,7 @@ class CustomerController extends Controller
             $customer = Customer::findOrFail($request->customer_id);
             $customer->delete();
 
-            return back()->with('success', 'Customer has been deactivated successfully.');
+            // return redirect()->route('customers.index')->with('success', 'Customer has been deactivated successfully.');
         }
 
 

@@ -21,7 +21,7 @@ class CustomerSeeder extends Seeder
                 'reason' => 'Default',
             ]);
             CustomerStatus::factory()->create([
-                'status_name' => 'Inactive',
+                'status_name' => 'Deactivated',
                 'reason' => 'Created by seeder',
             ]);
         }

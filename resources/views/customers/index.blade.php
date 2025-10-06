@@ -1,5 +1,6 @@
 <x-layout :title="$title">
 <script src="//unpkg.com/alpinejs" defer></script>
+<style>[x-cloak]{ display: none !important; }</style>
 
 
     @if (session('success'))
@@ -71,7 +72,7 @@
                         @php
                             $statusColors = [
                                 'Active' => 'bg-green-600 text-white',
-                                'Inactive' => 'bg-gray-500 text-white',
+                                'Deativate' => 'bg-gray-500 text-white',
                                 'Pending' => 'bg-yellow-500 text-white',
                                 'Cancelled' => 'bg-red-600 text-white',
                             ];
@@ -147,56 +148,62 @@
     </div>
     
 
-            <div 
+<div 
     x-data="{ 
-        open: @json($errors->has('password')), 
-        customerId: '{{ old('customer_id') }}', 
-        customerName: '{{ old('customer_name') }}' 
-    }"
-    x-on:open-deactivate-modal.window="
+        open: false, 
+        customerId: '', 
+        customerName: '' 
+    }" 
+    x-init="
+        @if($errors->has('password') && old('customer_id'))
+            open = true;
+            customerId = '{{ old('customer_id', '') }}';
+            customerName = '{{ old('customer_name', '') }}';
+        @endif
+    "
+    x-on:open-deactivate-modal.window=" 
         open = true; 
         customerId = $event.detail.id; 
-        customerName = $event.detail.name;
-    "
-    x-cloak
-    class="fixed inset-0 z-50 flex items-center justify-center bg-black/50"
+        customerName = $event.detail.name; 
+    " 
+    x-cloak 
+    class="fixed inset-0 z-50 flex items-center justify-center bg-black/50" 
     x-show="open"
 >
     <div class="bg-white p-6 rounded-xl shadow-md w-96">
         <h2 class="text-lg font-bold mb-3">Deactivate Customer</h2>
         <p class="text-sm mb-4">
-            Enter your password to deactivate 
-            <span class="font-semibold" x-text="customerName"></span>.
+            Enter your password to deactivate <span class="font-semibold" x-text="customerName"></span>.
         </p>
 
         <form method="POST" action="{{ route('customers.deactivate') }}">
-        @csrf
-            <input type="hidden" name="customer_id" 
-                x-model="customerId"
-                value="{{ old('customer_id') }}">
-            <input type="hidden" name="customer_name" 
-                x-model="customerName"
-                value="{{ old('customer_name') }}">
+            @csrf
+            <input type="hidden" name="customer_id" x-model="customerId">
+            <input type="hidden" name="customer_name" x-model="customerName">
 
-
-            <input type="password" 
-                   name="password" 
-                   class="w-full border p-2 mb-3 rounded @error('password') border-red-500 @enderror" 
-                   placeholder="Enter your password" required>
+            <input 
+                type="password" 
+                name="password" 
+                class="w-full border p-2 mb-3 rounded @error('password') border-red-500 @enderror" 
+                placeholder="Enter your password" 
+                required
+            >
 
             @error('password')
                 <p class="text-red-600 text-sm mb-2">{{ $message }}</p>
             @enderror
 
             <div class="flex justify-end space-x-2">
-                <button type="button" @click="open = false" class="px-3 py-1 bg-gray-300 rounded">Cancel</button>
-                <button type="submit" class="px-3 py-1 bg-yellow-500 text-white rounded">Confirm</button>
+                <button type="button" @click="open = false" class="px-3 py-1 bg-gray-300 rounded">
+                    Cancel
+                </button>
+                <button type="submit" class="px-3 py-1 bg-yellow-500 text-white rounded">
+                    Confirm
+                </button>
             </div>
         </form>
     </div>
 </div>
-
-
 
 
 </x-layout>
