@@ -13,13 +13,13 @@
 <div x-data="{ open: false }" class="inline">
     <button 
         type="button"
-        class="{{ $triggerClass }}"
+        class="{{ $triggerClass }} flex items-center justify-center w-8 h-8 rounded-full hover:bg-gray-100 transition-colors duration-200"
         @click="open = true"
         aria-haspopup="dialog"
         :aria-expanded="open.toString()"
         aria-controls="action-modal-{{ $entityId }}"
     >
-        ⋮
+        <span class="text-lg font-bold">⋮</span>
     </button>
 
     <div 
@@ -34,9 +34,8 @@
         id="action-modal-{{ $entityId }}"
     >
         <div class="bg-white rounded-xl shadow-xl w-full max-w-md mx-4">
-            <div class="px-5 py-4 border-b flex items-center justify-between">
+            <div class="px-5 py-4 border-b">
                 <h2 class="text-lg font-semibold">{{ $title }}</h2>
-                <button type="button" class="text-gray-500 hover:text-gray-700" @click="open = false">✕</button>
             </div>
             <div class="px-5 py-4">
                 @if($entityName)
@@ -49,8 +48,22 @@
                             $url = $action['url'] ?? null;
                             $method = strtoupper($action['method'] ?? 'GET');
                             $span = ($action['full'] ?? false) ? 'col-span-2' : '';
-                            $customClass = trim($action['class'] ?? 'bg-gray-600 text-white hover:bg-gray-700');
-                            $baseBtn = 'px-4 py-2 rounded text-center';
+                            
+                            // Color psychology-based button colors
+                            $defaultColors = 'bg-gray-600 text-white hover:bg-gray-700';
+                            if (strtolower($label) === 'view') {
+                                $customClass = 'bg-blue-600 text-white hover:bg-blue-700';
+                            } elseif (strtolower($label) === 'edit') {
+                                $customClass = 'bg-purple-600 text-white hover:bg-purple-700';
+                            } elseif (in_array(strtolower($label), ['reactivate', 'reactivation'])) {
+                                $customClass = 'bg-green-600 text-white hover:bg-green-700';
+                            } elseif (strtolower($label) === 'deactivate') {
+                                $customClass = 'bg-red-600 text-white hover:bg-red-700';
+                            } else {
+                                $customClass = $defaultColors;
+                            }
+                            
+                            $baseBtn = 'px-4 py-2 rounded text-center transition-colors duration-200';
                             $classes = trim($customClass . ' ' . $baseBtn);
                         @endphp
 
@@ -77,12 +90,12 @@
 
 
                     @empty
-                        <button type="button" class="col-span-2 px-4 py-2 rounded bg-gray-600 text-white hover:bg-gray-700" @click="open = false">Close</button>
+                        <button type="button" class="col-span-2 px-4 py-2 rounded bg-gray-500 text-white hover:bg-gray-600 transition-colors duration-200" @click="open = false">Close</button>
                     @endforelse
                 </div>
             </div>
             <div class="px-5 py-3 border-t flex justify-end">
-                <button type="button" class="px-4 py-2 rounded bg-gray-600 text-white hover:bg-gray-700" @click="open = false">Close</button>
+                <button type="button" class="px-4 py-2 rounded bg-gray-500 text-white hover:bg-gray-600 transition-colors duration-200" @click="open = false">Close</button>
             </div>
         </div>
     </div>

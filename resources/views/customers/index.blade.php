@@ -1,6 +1,67 @@
 <x-layout :title="$title">
 <script src="//unpkg.com/alpinejs" defer></script>
-<style>[x-cloak]{ display: none !important; }</style>
+<style>
+[x-cloak]{ display: none !important; }
+
+/* Custom Pagination Styling */
+.pagination-wrapper .pagination {
+    display: flex;
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    gap: 4px;
+}
+
+.pagination-wrapper .pagination li {
+    display: inline-block;
+}
+
+.pagination-wrapper .pagination a,
+.pagination-wrapper .pagination span {
+    display: inline-block;
+    padding: 8px 12px;
+    text-decoration: none;
+    border: 1px solid #d1d5db;
+    border-radius: 6px;
+    color: #374151;
+    font-size: 14px;
+    font-weight: 500;
+    transition: all 0.2s ease-in-out;
+}
+
+.pagination-wrapper .pagination a:hover {
+    background-color: #ecfdf5;
+    border-color: #059669;
+    color: #059669;
+}
+
+.pagination-wrapper .pagination .active span {
+    background-color: #059669;
+    border-color: #059669;
+    color: white;
+    font-weight: 600;
+}
+
+.pagination-wrapper .pagination .disabled span {
+    background-color: #f9fafb;
+    border-color: #e5e7eb;
+    color: #9ca3af;
+    cursor: not-allowed;
+}
+
+.pagination-wrapper .pagination .disabled a {
+    background-color: #f9fafb;
+    border-color: #e5e7eb;
+    color: #9ca3af;
+    cursor: not-allowed;
+}
+
+.pagination-wrapper .pagination .disabled a:hover {
+    background-color: #f9fafb;
+    border-color: #e5e7eb;
+    color: #9ca3af;
+}
+</style>
 
 
     @if (session('success'))
@@ -9,7 +70,7 @@
     </div>
     @endif
 
-    <div class="flex gap-6 ">
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-2 mb-6">
         <x-kpi-card icon="fas fa-calendar-check" color="bg-[#C16BFF]" symbol="{{ asset('storage/images/vector_peso.png') }}"  background="bg-gradient-to-r from-[#C16BFF] to-[#6A0DAD]">
             <h3 class="text-sm text-gray-200">Reservations</h3>
             <p class="text-3xl font-bold">120</p>
@@ -36,24 +97,67 @@
 
     </div>
 
-    <form method="GET" action="{{ route('customers.index') }}" class="m-4 mr-4 ml-auto mb-2 flex items-center gap-3">
-        <div class="relative w-full md:w-96">
-            <span class="absolute inset-y-0 left-0 pl-3 flex items-center text-gray-400">
-                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
-                    <path fill-rule="evenodd" d="M8 4a4 4 0 100 8 4 4 0 000-8zM2 8a6 6 0 1110.89 3.476l3.817 3.817a1 1 0 01-1.414 1.414l-3.817-3.817A6 6 0 012 8z" clip-rule="evenodd" />
-                </svg>
-            </span>
-            <input type="text" name="q" value="{{ request('q') }}" placeholder="Search by name, email, or contact" class="w-full border rounded-lg pl-10 pr-10 py-2 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-purple-500" />
-            @if(request('q'))
-                <a href="{{ route('customers.index', array_filter(request()->except('page', 'q'))) }}" class="absolute inset-y-0 right-0 pr-3 flex items-center text-gray-400 hover:text-gray-600" title="Clear search">
-                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
-                        <path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd" />
+    <!-- Search and Filter Bar -->
+    <div class="bg-white rounded-lg shadow-md p-4 mb-6">
+        <form method="GET" action="{{ route('customers.index') }}" class="flex flex-col md:flex-row gap-4 items-end">
+            <!-- Search Input -->
+            <div class="flex-1">
+                <label for="search" class="block text-sm font-medium text-gray-700 mb-2">Search Customers</label>
+                <div class="relative">
+                    <span class="absolute inset-y-0 left-0 pl-3 flex items-center text-gray-400">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+                            <path fill-rule="evenodd" d="M8 4a4 4 0 100 8 4 4 0 000-8zM2 8a6 6 0 1110.89 3.476l3.817 3.817a1 1 0 01-1.414 1.414l-3.817-3.817A6 6 0 012 8z" clip-rule="evenodd" />
+                        </svg>
+                    </span>
+                    <input type="text" 
+                           id="search"
+                           name="q" 
+                           value="{{ request('q') }}" 
+                           placeholder="Search by name, email, or contact" 
+                           class="w-full border border-gray-300 rounded-lg pl-10 pr-10 py-2 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-purple-500" />
+                    @if(request('q'))
+                        <a href="{{ route('customers.index', array_filter(request()->except('page', 'q'))) }}" 
+                           class="absolute inset-y-0 right-0 pr-3 flex items-center text-gray-400 hover:text-gray-600" 
+                           title="Clear search">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+                                <path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd" />
+                            </svg>
+                        </a>
+                    @endif
+                </div>
+            </div>
+
+            <!-- Status Filter -->
+            <div class="w-full md:w-48">
+                <label for="status" class="block text-sm font-medium text-gray-700 mb-2">Filter by Status</label>
+                <select name="status" 
+                        id="status"
+                        class="w-full border border-gray-300 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-purple-500">
+                    <option value="">All Statuses</option>
+                    <option value="Active" {{ request('status') == 'Active' ? 'selected' : '' }}>Active</option>
+                    <option value="Deactivated" {{ request('status') == 'Deactivated' ? 'selected' : '' }}>Deactivated</option>
+                </select>
+            </div>
+
+            <!-- Action Buttons -->
+            <div class="flex gap-2">
+                <button type="submit" 
+                        class="px-6 py-2 bg-purple-600 hover:bg-purple-700 text-white rounded-lg transition-colors duration-200 flex items-center gap-2">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" viewBox="0 0 20 20" fill="currentColor">
+                        <path fill-rule="evenodd" d="M8 4a4 4 0 100 8 4 4 0 000-8zM2 8a6 6 0 1110.89 3.476l3.817 3.817a1 1 0 01-1.414 1.414l-3.817-3.817A6 6 0 012 8z" clip-rule="evenodd" />
                     </svg>
+                    Search
+                </button>
+                <a href="{{ route('customers.index') }}" 
+                   class="px-6 py-2 bg-gray-500 hover:bg-gray-600 text-white rounded-lg transition-colors duration-200 flex items-center gap-2">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" viewBox="0 0 20 20" fill="currentColor">
+                        <path fill-rule="evenodd" d="M4 2a1 1 0 011 1v2.101a7.002 7.002 0 0111.601 2.566 1 1 0 11-1.885.666A5.002 5.002 0 005.999 7H9a1 1 0 010 2H4a1 1 0 01-1-1V3a1 1 0 011-1zm.008 9.057a1 1 0 011.276.61A5.002 5.002 0 0014.001 13H11a1 1 0 110-2h5a1 1 0 011 1v5a1 1 0 11-2 0v-2.101a7.002 7.002 0 01-11.601-2.566 1 1 0 01.61-1.276z" clip-rule="evenodd" />
+                    </svg>
+                    Reset
                 </a>
-            @endif
-        </div>
-        <button type="submit" class="px-4 py-2 bg-purple-600 hover:bg-purple-700 text-white rounded-lg">Search</button>
-    </form>
+            </div>
+        </form>
+    </div>
 
     <div class="m-4 grid grid-cols-4 gap-8 -ml-1">
 
@@ -113,9 +217,9 @@
                         @php($m = $customer->measurement)
                         {{ is_array($m) ? ($m['chest'] ?? ($m['size'] ?? '—')) : '—' }}
                     </td>
-                   <td class="px-4 py-3">
+                   <td class="px-4 py-3 text-center">
 
-                <div x-data="{ open: false }">
+                <div x-data="{ open: false }" class="flex justify-center">
                     <x-action-button 
                         :entity-id="$customer->customer_id"
                         :entity-name="$customer->full_name"
@@ -146,28 +250,43 @@
 
     </div>
 
-    <div class="mt-6 flex items-center justify-between">
-        <div class="text-sm text-gray-600">
-            Showing
-            <span class="font-semibold">{{ $customers->firstItem() ?? 0 }}</span>
-            to
-            <span class="font-semibold">{{ $customers->lastItem() ?? 0 }}</span>
-            of
-            <span class="font-semibold">{{ $customers->total() }}</span>
-            customers
-        </div>
+    <!-- Pagination and Results Info -->
+    <div class="bg-white rounded-lg shadow-md p-4 mt-6">
+        <div class="flex flex-col lg:flex-row items-center justify-between gap-4">
+            <!-- Results Info -->
+            <div class="text-sm text-gray-600">
+                <span class="font-medium text-gray-900">Showing</span>
+                <span class="font-semibold text-purple-600">{{ $customers->firstItem() ?? 0 }}</span>
+                <span class="font-medium text-gray-900">to</span>
+                <span class="font-semibold text-purple-600">{{ $customers->lastItem() ?? 0 }}</span>
+                <span class="font-medium text-gray-900">of</span>
+                <span class="font-semibold text-purple-600">{{ $customers->total() }}</span>
+                <span class="font-medium text-gray-900">customers</span>
+            </div>
 
-        <div class="flex items-center gap-2">
-            <form method="GET" action="{{ route('customers.index') }}" class="flex items-center gap-2">
-                <label for="per_page" class="text-sm text-gray-600">Rows per page</label>
-                <select id="per_page" name="per_page" class="border rounded-md px-2 py-1 text-sm" onchange="this.form.submit()">
-                    <option value="5" {{ ($perPage ?? 5) == 5 ? 'selected' : '' }}>5</option>
-                    <option value="10" {{ ($perPage ?? 5) == 10 ? 'selected' : '' }}>10</option>
-                    <option value="15" {{ ($perPage ?? 5) == 15 ? 'selected' : '' }}>15</option>
-                </select>
-            </form>
+            <!-- Pagination Controls -->
+            <div class="flex flex-col sm:flex-row items-center gap-4">
+                <!-- Rows per page selector -->
+                <form method="GET" action="{{ route('customers.index') }}" class="flex items-center gap-2">
+                    <input type="hidden" name="q" value="{{ request('q') }}">
+                    <input type="hidden" name="status" value="{{ request('status') }}">
+                    <label for="per_page" class="text-sm font-medium text-gray-700">Rows per page:</label>
+                    <select id="per_page" 
+                            name="per_page" 
+                            class="border border-gray-300 rounded-md px-3 py-1 text-sm focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-purple-500" 
+                            onchange="this.form.submit()">
+                        <option value="5" {{ ($perPage ?? 10) == 5 ? 'selected' : '' }}>5</option>
+                        <option value="10" {{ ($perPage ?? 10) == 10 ? 'selected' : '' }}>10</option>
+                        <option value="15" {{ ($perPage ?? 10) == 15 ? 'selected' : '' }}>15</option>
+                        <option value="25" {{ ($perPage ?? 10) == 25 ? 'selected' : '' }}>25</option>
+                    </select>
+                </form>
 
-            {{ $customers->links() }}
+                <!-- Pagination Links -->
+                <div class="pagination-wrapper">
+                    {{ $customers->appends(request()->query())->links() }}
+                </div>
+            </div>
         </div>
     </div>
     
@@ -224,7 +343,7 @@ window.customerStatusMap = @json($customers->pluck('status.status_name','custome
                 <button type="button" @click="open = false" class="px-3 py-1 bg-gray-300 rounded">
                     Cancel
                 </button>
-                <button type="submit" class="px-3 py-1 bg-yellow-500 text-white rounded" x-text="mode === 'reactivate' ? 'Confirm Reactivate' : 'Confirm Deactivate'"></button>
+                <button type="submit" class="px-3 py-1 bg-yellow-500 text-white rounded" x-text="mode === 'reactivate' ? 'Confirm Reactivation' : 'Confirm Deactivation'"></button>
             </div>
         </form>
     </div>

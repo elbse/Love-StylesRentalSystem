@@ -17,7 +17,7 @@ class CustomerController extends Controller
     {
         
         $requestedPerPage = (int) request('per_page');
-        $perPage = in_array($requestedPerPage, [5, 10, 15], true) ? $requestedPerPage : 5;
+        $perPage = in_array($requestedPerPage, [5, 10, 15, 25], true) ? $requestedPerPage : 10;
 
         $filters = [
             'q' => request('q'),

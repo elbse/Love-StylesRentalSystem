@@ -74,9 +74,24 @@
             position: fixed !important;
             z-index: 999999 !important;
         }
+        
+        /* Hide scrollbars */
+        ::-webkit-scrollbar {
+            display: none;
+        }
+        
+        /* For Firefox */
+        html {
+            scrollbar-width: none;
+        }
+        
+        /* Ensure scrolling still works */
+        body {
+            -ms-overflow-style: none;
+        }
     </style>
 </head>
-<body class="flex h-screen bg-gray-100">
+<body class="flex h-screen" style="background-color: #D7C4E4;">
 
     <x-sidebar />
 
@@ -90,7 +105,7 @@
 
 
  <!-- Page Content -->
-        <main class="flex-1 min-h-0 p-6 bg-gray-100 overflow-y-auto">
+        <main class="flex-1 min-h-0 p-6 overflow-y-auto" style="background-color: #D7C4E4;">
             {{ $slot }}
         </main>
     </div>
