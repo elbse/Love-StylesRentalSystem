@@ -10,7 +10,7 @@
          x-transition:leave="transition ease-in duration-200"
          x-transition:leave-start="opacity-100 transform scale-100"
          x-transition:leave-end="opacity-0 transform scale-95"
-         class="mx-4 mb-6 p-4 rounded-xl bg-gradient-to-r from-green-50 to-emerald-50 border-l-4 border-green-500 shadow-lg" 
+         class="mb-6 p-4 rounded-xl bg-gradient-to-r from-green-50 to-emerald-50 border-l-4 border-green-500 shadow-lg" 
          role="status" 
          aria-live="polite">
         <div class="flex items-center gap-3">
@@ -35,13 +35,14 @@
     @if ($errors->any())
     <div x-data="{ show: true }" 
          x-show="show" 
+         x-init="setTimeout(() => show = false, 8000)" 
          x-transition:enter="transition ease-out duration-300"
          x-transition:enter-start="opacity-0 transform scale-95"
          x-transition:enter-end="opacity-100 transform scale-100"
          x-transition:leave="transition ease-in duration-200"
          x-transition:leave-start="opacity-100 transform scale-100"
          x-transition:leave-end="opacity-0 transform scale-95"
-         class="mx-4 mb-6 p-4 rounded-xl bg-gradient-to-r from-red-50 to-rose-50 border-l-4 border-red-500 shadow-lg" 
+         class="mb-6 p-4 rounded-xl bg-gradient-to-r from-red-50 to-rose-50 border-l-4 border-red-500 shadow-lg" 
          role="alert" 
          aria-live="polite">
         <div class="flex items-start gap-3">
@@ -70,14 +71,14 @@
     </div>
     @endif
 
-    <div class="max-w-6xl mx-auto p-4 md:p-5">
+    <div class="w-full p-4 md:p-5">
         <form action="{{ route('customers.store') }}" enctype="multipart/form-data" method="POST"
           class="bg-white rounded-2xl shadow-xl border border-gray-100 overflow-hidden relative">
           
         @csrf
         
         <!-- Background Pattern -->
-        <div class="absolute inset-0 opacity-5">
+        <div class="absolute inset-0 opacity-5 pointer-events-none" style="z-index: 1;">
             <div class="absolute inset-0" style="background-image: radial-gradient(circle at 25% 25%, #6366f1 2px, transparent 2px), radial-gradient(circle at 75% 75%, #8b5cf6 2px, transparent 2px); background-size: 40px 40px;"></div>
         </div>
         
@@ -95,7 +96,7 @@
             </div>
         </div>
 
-        <div class="p-6 md:p-8 relative z-10" style="background-image: url('{{ asset('storage/images/Vector_34.png') }}'); background-size: 920px 620px; background-repeat: no-repeat;">
+<div class="p-6 md:p-8 relative" style="background: linear-gradient(rgba(255,255,255,0.6), rgba(255,255,255,0.6)), url('{{ asset('storage/images/Vector_34.png') }}') no-repeat; background-size: 920px 620px; z-index: 2;">
             <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-10">
                 <div class="space-y-6">
                     <div class="bg-gradient-to-r from-purple-50 to-indigo-50 p-4 rounded-xl border border-purple-100">
@@ -121,9 +122,17 @@
                         <div>
                             <label for="email" class="block text-sm font-semibold text-gray-800 mb-3">Email Address <span class="text-red-500">*</span></label>
                             <input type="email" name="email" id="email" 
-                            class="border-2 border-gray-200 rounded-xl w-full px-4 py-3 focus:ring-4 focus:ring-purple-500/20 focus:border-purple-500 transition-all duration-200 text-gray-700 placeholder-gray-400" 
+                            class="border-2 {{ $errors->has('email') ? 'border-red-500 bg-red-50' : 'border-gray-200' }} rounded-xl w-full px-4 py-3 focus:ring-4 {{ $errors->has('email') ? 'focus:ring-red-500/20 focus:border-red-500' : 'focus:ring-purple-500/20 focus:border-purple-500' }} transition-all duration-200 text-gray-700 placeholder-gray-400" 
                             placeholder="customer@example.com"
                             value="{{ old('email') }}" required>
+                            @if($errors->has('email'))
+                                <p class="text-xs text-red-600 mt-2 flex items-center gap-1">
+                                    <svg class="w-3 h-3" fill="currentColor" viewBox="0 0 20 20">
+                                        <path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z" clip-rule="evenodd"/>
+                                    </svg>
+                                    {{ $errors->first('email') }}
+                                </p>
+                            @endif
                         </div>
 
                         <div>
@@ -137,20 +146,29 @@
                         <div>
                             <label for="contact_number" class="block text-sm font-semibold text-gray-800 mb-3">Contact Number <span class="text-red-500">*</span></label>
                             <input type="tel" name="contact_number" id="contact_number" 
-                            class="border-2 border-gray-200 rounded-xl w-full px-4 py-3 focus:ring-4 focus:ring-purple-500/20 focus:border-purple-500 transition-all duration-200 text-gray-700 placeholder-gray-400" 
+                            class="border-2 {{ $errors->has('contact_number') ? 'border-red-500 bg-red-50' : 'border-gray-200' }} rounded-xl w-full px-4 py-3 focus:ring-4 {{ $errors->has('contact_number') ? 'focus:ring-red-500/20 focus:border-red-500' : 'focus:ring-purple-500/20 focus:border-purple-500' }} transition-all duration-200 text-gray-700 placeholder-gray-400" 
                             placeholder="09234923 or +639234923"
                             value="{{ old('contact_number') }}" 
-                            pattern="^[+]?[0-9\s\(\)\-]*[0-9][0-9\s\(\)\-]*$" 
-                            title="Please enter a valid phone number (no negative numbers allowed)"
+                            pattern="^[+]?[0-9\s\(\)]*[0-9][0-9\s\(\)]*$" 
+                            title="Please enter a valid phone number (only positive numbers allowed)"
                             minlength="7"
                             maxlength="20"
+                            oninput="this.value = this.value.replace(/[^+0-9\s\(\)]/g, '')"
                             required>
                             <p class="text-xs text-gray-500 mt-2 flex items-center gap-1">
                                 <svg class="w-3 h-3" fill="currentColor" viewBox="0 0 20 20">
                                     <path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z" clip-rule="evenodd"/>
                                 </svg>
-                                Enter phone number without negative signs
+                                Enter phone number with only positive numbers (no negative signs)
                             </p>
+                            @if($errors->has('contact_number'))
+                                <p class="text-xs text-red-600 mt-2 flex items-center gap-1">
+                                    <svg class="w-3 h-3" fill="currentColor" viewBox="0 0 20 20">
+                                        <path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z" clip-rule="evenodd"/>
+                                    </svg>
+                                    {{ $errors->first('contact_number') }}
+                                </p>
+                            @endif
                         </div>
 
                     </div>

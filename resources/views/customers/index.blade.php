@@ -277,7 +277,7 @@
     </div>
     @endif
 
-    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mb-6">
+    <div class="px-4 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mb-6">
         <!-- Total Customers -->
         <div class="relative w-full h-36 rounded-2xl shadow-xl p-6 overflow-hidden bg-gradient-to-br from-purple-600 via-purple-700 to-indigo-800">
             <!-- Enhanced Background Pattern -->
@@ -370,7 +370,7 @@
     </div>
 
     <!-- Search and Filter Bar -->
-    <div class="bg-white rounded-lg shadow-md p-4 mb-6">
+    <div class="mx-4 bg-white rounded-lg shadow-md p-4 mb-6">
         <form method="GET" action="{{ route('customers.index') }}" class="flex flex-col md:flex-row gap-4 items-end">
             <!-- Search Input -->
             <div class="flex-1">
@@ -431,9 +431,9 @@
     </form>
     </div>
 
-    <div class="m-4 grid grid-cols-4 gap-8 -ml-1">
+    <div class="px-4 grid grid-cols-1 lg:grid-cols-4 gap-6">
 
-        <div class="bg-white rounded-xl shadow-md overflow-hidden col-span-3">
+        <div class="bg-white rounded-xl shadow-md overflow-hidden lg:col-span-3">
     <!-- Header -->
     <div class="bg-gradient-to-r from-purple-600 to-purple-800 text-white p-4">
         <h2 class="text-xl font-semibold">Customers</h2>
@@ -442,7 +442,7 @@
     
 
     <!-- Table -->
-    <div class="overflow-x-auto" style="background-image: url('{{ asset('storage/images/Vector_34.png') }}'); background-size: 920px 620px; background-repeat: no-repeat; background-position: center;">
+    <div class="overflow-x-auto" style="background: url('{{ asset('storage/images/Vector_34.png') }}'); background-size: 920px 620px; background-repeat: no-repeat; background-position: center;">
         <table class="min-w-full border-collapse">
             <thead>
                 <tr class="bg-purple-100 text-gray-700">
@@ -519,12 +519,14 @@
             </div>
         </div>
 
-        <x-action-panel class="col-start-1" />
+        <div class="lg:col-span-1">
+            <x-action-panel />
+        </div>
 
     </div>
 
     <!-- Pagination and Results Info -->
-    <div class="bg-white rounded-lg shadow-md p-4 mt-6">
+    <div class="mx-4 bg-white rounded-lg shadow-md p-4 mt-6">
         <div class="flex flex-col lg:flex-row items-center justify-between gap-4">
             <!-- Results Info -->
         <div class="text-sm text-gray-600">
