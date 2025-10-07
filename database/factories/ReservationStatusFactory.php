@@ -2,6 +2,7 @@
 
 namespace Database\Factories;
 
+use App\Models\ReservationStatus;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
@@ -9,6 +10,8 @@ use Illuminate\Database\Eloquent\Factories\Factory;
  */
 class ReservationStatusFactory extends Factory
 {
+    protected $model = ReservationStatus::class;
+
     /**
      * Define the model's default state.
      *
@@ -17,7 +20,13 @@ class ReservationStatusFactory extends Factory
     public function definition(): array
     {
         return [
-            //
+            'status_name' => $this->faker->randomElement([
+                'Pending',
+                'Confirmed',
+                'Cancelled',
+                'Completed',
+                'Expired'
+            ])
         ];
     }
 }

@@ -32,6 +32,40 @@ class Customer extends Model
         return $this->belongsTo(CustomerStatus::class, 'status_id');
     }
 
+    public function reservations()
+    {
+        return $this->hasMany(Reservation::class, 'customer_id');
+    }
+
+    /**
+     * Check if customer has any overdue rentals
+     */
+    public function hasOverdueRentals()
+    {
+        return $this->reservations()
+            ->whereHas('rental', function($query) {
+                $query->whereHas('status', function($statusQuery) {
+                    $statusQuery->where('status_name', 'Overdue');
+                });
+            })
+            ->exists();
+    }
+
+    /**
+     * Get all overdue rentals for this customer
+     */
+    public function getOverdueRentals()
+    {
+        return $this->reservations()
+            ->whereHas('rental', function($query) {
+                $query->whereHas('status', function($statusQuery) {
+                    $statusQuery->where('status_name', 'Overdue');
+                });
+            })
+            ->with('rental.status', 'rental.reservation.item')
+            ->get();
+    }
+
     // Scope for filtering and fuzzy searching
     public function scopeFilter($query, array $filters)
     {

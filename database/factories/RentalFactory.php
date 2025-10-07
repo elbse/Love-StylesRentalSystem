@@ -2,6 +2,10 @@
 
 namespace Database\Factories;
 
+use App\Models\Rental;
+use App\Models\Reservation;
+use App\Models\User;
+use App\Models\RentalStatus;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
@@ -9,6 +13,8 @@ use Illuminate\Database\Eloquent\Factories\Factory;
  */
 class RentalFactory extends Factory
 {
+    protected $model = Rental::class;
+
     /**
      * Define the model's default state.
      *
@@ -16,8 +22,35 @@ class RentalFactory extends Factory
      */
     public function definition(): array
     {
+        $releasedDate = $this->faker->dateTimeBetween('-6 months', 'now');
+        $dueDate = $releasedDate->copy()->addDays(7); // Fixed 7-day rental period
+        
+        // 60% chance of being active (no return date and not overdue)
+        $isActive = $this->faker->boolean(60);
+        $returnDate = null;
+        $penaltyFee = 0;
+        
+        if (!$isActive) {
+            // 40% chance of being completed or overdue
+            $returnDate = $this->faker->optional(0.7)->dateTimeBetween($releasedDate, $dueDate);
+            
+            if ($returnDate && $returnDate > $dueDate) {
+                $daysOverdue = $returnDate->diffInDays($dueDate);
+                $penaltyFee = $daysOverdue * 50; // 50 pesos per day overdue
+            } elseif (!$returnDate && now() > $dueDate) {
+                $daysOverdue = now()->diffInDays($dueDate);
+                $penaltyFee = $daysOverdue * 50;
+            }
+        }
+        
         return [
-            //
+            'reservation_id' => Reservation::factory(),
+            'released_by' => User::factory(),
+            'released_date' => $releasedDate,
+            'due_date' => $dueDate,
+            'return_date' => $returnDate,
+            'status_id' => RentalStatus::factory(),
+            'penalty_fee' => $penaltyFee,
         ];
     }
 }

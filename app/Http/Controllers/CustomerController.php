@@ -3,6 +3,10 @@
 namespace App\Http\Controllers;
 
 use App\Models\Customer;
+use App\Models\Rental;
+use App\Models\RentalStatus;
+use App\Models\ReservationStatus;
+use App\Models\PaymentStatus;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
@@ -17,7 +21,7 @@ class CustomerController extends Controller
     {
         
         $requestedPerPage = (int) request('per_page');
-        $perPage = in_array($requestedPerPage, [5, 10, 15], true) ? $requestedPerPage : 5;
+        $perPage = in_array($requestedPerPage, [5, 10, 15, 25], true) ? $requestedPerPage : 10;
 
         $filters = [
             'q' => request('q'),
@@ -34,7 +38,33 @@ class CustomerController extends Controller
             ->paginate($perPage)
             ->withQueryString();
 
-        return view('customers.index', ['title' => 'Customer Management', 'perPage' => $perPage], ["customers"=> $customer]);
+        // KPI Statistics for the dashboard
+        $totalCustomers = Customer::count();
+        $activeCustomers = Customer::whereHas('status', function($query) {
+            $query->where('status_name', 'Active');
+        })->count();
+        $newCustomersThisMonth = Customer::whereBetween('created_at', [
+            now()->startOfMonth(),
+            now()->endOfMonth()
+        ])->count();
+        $totalRentals = Rental::count();
+        $activeRentals = Rental::join('rental_status', 'rentals.status_id', '=', 'rental_status.status_id')
+            ->where('rental_status.status_name', 'Active')
+            ->count();
+        $overdueRentals = Rental::join('rental_status', 'rentals.status_id', '=', 'rental_status.status_id')
+            ->where('rental_status.status_name', 'Overdue')
+            ->count();
+
+        return view('customers.index', [
+            'title' => 'Customer Management', 
+            'perPage' => $perPage,
+            'totalCustomers' => $totalCustomers,
+            'activeCustomers' => $activeCustomers,
+            'newCustomersThisMonth' => $newCustomersThisMonth,
+            'totalRentals' => $totalRentals,
+            'activeRentals' => $activeRentals,
+            'overdueRentals' => $overdueRentals
+        ], ["customers"=> $customer]);
     }
     
     /**
@@ -105,10 +135,22 @@ class CustomerController extends Controller
             abort(404, 'Customer not found');
         }
         
-        // Debug: Check what customer_id value is
-        Log::info('Customer ID: ' . $customer->customer_id);
+        // Get rental history for this customer
+        $rentals = Rental::with(['reservation.item', 'status', 'payments'])
+            ->whereHas('reservation', function($query) use ($customer_id) {
+                $query->where('customer_id', $customer_id);
+            })
+            ->orderBy('released_date', 'desc')
+            ->get();
         
-        return view('customers.show', compact('customer'));
+        // Calculate rental statistics
+        $totalRentals = $rentals->count();
+        $totalSpent = $rentals->sum(function($rental) {
+            return $rental->payments->sum('amount');
+        });
+        $activeRentals = $rentals->where('status.status_name', 'Active')->count();
+        
+        return view('customers.show', compact('customer', 'rentals', 'totalRentals', 'totalSpent', 'activeRentals'));
     }
 
     /**
