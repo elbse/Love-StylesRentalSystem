@@ -277,34 +277,124 @@
     </div>
     @endif
 
-    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-2 mb-6">
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mb-6">
         <!-- Total Customers -->
-        <x-kpi-card icon="fas fa-users" color="bg-[#C16BFF]" symbol="{{ asset('storage/images/vector_peso.png') }}"  background="bg-gradient-to-r from-[#C16BFF] to-[#6A0DAD]">
-            <h3 class="text-sm text-gray-200">Total Customers</h3>
-            <p class="text-3xl font-bold">{{ number_format($totalCustomers) }}</p>
-            <p class="text-sm text-gray-300">{{ $newCustomersThisMonth }} new this month</p>
-        </x-kpi-card>
+        <div class="relative w-full h-36 rounded-2xl shadow-xl p-6 overflow-hidden bg-gradient-to-br from-purple-600 via-purple-700 to-indigo-800">
+            <!-- Enhanced Background Pattern -->
+            <div class="absolute inset-0 opacity-10">
+                <div class="absolute inset-0" style="background-image: radial-gradient(circle at 20% 20%, white 2px, transparent 2px), radial-gradient(circle at 80% 80%, white 2px, transparent 2px); background-size: 30px 30px;"></div>
+            </div>
+            
+            <!-- Background Icon -->
+            <div class="absolute top-2 right-2 opacity-20">
+                <svg class="w-16 h-16 text-white" fill="currentColor" viewBox="0 0 20 20">
+                    <path d="M9 6a3 3 0 11-6 0 3 3 0 016 0zM17 6a3 3 0 11-6 0 3 3 0 016 0zM12.93 17c.046-.327.07-.66.07-1a6.97 6.97 0 00-1.5-4.33A5 5 0 0119 16v1h-6.07zM6 11a5 5 0 015 5v1H1v-1a5 5 0 015-5z"/>
+                </svg>
+            </div>
+
+            <!-- Content -->
+            <div class="relative z-10">
+                <div class="flex items-center justify-between mb-2">
+                    <h3 class="text-sm font-semibold text-white/90 uppercase tracking-wide">Total Customers</h3>
+                    <div class="w-8 h-8 bg-white/20 rounded-lg flex items-center justify-center">
+                        <svg class="w-4 h-4 text-white" fill="currentColor" viewBox="0 0 20 20">
+                            <path d="M9 6a3 3 0 11-6 0 3 3 0 016 0zM17 6a3 3 0 11-6 0 3 3 0 016 0zM12.93 17c.046-.327.07-.66.07-1a6.97 6.97 0 00-1.5-4.33A5 5 0 0119 16v1h-6.07zM6 11a5 5 0 015 5v1H1v-1a5 5 0 015-5z"/>
+                        </svg>
+                    </div>
+                </div>
+                <p class="text-4xl font-bold text-white mb-1 drop-shadow-lg">{{ number_format($totalCustomers) }}</p>
+                <p class="text-xs text-white/80 font-medium">{{ $newCustomersThisMonth }} new this month</p>
+            </div>
+        </div>
 
         <!-- Active Customers -->
-        <x-kpi-card icon="fas fa-user-check" color="bg-[#A4B1FF]" symbol="{{ asset('storage/images/vector_cash.png') }}"  background="bg-gradient-to-r from-[#A4B1FF] to-[#5E72E4]">
-            <h3 class="text-sm text-gray-200">Active Customers</h3>
-            <p class="text-3xl font-bold">{{ number_format($activeCustomers) }}</p>
-            <p class="text-sm text-gray-300">{{ $totalCustomers > 0 ? round(($activeCustomers / $totalCustomers) * 100, 1) : 0 }}% of total</p>
-        </x-kpi-card>
+        <div class="relative w-full h-36 rounded-2xl shadow-xl p-6 overflow-hidden bg-gradient-to-br from-blue-500 via-blue-600 to-indigo-700">
+            <!-- Enhanced Background Pattern -->
+            <div class="absolute inset-0 opacity-10">
+                <div class="absolute inset-0" style="background-image: radial-gradient(circle at 20% 20%, white 2px, transparent 2px), radial-gradient(circle at 80% 80%, white 2px, transparent 2px); background-size: 30px 30px;"></div>
+            </div>
+            
+            <!-- Background Icon -->
+            <div class="absolute top-2 right-2 opacity-20">
+                <svg class="w-16 h-16 text-white" fill="currentColor" viewBox="0 0 20 20">
+                    <path fill-rule="evenodd" d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z" clip-rule="evenodd"/>
+                    <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/>
+                </svg>
+            </div>
+
+            <!-- Content -->
+            <div class="relative z-10">
+                <div class="flex items-center justify-between mb-2">
+                    <h3 class="text-sm font-semibold text-white/90 uppercase tracking-wide">Active Customers</h3>
+                    <div class="w-8 h-8 bg-white/20 rounded-lg flex items-center justify-center">
+                        <svg class="w-4 h-4 text-white" fill="currentColor" viewBox="0 0 20 20">
+                            <path fill-rule="evenodd" d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z" clip-rule="evenodd"/>
+                            <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/>
+                        </svg>
+                    </div>
+                </div>
+                <p class="text-4xl font-bold text-white mb-1 drop-shadow-lg">{{ number_format($activeCustomers) }}</p>
+                <p class="text-xs text-white/80 font-medium">{{ $totalCustomers > 0 ? round(($activeCustomers / $totalCustomers) * 100, 1) : 0 }}% of total</p>
+            </div>
+        </div>
 
         <!-- Active Rentals -->
-        <x-kpi-card icon="fas fa-tshirt" color="bg-[#77FF90]" symbol="{{ asset('storage/images/vector_check.png') }}"  background="bg-gradient-to-r from-[#77FF90] to-[#35B73E]">
-            <h3 class="text-sm text-gray-200">Active Rentals</h3>
-            <p class="text-3xl font-bold">{{ number_format($activeRentals) }}</p>
-            <p class="text-sm text-gray-300">{{ $totalRentals > 0 ? round(($activeRentals / $totalRentals) * 100, 1) : 0 }}% of total</p>
-        </x-kpi-card>
+        <div class="relative w-full h-36 rounded-2xl shadow-xl p-6 overflow-hidden bg-gradient-to-br from-green-500 via-emerald-600 to-teal-700">
+            <!-- Enhanced Background Pattern -->
+            <div class="absolute inset-0 opacity-10">
+                <div class="absolute inset-0" style="background-image: radial-gradient(circle at 20% 20%, white 2px, transparent 2px), radial-gradient(circle at 80% 80%, white 2px, transparent 2px); background-size: 30px 30px;"></div>
+            </div>
+            
+            <!-- Background Icon -->
+            <div class="absolute top-2 right-2 opacity-20">
+                <svg class="w-16 h-16 text-white" fill="currentColor" viewBox="0 0 20 20">
+                    <path fill-rule="evenodd" d="M3 4a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zm0 4a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zm0 4a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zm0 4a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1z" clip-rule="evenodd"/>
+                </svg>
+            </div>
+
+            <!-- Content -->
+            <div class="relative z-10">
+                <div class="flex items-center justify-between mb-2">
+                    <h3 class="text-sm font-semibold text-white/90 uppercase tracking-wide">Active Rentals</h3>
+                    <div class="w-8 h-8 bg-white/20 rounded-lg flex items-center justify-center">
+                        <svg class="w-4 h-4 text-white" fill="currentColor" viewBox="0 0 20 20">
+                            <path fill-rule="evenodd" d="M3 4a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zm0 4a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zm0 4a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zm0 4a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1z" clip-rule="evenodd"/>
+                        </svg>
+                    </div>
+                </div>
+                <p class="text-4xl font-bold text-white mb-1 drop-shadow-lg">{{ number_format($activeRentals) }}</p>
+                <p class="text-xs text-white/80 font-medium">{{ $totalRentals > 0 ? round(($activeRentals / $totalRentals) * 100, 1) : 0 }}% of total</p>
+            </div>
+        </div>
 
         <!-- Overdue Rentals -->
-        <x-kpi-card icon="fas fa-exclamation-triangle" color="bg-[#FF6B6B]" symbol="{{ asset('storage/images/vector_sms.png') }}"  background="bg-gradient-to-r from-[#FF6B6B] to-[#E53E3E]">
-            <h3 class="text-sm text-gray-200">Overdue Rentals</h3>
-            <p class="text-3xl font-bold">{{ number_format($overdueRentals) }}</p>
-            <p class="text-sm text-gray-300">{{ $activeRentals > 0 ? round(($overdueRentals / $activeRentals) * 100, 1) : 0 }}% of active</p>
-        </x-kpi-card>
+        <div class="relative w-full h-36 rounded-2xl shadow-xl p-6 overflow-hidden bg-gradient-to-br from-red-500 via-rose-600 to-pink-700">
+            <!-- Enhanced Background Pattern -->
+            <div class="absolute inset-0 opacity-10">
+                <div class="absolute inset-0" style="background-image: radial-gradient(circle at 20% 20%, white 2px, transparent 2px), radial-gradient(circle at 80% 80%, white 2px, transparent 2px); background-size: 30px 30px;"></div>
+            </div>
+            
+            <!-- Background Icon -->
+            <div class="absolute top-2 right-2 opacity-20">
+                <svg class="w-16 h-16 text-white" fill="currentColor" viewBox="0 0 20 20">
+                    <path fill-rule="evenodd" d="M8.257 3.099c.765-1.36 2.722-1.36 3.486 0l5.58 9.92c.75 1.334-.213 2.98-1.742 2.98H4.42c-1.53 0-2.493-1.646-1.743-2.98l5.58-9.92zM11 13a1 1 0 11-2 0 1 1 0 012 0zm-1-8a1 1 0 00-1 1v3a1 1 0 002 0V6a1 1 0 00-1-1z" clip-rule="evenodd"/>
+                </svg>
+            </div>
+
+            <!-- Content -->
+            <div class="relative z-10">
+                <div class="flex items-center justify-between mb-2">
+                    <h3 class="text-sm font-semibold text-white/90 uppercase tracking-wide">Overdue Rentals</h3>
+                    <div class="w-8 h-8 bg-white/20 rounded-lg flex items-center justify-center">
+                        <svg class="w-4 h-4 text-white" fill="currentColor" viewBox="0 0 20 20">
+                            <path fill-rule="evenodd" d="M8.257 3.099c.765-1.36 2.722-1.36 3.486 0l5.58 9.92c.75 1.334-.213 2.98-1.742 2.98H4.42c-1.53 0-2.493-1.646-1.743-2.98l5.58-9.92zM11 13a1 1 0 11-2 0 1 1 0 012 0zm-1-8a1 1 0 00-1 1v3a1 1 0 002 0V6a1 1 0 00-1-1z" clip-rule="evenodd"/>
+                        </svg>
+                    </div>
+                </div>
+                <p class="text-4xl font-bold text-white mb-1 drop-shadow-lg">{{ number_format($overdueRentals) }}</p>
+                <p class="text-xs text-white/80 font-medium">{{ $activeRentals > 0 ? round(($overdueRentals / $activeRentals) * 100, 1) : 0 }}% of active</p>
+            </div>
+        </div>
 
     </div>
 
