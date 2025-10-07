@@ -20,7 +20,13 @@ class DatabaseSeeder extends Seeder
         // ]);
 
         $this->call([
+            UserSeeder::class,
             CustomerSeeder::class,
+            InventorySeeder::class,
+            RentalStatusSeeder::class,
+            ReservationStatusSeeder::class,
+            PaymentStatusSeeder::class,
+            RentalHistorySeeder::class,
         ]);
     }
 }

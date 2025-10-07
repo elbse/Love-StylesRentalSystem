@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Love & Styles Rental System</title>
 
-    <link rel="shortcut icon" href="{{ asset('lsrs_logo.png') }}?v=1" type="image/png">
+    <link rel="shortcut icon" href="{{ asset('storage/images/lsrs_logo.png') }}?v=1" type="image/png">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inria+Serif:ital,wght@0,300;0,400;0,700;1,300;1,400;1,700&display=swap" rel="stylesheet">
@@ -19,7 +19,7 @@
 
         <!-- Background Collage -->
         <div class="absolute inset-0">
-            <img src="/images/container.png" alt="Collage" 
+            <img src="{{ asset('storage/images/container.png') }}" alt="Collage" 
                  class="w-full h-full object-cover">
             <div class="absolute inset-0 bg-black/30"></div>
         </div>
@@ -30,7 +30,7 @@
             <!-- Left: Image + Tagline -->
             <div class="relative flex flex-col justify-center text-white max-w-3xl">
                 <!-- Larger Image -->
-                <img src="/images/main_visual.png" 
+                <img src="{{ asset('storage/images/main_visual.png') }}" 
                     alt="Model" 
                     class="w-[150%] max-w-none drop-shadow-2xl relative z-0 left-[-20%] ">
 
@@ -50,7 +50,7 @@
         <!-- Footer Badge - Bottom Right Corner -->
         <div class="absolute right-8 bg-white rounded-2xl py-4 px-6 flex items-center space-x-4 shadow-2xl max-w-md -mt-80 mr-2">
 
-            <img src="images/pod_logo.png" alt="Logo" class="w-14 h-14 flex-shrink-0">
+            <img src="{{ asset('storage/images/pod_logo.png') }}" alt="Logo" class="w-14 h-14 flex-shrink-0">
             <p class="text-gray-800 text-sm leading-relaxed">
                 Most trusted by people for delivering timeless style and elegant formal wear 
                 for every occasion.

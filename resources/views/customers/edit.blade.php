@@ -7,6 +7,76 @@
             </div>
 
             <div class="p-5 md:p-6">
+                @if (session('success'))
+                <div x-data="{ show: true }" 
+                     x-show="show" 
+                     x-init="setTimeout(() => show = false, 5000)" 
+                     x-transition:enter="transition ease-out duration-300"
+                     x-transition:enter-start="opacity-0 transform scale-95"
+                     x-transition:enter-end="opacity-100 transform scale-100"
+                     x-transition:leave="transition ease-in duration-200"
+                     x-transition:leave-start="opacity-100 transform scale-100"
+                     x-transition:leave-end="opacity-0 transform scale-95"
+                     class="mb-6 p-4 rounded-xl bg-gradient-to-r from-green-50 to-emerald-50 border-l-4 border-green-500 shadow-lg" 
+                     role="status" 
+                     aria-live="polite">
+                    <div class="flex items-center gap-3">
+                        <div class="flex-shrink-0">
+                            <svg class="w-6 h-6 text-green-600" fill="currentColor" viewBox="0 0 20 20">
+                                <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/>
+                            </svg>
+                        </div>
+                        <div class="flex-1">
+                            <h3 class="text-sm font-semibold text-green-800">Success!</h3>
+                            <p class="text-sm text-green-700 mt-1">{{ session('success') }}</p>
+                        </div>
+                        <button @click="show = false" class="flex-shrink-0 text-green-600 hover:text-green-800 transition-colors duration-200">
+                            <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
+                                <path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd"/>
+                            </svg>
+                        </button>
+                    </div>
+                </div>
+                @endif
+
+                @if ($errors->any())
+                <div x-data="{ show: true }" 
+                     x-show="show" 
+                     x-transition:enter="transition ease-out duration-300"
+                     x-transition:enter-start="opacity-0 transform scale-95"
+                     x-transition:enter-end="opacity-100 transform scale-100"
+                     x-transition:leave="transition ease-in duration-200"
+                     x-transition:leave-start="opacity-100 transform scale-100"
+                     x-transition:leave-end="opacity-0 transform scale-95"
+                     class="mb-6 p-4 rounded-xl bg-gradient-to-r from-red-50 to-rose-50 border-l-4 border-red-500 shadow-lg" 
+                     role="alert" 
+                     aria-live="polite">
+                    <div class="flex items-start gap-3">
+                        <div class="flex-shrink-0">
+                            <svg class="w-6 h-6 text-red-600 mt-0.5" fill="currentColor" viewBox="0 0 20 20">
+                                <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z" clip-rule="evenodd"/>
+                            </svg>
+                        </div>
+                        <div class="flex-1">
+                            <h3 class="text-sm font-semibold text-red-800">Validation Errors</h3>
+                            <ul class="mt-2 space-y-1">
+                                @foreach ($errors->all() as $error)
+                                    <li class="text-sm text-red-700 flex items-start gap-2">
+                                        <span class="text-red-500 mt-1">•</span>
+                                        <span>{{ $error }}</span>
+                                    </li>
+                                @endforeach
+                            </ul>
+                        </div>
+                        <button @click="show = false" class="flex-shrink-0 text-red-600 hover:text-red-800 transition-colors duration-200">
+                            <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
+                                <path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd"/>
+                            </svg>
+                        </button>
+                    </div>
+                </div>
+                @endif
+
                 @if($customer)
                 <h3 class="text-lg font-semibold mb-4">Editing: {{ $customer->full_name }}</h3>
                 <p class="text-gray-600">Customer ID: {{ $customer->customer_id }}</p>
@@ -40,7 +110,14 @@
 
                     <div>
                         <label for="contact_number" class="block text-sm font-medium text-gray-700">Contact Number</label>
-                        <input id="contact_number" name="contact_number" type="text" value="{{ old('contact_number', $customer->contact_number) }}" class="mt-1 block w-full border rounded-md px-3 py-2 @error('contact_number') border-red-500 @enderror" required>
+                        <input id="contact_number" name="contact_number" type="tel" value="{{ old('contact_number', $customer->contact_number) }}" 
+                               class="mt-1 block w-full border rounded-md px-3 py-2 @error('contact_number') border-red-500 @enderror" 
+                               pattern="^[+]?[0-9\s\(\)\-]*[0-9][0-9\s\(\)\-]*$" 
+                               title="Please enter a valid phone number (no negative numbers allowed)"
+                               minlength="7"
+                               maxlength="20"
+                               required>
+                        <p class="text-xs text-gray-500 mt-1">Enter phone number without negative signs (e.g., 09234923 or +639234923)</p>
                         @error('contact_number')
                         <p class="text-red-600 text-sm mt-1">{{ $message }}</p>
                         @enderror
@@ -49,7 +126,14 @@
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                         <div>
                             <label for="size" class="block text-sm font-medium text-gray-700">Size</label>
-                            <input id="size" name="size" type="text" value="{{ old('size', $customer->measurement['size'] ?? '') }}" class="mt-1 block w-full border rounded-md px-3 py-2 @error('size') border-red-500 @enderror">
+                            <select id="size" name="size" class="mt-1 block w-full border rounded-md px-3 py-2 @error('size') border-red-500 @enderror">
+                                <option value="" disabled {{ old('size', $customer->measurement['size'] ?? $customer->measurement['chest'] ?? '') ? '' : 'selected' }} class="text-gray-400">Select a size</option>
+                                <option value="XS" {{ old('size', $customer->measurement['size'] ?? $customer->measurement['chest'] ?? '') == 'XS' ? 'selected' : '' }}>Extra Small (XS)</option>
+                                <option value="S" {{ old('size', $customer->measurement['size'] ?? $customer->measurement['chest'] ?? '') == 'S' ? 'selected' : '' }}>Small (S)</option>
+                                <option value="M" {{ old('size', $customer->measurement['size'] ?? $customer->measurement['chest'] ?? '') == 'M' ? 'selected' : '' }}>Medium (M)</option>
+                                <option value="L" {{ old('size', $customer->measurement['size'] ?? $customer->measurement['chest'] ?? '') == 'L' ? 'selected' : '' }}>Large (L)</option>
+                                <option value="XL" {{ old('size', $customer->measurement['size'] ?? $customer->measurement['chest'] ?? '') == 'XL' ? 'selected' : '' }}>Extra Large (XL)</option>
+                            </select>
                             @error('size')
                             <p class="text-red-600 text-sm mt-1">{{ $message }}</p>
                             @enderror

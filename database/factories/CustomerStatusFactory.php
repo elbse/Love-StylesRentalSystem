@@ -17,7 +17,7 @@ class CustomerStatusFactory extends Factory
     public function definition(): array
     {
         return [
-            'status_name' => fake()->randomElement(['Active','Deactivate','Banned']),
+            'status_name' => fake()->randomElement(['Active','Deactivate']),
             'reason' => fake()->optional()->sentence(),
         ];
     }

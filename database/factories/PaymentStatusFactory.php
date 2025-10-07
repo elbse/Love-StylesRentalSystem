@@ -2,6 +2,7 @@
 
 namespace Database\Factories;
 
+use App\Models\PaymentStatus;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
@@ -9,6 +10,8 @@ use Illuminate\Database\Eloquent\Factories\Factory;
  */
 class PaymentStatusFactory extends Factory
 {
+    protected $model = PaymentStatus::class;
+
     /**
      * Define the model's default state.
      *
@@ -17,7 +20,13 @@ class PaymentStatusFactory extends Factory
     public function definition(): array
     {
         return [
-            //
+            'status_name' => $this->faker->randomElement([
+                'Pending',
+                'Completed',
+                'Failed',
+                'Refunded',
+                'Cancelled'
+            ])
         ];
     }
 }

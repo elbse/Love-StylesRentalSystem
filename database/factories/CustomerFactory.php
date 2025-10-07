@@ -19,20 +19,22 @@ class CustomerFactory extends Factory
     public function definition(): array
     {
         return [
-        'full_name' => fake()->name(),
-        'email' => fake()->unique()->safeEmail(),
-        'address' => fake()->address(),
-        'contact_number' => fake()->phoneNumber(),
-        'measurement' => [
-            'height' => fake()->numberBetween(150, 200),
-            'weight' => fake()->numberBetween(50, 100),
-            'chest'  => fake()->numberBetween(80, 120),
-            'waist'  => fake()->numberBetween(60, 100),
-            'hips'   => fake()->numberBetween(80, 120),
-        ],
+            'full_name' => fake()->name(),
+            'email' => fake()->unique()->safeEmail(),
+            'address' => fake()->address(),
+            'contact_number' => fake()->phoneNumber(),
+            'measurement' => [
+                'height' => fake()->numberBetween(150, 200),
+                'weight' => fake()->numberBetween(50, 100),
+                'chest'  => fake()->numberBetween(80, 120),
+                'waist'  => fake()->numberBetween(60, 100),
+                'hips'   => fake()->numberBetween(80, 120),
+                'size'   => fake()->randomElement(['XS', 'S', 'M', 'L', 'XL', 'XXL']),
+            ],
             // Ensure a valid foreign key to customer_status table
             'status_id' => CustomerStatus::query()->inRandomOrder()->value('status_id')
                 ?? CustomerStatus::factory(),
         ];
     }
+
 }
