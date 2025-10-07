@@ -111,9 +111,15 @@
 
                     <div>
                         <label for="contact_number" class="block text-sm font-medium text-gray-700 mb-2">Contact Number <span class="text-red-500">*</span></label>
-                        <input type="text" name="contact_number" id="contact_number" 
+                        <input type="tel" name="contact_number" id="contact_number" 
                         class="border border-gray-300 rounded-lg w-full px-3.5 py-2 focus:ring-2 focus:ring-slate-500 focus:border-transparent transition-all" 
-                        value="{{ old('contact_number') }}" required>
+                        value="{{ old('contact_number') }}" 
+                        pattern="^[+]?[0-9\s\(\)\-]*[0-9][0-9\s\(\)\-]*$" 
+                        title="Please enter a valid phone number (no negative numbers allowed)"
+                        minlength="7"
+                        maxlength="20"
+                        required>
+                        <p class="text-xs text-gray-500 mt-1">Enter phone number without negative signs (e.g., 09234923 or +639234923)</p>
                     </div>
 
                     <div>
@@ -134,9 +140,9 @@
 
                         <div class="space-y-3.5">
                             <div>
-                                <label for="size" class="block text-sm font-medium text-gray-700 mb-2">Size</label>
+                                <label for="size" class="block text-sm font-medium text-gray-700 mb-2">Size <span class="text-red-500">*</span></label>
                                 <select name="size" id="size" 
-                                        class="border border-gray-300 rounded-lg w-full px-3.5 py-2 text-gray-700 bg-white focus:ring-2 focus:ring-slate-500 focus:border-transparent transition-all">
+                                        class="border border-gray-300 rounded-lg w-full px-3.5 py-2 text-gray-700 bg-white focus:ring-2 focus:ring-slate-500 focus:border-transparent transition-all" required>
                                     <option value="" disabled {{ old('size') ? '' : 'selected' }} class="text-gray-400">Select a size</option>
                                     <option value="XS" {{ old('size')=='XS' ? 'selected' : '' }}>Extra Small (XS)</option>
                                     <option value="S" {{ old('size')=='S' ? 'selected' : '' }}>Small (S)</option>

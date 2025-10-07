@@ -110,7 +110,14 @@
 
                     <div>
                         <label for="contact_number" class="block text-sm font-medium text-gray-700">Contact Number</label>
-                        <input id="contact_number" name="contact_number" type="text" value="{{ old('contact_number', $customer->contact_number) }}" class="mt-1 block w-full border rounded-md px-3 py-2 @error('contact_number') border-red-500 @enderror" required>
+                        <input id="contact_number" name="contact_number" type="tel" value="{{ old('contact_number', $customer->contact_number) }}" 
+                               class="mt-1 block w-full border rounded-md px-3 py-2 @error('contact_number') border-red-500 @enderror" 
+                               pattern="^[+]?[0-9\s\(\)\-]*[0-9][0-9\s\(\)\-]*$" 
+                               title="Please enter a valid phone number (no negative numbers allowed)"
+                               minlength="7"
+                               maxlength="20"
+                               required>
+                        <p class="text-xs text-gray-500 mt-1">Enter phone number without negative signs (e.g., 09234923 or +639234923)</p>
                         @error('contact_number')
                         <p class="text-red-600 text-sm mt-1">{{ $message }}</p>
                         @enderror
@@ -119,7 +126,14 @@
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                         <div>
                             <label for="size" class="block text-sm font-medium text-gray-700">Size</label>
-                            <input id="size" name="size" type="text" value="{{ old('size', $customer->measurement['size'] ?? $customer->measurement['chest'] ?? '') }}" class="mt-1 block w-full border rounded-md px-3 py-2 @error('size') border-red-500 @enderror">
+                            <select id="size" name="size" class="mt-1 block w-full border rounded-md px-3 py-2 @error('size') border-red-500 @enderror">
+                                <option value="" disabled {{ old('size', $customer->measurement['size'] ?? $customer->measurement['chest'] ?? '') ? '' : 'selected' }} class="text-gray-400">Select a size</option>
+                                <option value="XS" {{ old('size', $customer->measurement['size'] ?? $customer->measurement['chest'] ?? '') == 'XS' ? 'selected' : '' }}>Extra Small (XS)</option>
+                                <option value="S" {{ old('size', $customer->measurement['size'] ?? $customer->measurement['chest'] ?? '') == 'S' ? 'selected' : '' }}>Small (S)</option>
+                                <option value="M" {{ old('size', $customer->measurement['size'] ?? $customer->measurement['chest'] ?? '') == 'M' ? 'selected' : '' }}>Medium (M)</option>
+                                <option value="L" {{ old('size', $customer->measurement['size'] ?? $customer->measurement['chest'] ?? '') == 'L' ? 'selected' : '' }}>Large (L)</option>
+                                <option value="XL" {{ old('size', $customer->measurement['size'] ?? $customer->measurement['chest'] ?? '') == 'XL' ? 'selected' : '' }}>Extra Large (XL)</option>
+                            </select>
                             @error('size')
                             <p class="text-red-600 text-sm mt-1">{{ $message }}</p>
                             @enderror
