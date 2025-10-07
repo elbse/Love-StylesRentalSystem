@@ -38,7 +38,33 @@ class CustomerController extends Controller
             ->paginate($perPage)
             ->withQueryString();
 
-        return view('customers.index', ['title' => 'Customer Management', 'perPage' => $perPage], ["customers"=> $customer]);
+        // KPI Statistics for the dashboard
+        $totalCustomers = Customer::count();
+        $activeCustomers = Customer::whereHas('status', function($query) {
+            $query->where('status_name', 'Active');
+        })->count();
+        $newCustomersThisMonth = Customer::whereBetween('created_at', [
+            now()->startOfMonth(),
+            now()->endOfMonth()
+        ])->count();
+        $totalRentals = Rental::count();
+        $activeRentals = Rental::join('rental_status', 'rentals.status_id', '=', 'rental_status.status_id')
+            ->where('rental_status.status_name', 'Active')
+            ->count();
+        $overdueRentals = Rental::join('rental_status', 'rentals.status_id', '=', 'rental_status.status_id')
+            ->where('rental_status.status_name', 'Overdue')
+            ->count();
+
+        return view('customers.index', [
+            'title' => 'Customer Management', 
+            'perPage' => $perPage,
+            'totalCustomers' => $totalCustomers,
+            'activeCustomers' => $activeCustomers,
+            'newCustomersThisMonth' => $newCustomersThisMonth,
+            'totalRentals' => $totalRentals,
+            'activeRentals' => $activeRentals,
+            'overdueRentals' => $overdueRentals
+        ], ["customers"=> $customer]);
     }
     
     /**

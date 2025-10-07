@@ -2,6 +2,7 @@
     // Generic identity for modal scoping
     'entityId' => null,
     'entityName' => null,
+    'entityEmail' => null,
     // Modal title
     'title' => 'Actions',
     // Array of actions: [ ['label' => 'View', 'url' => '#', 'method' => 'GET', 'color' => 'blue'] ]
@@ -81,7 +82,7 @@
                             <button 
                                 type="button" 
                                 class="{{ $classes }} {{ $span }}" 
-                                @click="$dispatch('open-deactivate-modal', { id: '{{ $entityId }}', name: '{{ $entityName }}' }); open = false">
+                                @click="$dispatch('open-deactivate-modal', { id: '{{ $entityId }}', name: '{{ $entityName }}', email: '{{ $entityEmail }}' }); open = false">
                                 {{ $label }}
                             </button>
                         @else
