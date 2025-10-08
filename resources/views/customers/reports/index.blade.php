@@ -136,12 +136,12 @@
         <div class="mb-8">
             <div class="bg-white rounded-xl shadow-lg border border-gray-100 p-6">
                 <h3 class="text-lg font-semibold text-gray-900 mb-4">Top Customers by Revenue</h3>
-                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-                    @foreach($topCustomers as $index => $customerData)
+                <div class="space-y-4">
+                    @foreach($topCustomers as $customerData)
                         <div class="flex items-center justify-between p-4 bg-gray-50 rounded-lg hover:bg-gray-100 transition-colors">
                             <div class="flex items-center space-x-3">
                                 <div class="w-10 h-10 bg-purple-100 rounded-full flex items-center justify-center">
-                                    <span class="text-sm font-semibold text-purple-600">#{{ $index + 1 }}</span>
+                                    <span class="text-sm font-semibold text-purple-600">#{{ $loop->iteration }}</span>
                                 </div>
                                 <div>
                                     <p class="font-medium text-gray-900">{{ $customerData['customer']->full_name }}</p>
