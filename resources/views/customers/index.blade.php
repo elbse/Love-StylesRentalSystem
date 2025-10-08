@@ -78,7 +78,17 @@
     <div x-data="{ 
         show: true, 
         countdown: 5,
+        messageId: '{{ md5(session('success') . now()) }}',
         startCountdown() {
+            // Check if this message was already shown
+            if (sessionStorage.getItem('shown_message_' + this.messageId)) {
+                this.show = false;
+                return;
+            }
+            
+            // Mark this message as shown
+            sessionStorage.setItem('shown_message_' + this.messageId, 'true');
+            
             this.countdown = 5;
             const timer = setInterval(() => {
                 this.countdown--;
@@ -130,7 +140,17 @@
     <div x-data="{ 
         show: true, 
         countdown: 6,
+        messageId: '{{ md5(session('error') . now()) }}',
         startCountdown() {
+            // Check if this message was already shown
+            if (sessionStorage.getItem('shown_message_' + this.messageId)) {
+                this.show = false;
+                return;
+            }
+            
+            // Mark this message as shown
+            sessionStorage.setItem('shown_message_' + this.messageId, 'true');
+            
             this.countdown = 6;
             const timer = setInterval(() => {
                 this.countdown--;
