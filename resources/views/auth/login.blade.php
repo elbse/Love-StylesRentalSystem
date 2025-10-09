@@ -17,9 +17,9 @@
         <form action="{{ route('login')}}" method="POST" class="space-y-4" x-data="{ showPassword: false }" x-cloak>
 
 
-            @csrf
-            <input type="email" name="email" placeholder="user@email.com"
-                class="w-full px-4 py-2 rounded-lg border border-gray-300 focus:ring-2 bg-white focus:ring-purple-500 outline-none">
+            @csrf   
+            <input type="email" name="email" placeholder="user@email.com" value="{{ old('email') }}"
+                class="w-full px-4 py-2 rounded-lg border focus:ring-2 bg-white outline-none {{ $errors->has('email') || $errors->any() ? 'border-red-500 focus:ring-red-500' : 'border-gray-300 focus:ring-purple-500' }}">
 
             <div class="relative">
                 <input 
