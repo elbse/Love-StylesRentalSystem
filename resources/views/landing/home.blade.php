@@ -42,6 +42,8 @@
             
     </section>
 
+    
+
 
     <!-- Footer Section -->
     <footer class="bg-white py-4 px-6 flex items-center justify-center space-x-4 shadow-inner">
