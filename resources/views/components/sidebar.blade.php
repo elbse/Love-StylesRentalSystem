@@ -23,6 +23,15 @@
             <span class="font-medium">Dashboard</span>
         </a>
 
+         <!-- Bookings -->
+        <a href="{{ route('bookings.index') }}" 
+           class="sidebar-link flex items-center gap-3 rounded-lg px-4 py-3 text-gray-300 transition-all duration-200 hover:bg-gray-700 hover:text-white {{ request()->routeIs('bookings.*') ? 'bg-gray-700 text-white' : '' }}">
+            <svg class="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/>
+            </svg>
+            <span class="font-medium">Bookings</span>
+        </a>
+
         <!-- Rentals with Dropdown -->
         <div class="rentals-dropdown-container">
             <button id="rentals-toggle" 
@@ -69,6 +78,24 @@
             </div>
         </div>
 
+          <!-- Customer -->
+        <a href="{{ route('customer.index') }}" 
+           class="sidebar-link flex items-center gap-3 rounded-lg px-4 py-3 text-gray-300 transition-all duration-200 hover:bg-gray-700 hover:text-white {{ request()->routeIs('customer.*') ? 'bg-purple-600 text-white' : '' }}">
+            <svg class="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z"/>
+            </svg>
+            <span class="font-medium">Customer</span>
+        </a>
+
+         <!-- Inventory -->
+        <a href="{{ route('inventory.index') }}" 
+           class="sidebar-link flex items-center gap-3 rounded-lg px-4 py-3 text-gray-300 transition-all duration-200 hover:bg-gray-700 hover:text-white {{ request()->routeIs('inventory.*') ? 'bg-gray-700 text-white' : '' }}">
+            <svg class="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4"/>
+            </svg>
+            <span class="font-medium">Inventory</span>
+        </a>
+
         <!-- Billing -->
         <a href="{{ route('billing.index') }}" 
            class="sidebar-link flex items-center gap-3 rounded-lg px-4 py-3 text-gray-300 transition-all duration-200 hover:bg-gray-700 hover:text-white {{ request()->routeIs('billing.*') ? 'bg-gray-700 text-white' : '' }}">
@@ -78,32 +105,6 @@
             <span class="font-medium">Billing</span>
         </a>
 
-        <!-- Inventory -->
-        <a href="{{ route('inventory.index') }}" 
-           class="sidebar-link flex items-center gap-3 rounded-lg px-4 py-3 text-gray-300 transition-all duration-200 hover:bg-gray-700 hover:text-white {{ request()->routeIs('inventory.*') ? 'bg-gray-700 text-white' : '' }}">
-            <svg class="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4"/>
-            </svg>
-            <span class="font-medium">Inventory</span>
-        </a>
-
-        <!-- Customer -->
-        <a href="{{ route('customer.index') }}" 
-           class="sidebar-link flex items-center gap-3 rounded-lg px-4 py-3 text-gray-300 transition-all duration-200 hover:bg-gray-700 hover:text-white {{ request()->routeIs('customer.*') ? 'bg-purple-600 text-white' : '' }}">
-            <svg class="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z"/>
-            </svg>
-            <span class="font-medium">Customer</span>
-        </a>
-
-        <!-- Bookings -->
-        <a href="{{ route('bookings.index') }}" 
-           class="sidebar-link flex items-center gap-3 rounded-lg px-4 py-3 text-gray-300 transition-all duration-200 hover:bg-gray-700 hover:text-white {{ request()->routeIs('bookings.*') ? 'bg-gray-700 text-white' : '' }}">
-            <svg class="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/>
-            </svg>
-            <span class="font-medium">Bookings</span>
-        </a>
      </nav>
  </aside>
 
