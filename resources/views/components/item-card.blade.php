@@ -1,6 +1,6 @@
 <div class="max-w-xs bg-white border border-gray-200 rounded-xl shadow-md overflow-hidden relative p-3">
   <div class="relative">
-    <img src="red-ball-gown.jpg" alt="Red Ball Gown" class="w-full h-64 object-cover rounded-lg">
+    <img src="{{ asset('storage/images/red-ball-gown.jpg') }}" alt="Red Ball Gown" class="w-full h-64 object-cover rounded-lg">
     <span class="absolute top-2 right-2 w-3 h-3 bg-green-500 rounded-full"></span>
   </div>
   <div class="mt-3">
