@@ -45,7 +45,7 @@
                            id="search"
                            name="q" 
                            value="{{ request('q') }}" 
-                           placeholder="Search by name, email, or contact" 
+                           placeholder="Search by name, size, or category" 
                            class="w-full border border-gray-300 rounded-lg pl-10 pr-10 py-2 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-purple-500" />
             @if(request('q'))
                         <a href="{{ route('customers.index', array_filter(request()->except('page', 'q'))) }}" 
@@ -58,6 +58,40 @@
             @endif
         </div>
             </div>
+
+             <!-- Status Filter -->
+            <div class="w-full md:w-48">
+                <label for="status" class="block text-sm font-medium text-gray-700 mb-2">Filter by Status</label>
+                <select name="status" 
+                        id="status"
+                        class="w-full border border-gray-300 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-purple-500">
+                    <option value="">Category</option>
+                    <option >Rented Out</option>
+                    <option >Cleaning</option>
+                    <option >Available</option>
+                    {{-- Dunno uy --}}
+                </select>
+            </div>
+
+            <!-- Action Buttons -->
+            <div class="flex gap-2">
+                <button type="submit" 
+                        class="px-6 py-2 bg-purple-600 hover:bg-purple-700 text-white rounded-lg transition-colors duration-200 flex items-center gap-2">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" viewBox="0 0 20 20" fill="currentColor">
+                        <path fill-rule="evenodd" d="M8 4a4 4 0 100 8 4 4 0 000-8zM2 8a6 6 0 1110.89 3.476l3.817 3.817a1 1 0 01-1.414 1.414l-3.817-3.817A6 6 0 012 8z" clip-rule="evenodd" />
+                    </svg>
+                    Search
+                </button>
+                <a href="{{ route('customers.index') }}" 
+                   class="px-6 py-2 bg-gray-500 hover:bg-gray-600 text-white rounded-lg transition-colors duration-200 flex items-center gap-2">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" viewBox="0 0 20 20" fill="currentColor">
+                        <path fill-rule="evenodd" d="M4 2a1 1 0 011 1v2.101a7.002 7.002 0 0111.601 2.566 1 1 0 11-1.885.666A5.002 5.002 0 005.999 7H9a1 1 0 010 2H4a1 1 0 01-1-1V3a1 1 0 011-1zm.008 9.057a1 1 0 011.276.61A5.002 5.002 0 0014.001 13H11a1 1 0 110-2h5a1 1 0 011 1v5a1 1 0 11-2 0v-2.101a7.002 7.002 0 01-11.601-2.566 1 1 0 01.61-1.276z" clip-rule="evenodd" />
+                    </svg>
+                    Reset
+                </a>
+            </div>
+    </form>
+    </div>
 
 
 </x-layout>

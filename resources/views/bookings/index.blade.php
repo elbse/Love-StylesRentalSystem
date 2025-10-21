@@ -39,7 +39,7 @@
                            id="search"
                            name="q" 
                            value="{{ request('q') }}" 
-                           placeholder="Search by name, email, or contact" 
+                           placeholder="Search by name, size or category" 
                            class="w-full border border-gray-300 rounded-lg pl-10 pr-10 py-2 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-purple-500" />
                     @if(request('q'))
                         <a href="{{ route('customers.index', array_filter(request()->except('page', 'q'))) }}" 
