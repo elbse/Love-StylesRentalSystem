@@ -71,7 +71,7 @@ Route::middleware('auth')->group(function () {
 });
 
 
-
+Route::get('/inventories/view', [InventoryController::class, 'view'])->name('inventories.view');
 Route::get('/register', [AuthController::class, 'showRegister'])->name('show.register')->middleware('guest');
 Route::get('/login', [AuthController::class, 'showLogin'])->name('show.login')->middleware('guest');
 Route::post('/login', [AuthController::class, 'login'])->name('login');
