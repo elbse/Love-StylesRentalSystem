@@ -65,11 +65,30 @@
                 <select name="status" 
                         id="status"
                         class="w-full border border-gray-300 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-purple-500">
-                    <option value="">Category</option>
-                    <option >Rented Out</option>
-                    <option >Cleaning</option>
-                    <option >Available</option>
-                    {{-- Dunno uy --}}
+                    <option value="">All Categories</option>
+        
+                    <optgroup label="Suits">
+                        <option value="business-suit">Business Suit</option>
+                        <option value="wedding-suit">Wedding Suit</option>
+                        <option value="tuxedo">Tuxedo</option>
+                        <option value="three-piece-suit">Three-Piece Suit</option>
+                        <option value="casual-suit">Casual Suit</option>
+                    </optgroup>
+
+                    <optgroup label="Gowns">
+                        <option value="wedding-gown">Wedding Gown</option>
+                        <option value="evening-gown">Evening Gown</option>
+                        <option value="ball-gown">Ball Gown</option>
+                        <option value="prom-gown">Prom Gown</option>
+                        <option value="cocktail-dress">Cocktail Dress</option>
+                    </optgroup>
+
+                    <optgroup label="Accessories">
+                        <option value="ties">Ties</option>
+                        <option value="cufflinks">Cufflinks</option>
+                        <option value="belts">Belts</option>
+                        <option value="scarves">Scarves</option>
+                        <option value="hats">Hats</option>
                 </select>
             </div>
 
