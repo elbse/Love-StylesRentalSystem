@@ -75,6 +75,14 @@
                         <option value="casual-suit">Casual Suit</option>
                     </optgroup>
 
+                    <optgroup label="Suits">
+                        <option value="business-suit">Suits</option>
+                        <option value="wedding-suit">Wedding Suit</option>
+                        <option value="tuxedo">Tuxedo</option>
+                        <option value="three-piece-suit">Three-Piece Suit</option>
+                        <option value="casual-suit">Casual Suit</option>
+                    </optgroup>
+
                     <optgroup label="Gowns">
                         <option value="wedding-gown">Wedding Gown</option>
                         <option value="evening-gown">Evening Gown</option>
