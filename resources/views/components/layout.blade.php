@@ -91,7 +91,7 @@
         }
     </style>
 </head>
-<body class="flex h-screen" style="background-color: #D7C4E4;">
+<body class="flex h-screen" style="background-color: #020003;">
 
     <x-sidebar />
 
@@ -105,7 +105,7 @@
 
 
  <!-- Page Content -->
-        <main class="flex-1 min-h-0 p-6 overflow-y-auto" style="background-color: #D7C4E4;">
+        <main class="flex-1 min-h-0 p-6 overflow-y-auto" style="background-color: #FFFFFF;">
             {{ $slot }}
         </main>
     </div>
