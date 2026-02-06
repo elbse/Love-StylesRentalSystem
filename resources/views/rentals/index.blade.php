@@ -18,9 +18,9 @@
             </x-kpi-card>
     </div>
 
-    <x-kpi-card icon="fas fa-users" color="bg-black" symbol="{{ asset('storage/images/vector_peso.png') }}"  background="bg-white">
-                <h3 class="text-sm text-black">Active Rental</h3>
-            </x-kpi-card>
+    <x-card icon="fas fa-users" color="bg-black" symbol="{{ asset('storage/images/vector_peso.png') }}"  background="bg-white">
+                
+    </x-card>
 
 
 </x-layout>
