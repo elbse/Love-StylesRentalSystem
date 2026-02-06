@@ -1,33 +1,21 @@
 <x-layout :title="$title">
 
- <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-2 mb-6">
-        <!-- Total Customers -->
-        <x-kpi-card icon="fas fa-users" color="bg-[#C16BFF]" symbol="{{ asset('storage/images/vector_peso.png') }}"  background="bg-gradient-to-r from-[#C16BFF] to-[#6A0DAD]">
-            <h3 class="text-sm text-gray-200">Total Customers</h3>
-            {{-- <p class="text-3xl font-bold">{{ number_format($totalCustomers) }}</p>
-            <p class="text-sm text-gray-300">{{ $newCustomersThisMonth }} new this month</p> --}}
-        </x-kpi-card>
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mb-6">
+        <x-kpi-card icon="fas fa-users" color="bg-black" symbol="{{ asset('storage/images/vector_peso.png') }}"  background="bg-white">
+                <h3 class="text-sm text-black">Total Customers</h3>
+            </x-kpi-card>
 
-        <!-- Active Customers -->
-        <x-kpi-card icon="fas fa-user-check" color="bg-[#A4B1FF]" symbol="{{ asset('storage/images/vector_cash.png') }}"  background="bg-gradient-to-r from-[#A4B1FF] to-[#5E72E4]">
-            <h3 class="text-sm text-gray-200">Active Customers</h3>
-            {{-- <p class="text-3xl font-bold">{{ number_format($activeCustomers) }}</p>
-            <p class="text-sm text-gray-300">{{ $totalCustomers > 0 ? round(($activeCustomers / $totalCustomers) * 100, 1) : 0 }}% of total</p> --}}
-        </x-kpi-card>
+        <x-kpi-card icon="fas fa-users" color="bg-black" symbol="{{ asset('storage/images/vector_peso.png') }}"  background="bg-white">
+                <h3 class="text-sm text-black">Total Customers</h3>
+            </x-kpi-card>
 
-        <!-- Active Rentals -->
-        <x-kpi-card icon="fas fa-tshirt" color="bg-[#77FF90]" symbol="{{ asset('storage/images/vector_check.png') }}"  background="bg-gradient-to-r from-[#77FF90] to-[#35B73E]">
-            <h3 class="text-sm text-gray-200">Active Rentals</h3>
-            {{-- <p class="text-3xl font-bold">{{ number_format($activeRentals) }}</p>
-            <p class="text-sm text-gray-300">{{ $totalRentals > 0 ? round(($activeRentals / $totalRentals) * 100, 1) : 0 }}% of total</p> --}}
-        </x-kpi-card>
+        <x-kpi-card icon="fas fa-users" color="bg-black" symbol="{{ asset('storage/images/vector_peso.png') }}"  background="bg-white">
+                <h3 class="text-sm text-black">Total Customers</h3>
+            </x-kpi-card>
 
-        <!-- Overdue Rentals -->
-        <x-kpi-card icon="fas fa-exclamation-triangle" color="bg-[#FF6B6B]" symbol="{{ asset('storage/images/vector_sms.png') }}"  background="bg-gradient-to-r from-[#FF6B6B] to-[#E53E3E]">
-            <h3 class="text-sm text-gray-200">Overdue Rentals</h3>
-            {{-- <p class="text-3xl font-bold">{{ number_format($overdueRentals) }}</p>
-            <p class="text-sm text-gray-300">{{ $activeRentals > 0 ? round(($overdueRentals / $activeRentals) * 100, 1) : 0 }}% of active</p> --}}
-        </x-kpi-card>
+        <x-kpi-card icon="fas fa-users" color="bg-black" symbol="{{ asset('storage/images/vector_peso.png') }}"  background="bg-white">
+                <h3 class="text-sm text-black">Total Customers</h3>
+            </x-kpi-card>
     </div>
 
     <div class="bg-white rounded-lg shadow-md p-4 mb-6">
