@@ -3,8 +3,8 @@
      <style>
          [x-cloak] { display: none !important; }
      </style>
-     
-     <div class="bg-[#393939] relative rounded-2xl shadow-lg p-8 w-[28rem] overflow-hidden">
+
+     <div class="bg-[#393939] relative rounded-2xl shadow-lg p-8 w-[28rem] overflow-hidden" >
 
 
         <img src="{{ asset('storage/images/vector_one.png') }}"
@@ -17,18 +17,18 @@
         <form action="{{ route('login')}}" method="POST" class="space-y-4" x-data="{ showPassword: false }" x-cloak>
 
 
-            @csrf   
+            @csrf
             <input type="email" name="email" placeholder="user@email.com" value="{{ old('email') }}"
                 class="w-full px-4 py-2 rounded-lg border focus:ring-2 bg-white outline-none {{ $errors->has('email') || $errors->any() ? 'border-red-500 focus:ring-red-500' : 'border-gray-300 focus:ring-purple-500' }}">
 
             <div class="relative">
-                <input 
-                    :type="showPassword ? 'text' : 'password'" 
-                    name="password" 
+                <input
+                    :type="showPassword ? 'text' : 'password'"
+                    name="password"
                     placeholder="Password"
                     class="w-full px-4 py-2 pr-12 rounded-lg border border-gray-300 focus:ring-2 bg-white focus:ring-purple-500 outline-none">
-                <button 
-                    type="button" 
+                <button
+                    type="button"
                     @click="showPassword = !showPassword"
                     class="absolute inset-y-0 right-0 pr-3 flex items-center text-gray-400 hover:text-gray-600 transition-colors duration-200">
                     <svg x-show="!showPassword" class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">

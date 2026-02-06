@@ -50,8 +50,8 @@ class CustomerReportController extends Controller
         $activeRentals = Rental::join('rental_status', 'rentals.status_id', '=', 'rental_status.status_id')
             ->where('rental_status.status_name', 'Active')
             ->count();
-        $completedRentals = Rental::join('rental_status', 'rentals.status_id', '=', 'rental_status.status_id')
-            ->where('rental_status.status_name', 'Completed')
+        $returnedRentals = Rental::join('rental_status', 'rentals.status_id', '=', 'rental_status.status_id')
+            ->where('rental_status.status_name', 'Returned')
             ->count();
         $overdueRentals = Rental::join('rental_status', 'rentals.status_id', '=', 'rental_status.status_id')
             ->where('rental_status.status_name', 'Overdue')
@@ -163,7 +163,7 @@ class CustomerReportController extends Controller
             'newCustomersThisMonth',
             'totalRentals',
             'activeRentals',
-            'completedRentals',
+            'returnedRentals',
             'overdueRentals',
             'overdueRentalsCollection',
             'totalRevenue',

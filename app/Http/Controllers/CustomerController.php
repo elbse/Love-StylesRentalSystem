@@ -84,13 +84,15 @@ class CustomerController extends Controller
             'full_name' => 'required|string|max:255',
             'email' => 'required|email|unique:customers,email',
             'address' => 'required|string|max:500',
-            'contact_number' => 'required|string|max:20',
+            'contact_number' => 'required|string|max:20|regex:/^[+]?[0-9\s\(\)]*[0-9][0-9\s\(\)]*$/',
             // optional measurement fields
             'size' => 'nullable|string|max:10',
             'height' => 'nullable|string|max:50',
             'bust' => 'nullable|string|max:50',
             'waist' => 'nullable|string|max:50',
             'hips' => 'nullable|string|max:50',
+        ], [
+            'contact_number.regex' => 'The contact number must contain only positive numbers. Negative numbers are not allowed.',
         ]);
 
         $measurement = [
@@ -173,13 +175,15 @@ class CustomerController extends Controller
             'full_name' => 'required|string|max:255',
             'email' => 'required|email|unique:customers,email,' . $customer->customer_id . ',customer_id',
             'address' => 'required|string|max:500',
-            'contact_number' => 'required|string|max:20',
+            'contact_number' => 'required|string|max:20|regex:/^[+]?[0-9\s\(\)]*[0-9][0-9\s\(\)]*$/',
             // optional measurement fields
             'size' => 'nullable|string|max:10',
             'height' => 'nullable|string|max:50',
             'bust' => 'nullable|string|max:50',
             'waist' => 'nullable|string|max:50',
             'hips' => 'nullable|string|max:50',
+        ], [
+            'contact_number.regex' => 'The contact number must contain only positive numbers. Negative numbers are not allowed.',
         ]);
 
         $measurement = [
