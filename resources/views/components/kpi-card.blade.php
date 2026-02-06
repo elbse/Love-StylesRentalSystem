@@ -1,4 +1,4 @@
-<div class="relative w-full h-32 rounded-2xl shadow-lg p-4 overflow-hidden {{ $background }}">
+<div class="relative w-full h-32 rounded-2xl shadow-lg p-4 overflow-hidden {{ $background }} border-black border-1">
 
     <!-- Background symbol -->
     <div class="absolute inset-0 flex items-center justify-center opacity-30 text-white text-8xl font-extrabold select-none">
