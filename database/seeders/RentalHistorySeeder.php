@@ -20,6 +20,9 @@ class RentalHistorySeeder extends Seeder
 {
     /**
      * Run the database seeds.
+     * 
+     * This seeder enforces the business rule: Customers with overdue rentals cannot rent additional items.
+     * Rentals are created chronologically, and once a customer gets an overdue rental, no more rentals are created.
      */
     public function run(): void
     {
@@ -43,20 +46,18 @@ class RentalHistorySeeder extends Seeder
             $user = $users->random();
             
             // Determine how many rentals this customer should have (1-5 rentals)
-            $rentalCount = rand(1, 5);
-            $hasOverdue = false; // Track if customer already has overdue rental
-            $overdueIndex = -1; // Track which rental will be overdue
+            $maxRentals = rand(1, 5);
             
-            // Randomly decide which rental (if any) will be overdue
-            if (rand(1, 10) <= 2) { // 20% chance of having an overdue rental
-                $overdueIndex = rand(0, $rentalCount - 1);
-            }
+            // Randomly decide if this customer will have an overdue rental
+            $willHaveOverdue = (rand(1, 10) <= 2); // 20% chance of having an overdue rental
             
-            for ($rentalIndex = 0; $rentalIndex < $rentalCount; $rentalIndex++) {
+            // Create rentals chronologically (older rentals first)
+            for ($rentalIndex = 0; $rentalIndex < $maxRentals; $rentalIndex++) {
                 $inventory = $inventories->random();
                 
-                // Create reservation with chronological dates
-                $reservationDate = Carbon::now()->subMonths(rand(1, 6))->subDays(rand(0, 30));
+                // Create reservation with chronological dates (older rentals first)
+                $monthsAgo = $maxRentals - $rentalIndex; // More recent rentals for higher indices
+                $reservationDate = Carbon::now()->subMonths($monthsAgo)->subDays(rand(0, 30));
                 $startDate = $reservationDate->copy()->addDays(rand(1, 3));
                 $endDate = $startDate->copy()->addDays(7); // Fixed 7-day rental period
                 
@@ -80,29 +81,34 @@ class RentalHistorySeeder extends Seeder
                     // Determine rental status with business logic
                     $rentalStatus = 'Active';
                     
-                    // Check if this is the designated overdue rental
-                    if ($rentalIndex === $overdueIndex) {
-                        // This rental is designated to be overdue
+                    // Check if this should be an overdue rental
+                    if ($willHaveOverdue && $rentalIndex === $maxRentals - 1) {
+                        // This is the last rental and should be overdue
                         $rentalStatus = 'Overdue';
                         $penaltyFee = now()->diffInDays($dueDate) * 50;
-                        $hasOverdue = true; // Mark customer as having overdue
-                        
-                        // Ensure this is the last rental by breaking the loop
-                        $rentalCount = $rentalIndex + 1;
                     } else {
-                        // This is not the overdue rental, so it must be completed/returned
+                        // This is not the overdue rental, determine status
                         $statusRoll = rand(1, 10);
                         
-                        if ($statusRoll <= 6) {
-                            // 60% chance - Completed (returned within 7 days)
-                            $returnDate = $releasedDate->copy()->addDays(rand(1, 7));
-                            $rentalStatus = 'Completed';
+                        if ($statusRoll <= 4) {
+                            // 40% chance - Active (currently rented)
+                            $returnDate = null; // Active rentals don't have return date yet
+                            
+                            // Check if rental should be overdue based on current date
+                            if (now()->greaterThan($dueDate)) {
+                                // This rental is overdue - no more rentals should be created after this
+                                $rentalStatus = 'Overdue';
+                                $penaltyFee = now()->diffInDays($dueDate) * 50;
+                            } else {
+                                $rentalStatus = 'Active';
+                            }
                         } elseif ($statusRoll <= 8) {
-                            // 20% chance - Returned (returned exactly on due date)
-                            $returnDate = $dueDate->copy();
+                            // 40% chance - Returned (returned within 7 days)
+                            $returnDate = $releasedDate->copy()->addDays(rand(1, 7));
                             $rentalStatus = 'Returned';
                         } else {
                             // 20% chance - Cancelled
+                            $returnDate = $releasedDate->copy()->addDays(rand(1, 3)); // Cancelled rentals have a return date
                             $rentalStatus = 'Cancelled';
                         }
                     }
@@ -121,11 +127,6 @@ class RentalHistorySeeder extends Seeder
                     }
                     
                     $rental = Rental::create($rentalData);
-
-                    // If this was the overdue rental, break the loop to prevent more rentals
-                    if ($rentalIndex === $overdueIndex) {
-                        break;
-                    }
 
                     // Create payments (1-3 payments per rental)
                     $paymentCount = rand(1, 3);
@@ -155,6 +156,11 @@ class RentalHistorySeeder extends Seeder
                             'generated_date' => $payment->payment_date,
                             'total_amount' => $amount,
                         ]);
+                    }
+                    
+                    // Business Rule Enforcement: If this rental is overdue, stop creating more rentals
+                    if ($rentalStatus === 'Overdue') {
+                        break; // Customer cannot rent more items once they have an overdue rental
                     }
                 } else {
                     // Reservation was cancelled

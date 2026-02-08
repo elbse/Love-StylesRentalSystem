@@ -78,7 +78,17 @@
     <div x-data="{ 
         show: true, 
         countdown: 5,
+        messageId: '{{ md5(session('success') . now()) }}',
         startCountdown() {
+            // Check if this message was already shown
+            if (sessionStorage.getItem('shown_message_' + this.messageId)) {
+                this.show = false;
+                return;
+            }
+            
+            // Mark this message as shown
+            sessionStorage.setItem('shown_message_' + this.messageId, 'true');
+            
             this.countdown = 5;
             const timer = setInterval(() => {
                 this.countdown--;
@@ -130,7 +140,17 @@
     <div x-data="{ 
         show: true, 
         countdown: 6,
+        messageId: '{{ md5(session('error') . now()) }}',
         startCountdown() {
+            // Check if this message was already shown
+            if (sessionStorage.getItem('shown_message_' + this.messageId)) {
+                this.show = false;
+                return;
+            }
+            
+            // Mark this message as shown
+            sessionStorage.setItem('shown_message_' + this.messageId, 'true');
+            
             this.countdown = 6;
             const timer = setInterval(() => {
                 this.countdown--;
@@ -277,29 +297,100 @@
     </div>
     @endif
 
-    
-        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mb-6">
-        <x-kpi-card icon="fas fa-users" color="bg-black" symbol="{{ asset('storage/images/vector_peso.png') }}"  background="bg-white">
-                <h3 class="text-sm text-black">Total Customers</h3>
-            </x-kpi-card>
+    <div class="px-4 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mb-6">
+        <!-- Total Customers -->
+        <div class="relative w-full h-36 rounded-2xl shadow-xl p-6 overflow-hidden bg-gradient-to-br from-purple-600 via-purple-700 to-indigo-800">
+            <!-- Enhanced Background Pattern -->
+            <div class="absolute inset-0 opacity-10">
+                <div class="absolute inset-0" style="background-image: radial-gradient(circle at 20% 20%, white 2px, transparent 2px), radial-gradient(circle at 80% 80%, white 2px, transparent 2px); background-size: 30px 30px;"></div>
+            </div>
 
-        <x-kpi-card icon="fas fa-users" color="bg-black" symbol="{{ asset('storage/images/vector_peso.png') }}"  background="bg-white">
-                <h3 class="text-sm text-black">Total Customers</h3>
-            </x-kpi-card>
+            <!-- Content -->
+            <div class="relative z-10">
+                <div class="flex items-center justify-between mb-2">
+                    <h3 class="text-sm font-semibold text-white/90 uppercase tracking-wide">Total Customers</h3>
+                    <div class="w-8 h-8 bg-white/20 rounded-lg flex items-center justify-center">
+                        <svg class="w-4 h-4 text-white" fill="currentColor" viewBox="0 0 20 20">
+                            <path d="M9 6a3 3 0 11-6 0 3 3 0 016 0zM17 6a3 3 0 11-6 0 3 3 0 016 0zM12.93 17c.046-.327.07-.66.07-1a6.97 6.97 0 00-1.5-4.33A5 5 0 0119 16v1h-6.07zM6 11a5 5 0 015 5v1H1v-1a5 5 0 015-5z"/>
+                        </svg>
+                    </div>
+                </div>
+                <p class="text-4xl font-bold text-white mb-1 drop-shadow-lg">{{ number_format($totalCustomers) }}</p>
+                <p class="text-xs text-white/80 font-medium">{{ $newCustomersThisMonth }} new this month</p>
+            </div>
+        </div>
 
-        <x-kpi-card icon="fas fa-users" color="bg-black" symbol="{{ asset('storage/images/vector_peso.png') }}"  background="bg-white">
-                <h3 class="text-sm text-black">Total Customers</h3>
-            </x-kpi-card>
+        <!-- Active Customers -->
+        <div class="relative w-full h-36 rounded-2xl shadow-xl p-6 overflow-hidden bg-gradient-to-br from-blue-500 via-blue-600 to-indigo-700">
+            <!-- Enhanced Background Pattern -->
+            <div class="absolute inset-0 opacity-10">
+                <div class="absolute inset-0" style="background-image: radial-gradient(circle at 20% 20%, white 2px, transparent 2px), radial-gradient(circle at 80% 80%, white 2px, transparent 2px); background-size: 30px 30px;"></div>
+            </div>
 
-        <x-kpi-card icon="fas fa-users" color="bg-black" symbol="{{ asset('storage/images/vector_peso.png') }}"  background="bg-white">
-                <h3 class="text-sm text-black">Total Customers</h3>
-            </x-kpi-card>
-    
+            <!-- Content -->
+            <div class="relative z-10">
+                <div class="flex items-center justify-between mb-2">
+                    <h3 class="text-sm font-semibold text-white/90 uppercase tracking-wide">Active Customers</h3>
+                    <div class="w-8 h-8 bg-white/20 rounded-lg flex items-center justify-center">
+                        <svg class="w-4 h-4 text-white" fill="currentColor" viewBox="0 0 20 20">
+                            <path fill-rule="evenodd" d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z" clip-rule="evenodd"/>
+                            <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/>
+                        </svg>
+                    </div>
+                </div>
+                <p class="text-4xl font-bold text-white mb-1 drop-shadow-lg">{{ number_format($activeCustomers) }}</p>
+                <p class="text-xs text-white/80 font-medium">{{ $totalCustomers > 0 ? round(($activeCustomers / $totalCustomers) * 100, 1) : 0 }}% of total</p>
+            </div>
+        </div>
+
+        <!-- Active Rentals -->
+        <div class="relative w-full h-36 rounded-2xl shadow-xl p-6 overflow-hidden bg-gradient-to-br from-green-500 via-emerald-600 to-teal-700">
+            <!-- Enhanced Background Pattern -->
+            <div class="absolute inset-0 opacity-10">
+                <div class="absolute inset-0" style="background-image: radial-gradient(circle at 20% 20%, white 2px, transparent 2px), radial-gradient(circle at 80% 80%, white 2px, transparent 2px); background-size: 30px 30px;"></div>
+            </div>
+
+            <!-- Content -->
+            <div class="relative z-10">
+                <div class="flex items-center justify-between mb-2">
+                    <h3 class="text-sm font-semibold text-white/90 uppercase tracking-wide">Active Rentals</h3>
+                    <div class="w-8 h-8 bg-white/20 rounded-lg flex items-center justify-center">
+                        <svg class="w-4 h-4 text-white" fill="currentColor" viewBox="0 0 20 20">
+                            <path fill-rule="evenodd" d="M3 4a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zm0 4a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zm0 4a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zm0 4a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1z" clip-rule="evenodd"/>
+                        </svg>
+                    </div>
+                </div>
+                <p class="text-4xl font-bold text-white mb-1 drop-shadow-lg">{{ number_format($activeRentals) }}</p>
+                <p class="text-xs text-white/80 font-medium">{{ $totalRentals > 0 ? round(($activeRentals / $totalRentals) * 100, 1) : 0 }}% of total</p>
+            </div>
+        </div>
+
+        <!-- Overdue Rentals -->
+        <div class="relative w-full h-36 rounded-2xl shadow-xl p-6 overflow-hidden bg-gradient-to-br from-red-500 via-rose-600 to-pink-700">
+            <!-- Enhanced Background Pattern -->
+            <div class="absolute inset-0 opacity-10">
+                <div class="absolute inset-0" style="background-image: radial-gradient(circle at 20% 20%, white 2px, transparent 2px), radial-gradient(circle at 80% 80%, white 2px, transparent 2px); background-size: 30px 30px;"></div>
+            </div>
+
+            <!-- Content -->
+            <div class="relative z-10">
+                <div class="flex items-center justify-between mb-2">
+                    <h3 class="text-sm font-semibold text-white/90 uppercase tracking-wide">Overdue Rentals</h3>
+                    <div class="w-8 h-8 bg-white/20 rounded-lg flex items-center justify-center">
+                        <svg class="w-4 h-4 text-white" fill="currentColor" viewBox="0 0 20 20">
+                            <path fill-rule="evenodd" d="M8.257 3.099c.765-1.36 2.722-1.36 3.486 0l5.58 9.92c.75 1.334-.213 2.98-1.742 2.98H4.42c-1.53 0-2.493-1.646-1.743-2.98l5.58-9.92zM11 13a1 1 0 11-2 0 1 1 0 012 0zm-1-8a1 1 0 00-1 1v3a1 1 0 002 0V6a1 1 0 00-1-1z" clip-rule="evenodd"/>
+                        </svg>
+                    </div>
+                </div>
+                <p class="text-4xl font-bold text-white mb-1 drop-shadow-lg">{{ number_format($overdueRentals) }}</p>
+                <p class="text-xs text-white/80 font-medium">{{ $activeRentals > 0 ? round(($overdueRentals / $activeRentals) * 100, 1) : 0 }}% of active</p>
+            </div>
+        </div>
 
     </div>
 
     <!-- Search and Filter Bar -->
-    <div class="bg-white rounded-lg shadow-md p-4 mb-6">
+    <div class="mx-4 bg-white rounded-lg shadow-md p-4 mb-6">
         <form method="GET" action="{{ route('customers.index') }}" class="flex flex-col md:flex-row gap-4 items-end">
             <!-- Search Input -->
             <div class="flex-1">
@@ -360,9 +451,9 @@
     </form>
     </div>
 
-    <div class="m-4 grid grid-cols-4 gap-8 -ml-1">
+    <div class="px-4 grid grid-cols-1 lg:grid-cols-4 gap-6">
 
-        <div class="bg-white rounded-xl shadow-md overflow-hidden col-span-3">
+        <div class="bg-white rounded-xl shadow-md overflow-hidden lg:col-span-3">
     <!-- Header -->
     <div class="bg-gradient-to-r from-purple-600 to-purple-800 text-white p-4">
         <h2 class="text-xl font-semibold">Customers</h2>
@@ -371,7 +462,7 @@
     
 
     <!-- Table -->
-    <div class="overflow-x-auto">
+    <div class="overflow-x-auto" style="background: url('{{ asset('storage/images/Vector_34.png') }}'); background-size: 920px 620px; background-repeat: no-repeat; background-position: center;">
         <table class="min-w-full border-collapse">
             <thead>
                 <tr class="bg-purple-100 text-gray-700">
@@ -448,12 +539,14 @@
             </div>
         </div>
 
-        <x-action-panel class="col-start-1" />
+        <div class="lg:col-span-1">
+            <x-action-panel />
+        </div>
 
     </div>
 
     <!-- Pagination and Results Info -->
-    <div class="bg-white rounded-lg shadow-md p-4 mt-6">
+    <div class="mx-4 bg-white rounded-lg shadow-md p-4 mt-6">
         <div class="flex flex-col lg:flex-row items-center justify-between gap-4">
             <!-- Results Info -->
         <div class="text-sm text-gray-600">

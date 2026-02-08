@@ -15,7 +15,6 @@ class RentalStatusSeeder extends Seeder
     {
         $statuses = [
             'Active',
-            'Completed',
             'Overdue',
             'Cancelled',
             'Returned'

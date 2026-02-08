@@ -1,14 +1,14 @@
 <x-layout title="Customer Reports">
-    <div class="max-w-7xl mx-auto p-4 md:p-6">
+    <div class="w-full p-4 md:p-6">
         <!-- Header -->
         <div class="bg-white rounded-2xl shadow-lg border border-gray-100 overflow-hidden mb-6">
             <div class="bg-gradient-to-r from-purple-50 to-blue-50 px-6 py-4 border-b border-gray-200">
-                <div class="flex items-center justify-between">
+                <div class="flex flex-col lg:flex-row items-start lg:items-center justify-between gap-4">
                     <div>
                         <h2 class="text-2xl font-bold text-gray-900">Customer Reports</h2>
                         <p class="text-sm text-gray-600 mt-1">Comprehensive analytics and insights</p>
                     </div>
-                    <div class="flex space-x-3">
+                    <div class="flex flex-wrap gap-3">
                         <!-- Date Range Filter -->
                         <form method="GET" action="{{ route('customers.reports.index') }}" class="flex items-center space-x-2">
                             <input type="date" name="start_date" value="{{ $startDate->format('Y-m-d') }}" 
@@ -43,7 +43,7 @@
         </div>
 
         <!-- Key Metrics Cards -->
-        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 xl:grid-cols-4 gap-4 mb-8">
             <!-- Total Customers -->
             <div class="bg-white rounded-xl shadow-lg border border-gray-100 p-6">
                 <div class="flex items-center justify-between">
@@ -111,14 +111,14 @@
 
         <!-- Monthly Trends Chart - Full Width -->
         <div class="mb-8">
-            <div class="bg-white rounded-xl shadow-lg border border-gray-100 p-6">
+            <div class="bg-white rounded-xl shadow-lg border border-gray-100 p-6" >
                 <h3 class="text-lg font-semibold text-gray-900 mb-4">Monthly Trends (Last 12 Months)</h3>
                 <canvas id="monthlyTrendsChart" width="800" height="300"></canvas>
             </div>
         </div>
 
         <!-- Charts Section -->
-        <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-8">
+        <div class="grid grid-cols-1 xl:grid-cols-2 gap-6 mb-8">
             <!-- Rental Status Distribution -->
             <div class="bg-white rounded-xl shadow-lg border border-gray-100 p-6">
                 <h3 class="text-lg font-semibold text-gray-900 mb-4">Rental Status Distribution</h3>
@@ -136,12 +136,12 @@
         <div class="mb-8">
             <div class="bg-white rounded-xl shadow-lg border border-gray-100 p-6">
                 <h3 class="text-lg font-semibold text-gray-900 mb-4">Top Customers by Revenue</h3>
-                <div class="space-y-3">
-                    @foreach($topCustomers as $index => $customerData)
-                        <div class="flex items-center justify-between p-3 bg-gray-50 rounded-lg">
+                <div class="space-y-4">
+                    @foreach($topCustomers as $customerData)
+                        <div class="flex items-center justify-between p-4 bg-gray-50 rounded-lg hover:bg-gray-100 transition-colors">
                             <div class="flex items-center space-x-3">
-                                <div class="w-8 h-8 bg-purple-100 rounded-full flex items-center justify-center">
-                                    <span class="text-sm font-semibold text-purple-600">#{{ $index + 1 }}</span>
+                                <div class="w-10 h-10 bg-purple-100 rounded-full flex items-center justify-center">
+                                    <span class="text-sm font-semibold text-purple-600">#{{ $loop->iteration }}</span>
                                 </div>
                                 <div>
                                     <p class="font-medium text-gray-900">{{ $customerData['customer']->full_name }}</p>
@@ -163,7 +163,7 @@
                 <h3 class="text-lg font-semibold text-gray-900 mb-4">Overdue Rentals</h3>
                 @if($overdueRentalsCollection->count() > 0)
                     <div class="overflow-x-auto">
-                        <table class="min-w-full divide-y divide-gray-200">
+                        <table class="w-full divide-y divide-gray-200">
                             <thead class="bg-gray-50">
                                 <tr>
                                     <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Customer</th>
@@ -236,23 +236,38 @@
         <!-- Detailed Statistics -->
         <div class="bg-white rounded-xl shadow-lg border border-gray-100 p-6">
             <h3 class="text-lg font-semibold text-gray-900 mb-6">Detailed Statistics</h3>
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                 <div class="text-center">
-                    <div class="p-4 bg-blue-50 rounded-lg">
-                        <p class="text-2xl font-bold text-blue-600">{{ $completedRentals }}</p>
-                        <p class="text-sm text-gray-600">Completed Rentals</p>
+                    <div class="p-6 bg-gradient-to-br from-blue-50 to-blue-100 rounded-xl border border-blue-200">
+                        <div class="w-12 h-12 bg-blue-500 rounded-full flex items-center justify-center mx-auto mb-3">
+                            <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                            </svg>
+                        </div>
+                        <p class="text-3xl font-bold text-blue-600 mb-1">{{ $returnedRentals }}</p>
+                        <p class="text-sm font-medium text-gray-700">Returned Rentals</p>
                     </div>
                 </div>
                 <div class="text-center">
-                    <div class="p-4 bg-green-50 rounded-lg">
-                        <p class="text-2xl font-bold text-green-600">{{ $activeCustomers }}</p>
-                        <p class="text-sm text-gray-600">Active Customers</p>
+                    <div class="p-6 bg-gradient-to-br from-green-50 to-green-100 rounded-xl border border-green-200">
+                        <div class="w-12 h-12 bg-green-500 rounded-full flex items-center justify-center mx-auto mb-3">
+                            <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"/>
+                            </svg>
+                        </div>
+                        <p class="text-3xl font-bold text-green-600 mb-1">{{ $activeCustomers }}</p>
+                        <p class="text-sm font-medium text-gray-700">Active Customers</p>
                     </div>
                 </div>
                 <div class="text-center">
-                    <div class="p-4 bg-purple-50 rounded-lg">
-                        <p class="text-2xl font-bold text-purple-600">{{ $totalItems }}</p>
-                        <p class="text-sm text-gray-600">Total Items</p>
+                    <div class="p-6 bg-gradient-to-br from-purple-50 to-purple-100 rounded-xl border border-purple-200">
+                        <div class="w-12 h-12 bg-purple-500 rounded-full flex items-center justify-center mx-auto mb-3">
+                            <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4"/>
+                            </svg>
+                        </div>
+                        <p class="text-3xl font-bold text-purple-600 mb-1">{{ $totalItems }}</p>
+                        <p class="text-sm font-medium text-gray-700">Total Items</p>
                     </div>
                 </div>
             </div>
@@ -325,7 +340,6 @@
                     data: rentalStatusData.map(item => item.count),
                     backgroundColor: [
                         'rgb(59, 130, 246)',   // Active - Blue
-                        'rgb(16, 185, 129)',   // Completed - Green
                         'rgb(239, 68, 68)',    // Overdue - Red
                         'rgb(107, 114, 128)',  // Cancelled - Gray
                         'rgb(147, 51, 234)'    // Returned - Purple
