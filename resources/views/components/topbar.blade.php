@@ -1,4 +1,5 @@
 <!-- Top Bar -->
+
 <header class="relative flex items-center justify-between bg-white shadow px-6 py-3 h-[94px] overflow-hidden">
     <!-- Background Image -->
 
@@ -20,6 +21,10 @@
             Welcome to Love & Styles Reservation System
         </p>
     </div>
+
+
+
+
 
 
     {{-- TODO --}}
