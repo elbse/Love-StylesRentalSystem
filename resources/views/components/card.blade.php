@@ -1,8 +1,16 @@
 <div class="relative w-full rounded-2xl shadow-lg overflow-hidden {{ $background }} border border-gray-300">
+
+    @props(['title' => null])
+
+    @php
+        $autoTitle = Route::currentRouteName()
+            ? ucwords(str_replace('.', ' ', Route::currentRouteName()))
+            : 'Default Title';
+    @endphp
     <!-- Header with title, search, and filter -->
     <div class="flex items-center justify-between gap-4 p-6">
         <!-- Title -->
-        <h2 class="text-xl font-semibold text-gray-900">Active Rentals</h2>
+        <h2 class="text-xl font-semibold text-gray-900">Active {{ $title ?? $autoTitle }}</h2>
         
         <!-- Search and Filter -->
         <div class="flex items-center gap-3">
