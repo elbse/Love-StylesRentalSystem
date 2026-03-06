@@ -5,46 +5,46 @@
 
     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mb-6">
         <x-kpi-card icon="fas fa-users" color="bg-black" symbol="{{ asset('storage/images/vector_peso.png') }}"  background="bg-white">
-                <h3 class="text-sm text-black">Total Customers</h3>
+                <h3 class="text-sm text-gray-700 font-semibold">Total Customers</h3>
             </x-kpi-card>
 
         <x-kpi-card icon="fas fa-users" color="bg-black" symbol="{{ asset('storage/images/vector_peso.png') }}"  background="bg-white">
-                <h3 class="text-sm text-black">Total Customers</h3>
+                <h3 class="text-sm text-gray-700 font-semibold">Total Customers</h3>
             </x-kpi-card>
 
         <x-kpi-card icon="fas fa-users" color="bg-black" symbol="{{ asset('storage/images/vector_peso.png') }}"  background="bg-white">
-                <h3 class="text-sm text-black">Total Customers</h3>
+                <h3 class="text-sm text-gray-700 font-semibold">Total Customers</h3>
             </x-kpi-card>
 
         <x-kpi-card icon="fas fa-users" color="bg-black" symbol="{{ asset('storage/images/vector_peso.png') }}"  background="bg-white">
-                <h3 class="text-sm text-black">Total Customers</h3>
+                <h3 class="text-sm text-gray-700 font-semibold">Total Customers</h3>
             </x-kpi-card>
     </div>
 
     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-6 gap-4 mb-6">
 
         <x-kpi-card icon="fas fa-users" color="bg-black" symbol="{{ asset('storage/images/vector_peso.png') }}"  background="bg-white">
-                <h3 class="text-sm text-black">Total Customers</h3>
+                <h3 class="text-sm text-gray-700 font-semibold">Total Customers</h3>
             </x-kpi-card>
 
         <x-kpi-card icon="fas fa-users" color="bg-black" symbol="{{ asset('storage/images/vector_peso.png') }}"  background="bg-white">
-                <h3 class="text-sm text-black">Total Customers</h3>
+                <h3 class="text-sm text-gray-700 font-semibold">Total Customers</h3>
             </x-kpi-card>
 
          <x-kpi-card icon="fas fa-users" color="bg-black" symbol="{{ asset('storage/images/vector_peso.png') }}"  background="bg-white">
-                <h3 class="text-sm text-black">Total Customers</h3>
+                <h3 class="text-sm text-gray-700 font-semibold">Total Customers</h3>
             </x-kpi-card>
 
         <x-kpi-card icon="fas fa-users" color="bg-black" symbol="{{ asset('storage/images/vector_peso.png') }}"  background="bg-white">
-                <h3 class="text-sm text-black">Total Customers</h3>
+                <h3 class="text-sm text-gray-700 font-semibold">Total Customers</h3>
             </x-kpi-card>
 
          <x-kpi-card icon="fas fa-users" color="bg-black" symbol="{{ asset('storage/images/vector_peso.png') }}"  background="bg-white">
-                <h3 class="text-sm text-black">Total Customers</h3>
+                <h3 class="text-sm text-gray-700 font-semibold">Total Customers</h3>
             </x-kpi-card>
 
         <x-kpi-card icon="fas fa-users" color="bg-black" symbol="{{ asset('storage/images/vector_peso.png') }}"  background="bg-white">
-                <h3 class="text-sm text-black">Total Customers</h3>
+                <h3 class="text-sm text-gray-700 font-semibold">Total Customers</h3>
             </x-kpi-card>
 
     </div>
@@ -82,6 +82,20 @@
         {{-- Rental Status Distribution --}}
         <div class="bg-white rounded-xl shadow-sm border border-gray-100 p-5">
             <h2 class="text-sm font-semibold text-gray-700 mb-4">Rental Status Distribution</h2>
+            <div class="flex items-center justify-center" style="height: 220px;">
+                <canvas id="rentalStatusChart"></canvas>
+            </div>
+        </div>
+
+        <div class="bg-white rounded-xl shadow-sm border border-gray-100 p-5">
+            <h2 class="text-sm font-semibold text-gray-700 mb-4">Top 5 Most Rented Items</h2>
+            <div class="flex items-center justify-center" style="height: 220px;">
+                <canvas id="rentalStatusChart"></canvas>
+            </div>
+        </div>
+
+        <div class="bg-white rounded-xl shadow-sm border border-gray-100 p-5">
+            <h2 class="text-sm font-semibold text-gray-700 mb-4">Top 5 Most Active</h2>
             <div class="flex items-center justify-center" style="height: 220px;">
                 <canvas id="rentalStatusChart"></canvas>
             </div>
