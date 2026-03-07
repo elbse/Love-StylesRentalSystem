@@ -40,6 +40,7 @@
             <i class="fas fa-cog"></i>
         </button>
 
+
         <!-- User Dropdown -->
         <div class="relative user-dropdown" x-data="{ 
             open: false,

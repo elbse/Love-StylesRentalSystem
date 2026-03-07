@@ -21,14 +21,6 @@
             <div class="absolute inset-0 bg-black/40"></div>
         </div>
 
-        {{-- <!-- Lady Image (Floating) -->
-        <div class="absolute bottom-0 left-16 z-10">
-        <img src="{{ asset('storage/images/landing_character.png') }}" 
-         alt="Main Visual" 
-         class="w-[500px] md:w-[650px] drop-shadow-2xl">
-        </div> --}}
-
-
         <!-- Content (shifted to the right) -->
         <div class="relative flex flex-1 ml-[100px]">
             <!-- Left: Tagline -->
@@ -41,9 +33,6 @@
             <!-- Right: Login Card -->
             
     </section>
-
-    
-
 
     <!-- Footer Section -->
     <footer class="bg-white py-4 px-6 flex items-center justify-center space-x-4 shadow-inner">
