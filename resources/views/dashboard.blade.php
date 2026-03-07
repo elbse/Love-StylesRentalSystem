@@ -8,16 +8,16 @@
                 <h3 class="text-sm text-gray-700 font-semibold">Total Customers</h3>
         </x-kpi-card>
 
-        <x-kpi-card icon="fas fa-users" color="bg-black" symbol="{{ asset('storage/images/vector_peso.png') }}"  background="bg-white">
-                <h3 class="text-sm text-gray-700 font-semibold">Total Customers</h3>
+        <x-kpi-card icon="fa-solid fa-boxes-packing" color="bg-black" background="bg-white">
+                <h3 class="text-sm text-gray-700 font-semibold">Active Rentals</h3>
             </x-kpi-card>
 
-        <x-kpi-card icon="fas fa-users" color="bg-black" symbol="{{ asset('storage/images/vector_peso.png') }}"  background="bg-white">
-                <h3 class="text-sm text-gray-700 font-semibold">Total Customers</h3>
+        <x-kpi-card icon="fa-solid fa-box" color="bg-black" background="bg-white">
+                <h3 class="text-sm text-gray-700 font-semibold">Inventory Items</h3>
             </x-kpi-card>
 
-        <x-kpi-card icon="fas fa-users" color="bg-black" symbol="{{ asset('storage/images/vector_peso.png') }}"  background="bg-white">
-                <h3 class="text-sm text-gray-700 font-semibold">Total Customers</h3>
+        <x-kpi-card icon="fa-solid fa-peso-sign" color="bg-black"  background="bg-white">
+                <h3 class="text-sm text-gray-700 font-semibold">Revenue</h3>
             </x-kpi-card>
     </div>
 
