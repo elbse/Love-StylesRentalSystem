@@ -6,6 +6,7 @@
     <title>Love and Styles Rental System</title>
 
     <link rel="shortcut icon" href="{{ asset('storage/images/lsrs_logo.png') }}?v=1" type="image/png">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
 
 
     @vite('resources/css/app.css')
