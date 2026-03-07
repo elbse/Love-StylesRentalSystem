@@ -1,24 +1,5 @@
 <x-layout :title="$title">
 
-    <!-- KPI CARDS GRID -->
-    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mb-6">
-        <x-kpi-card icon="fas fa-users" color="bg-black" symbol="{{ asset('storage/images/vector_peso.png') }}"  background="bg-white">
-                <h3 class="text-sm text-black">Total Customers</h3>
-            </x-kpi-card>
-
-        <x-kpi-card icon="fas fa-users" color="bg-black" symbol="{{ asset('storage/images/vector_peso.png') }}"  background="bg-white">
-                <h3 class="text-sm text-black">Total Customers</h3>
-            </x-kpi-card>
-
-        <x-kpi-card icon="fas fa-users" color="bg-black" symbol="{{ asset('storage/images/vector_peso.png') }}"  background="bg-white">
-                <h3 class="text-sm text-black">Total Customers</h3>
-            </x-kpi-card>
-
-        <x-kpi-card icon="fas fa-users" color="bg-black" symbol="{{ asset('storage/images/vector_peso.png') }}"  background="bg-white">
-                <h3 class="text-sm text-black">Total Customers</h3>
-            </x-kpi-card>
-    </div>
-
     <!-- SEARCH FORM -->
     <div class="bg-white rounded-lg shadow-md p-4 mb-6">
         <form method="GET" action="{{ route('customers.index') }}" class="flex flex-col md:flex-row gap-4 items-end">
@@ -51,13 +32,5 @@
         </form>
     </div>
 
-    <!-- ITEM CARDS SECTION -->
-    <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-3">
-        <x-item-card></x-item-card>
-        <x-item-card></x-item-card>
-        <x-item-card></x-item-card>
-        <x-item-card></x-item-card>
-        <x-item-card></x-item-card>
-    </div>
 
 </x-layout>
