@@ -18,9 +18,17 @@
             </x-kpi-card>
     </div>
 
-     <x-card icon="fas fa-users" color="bg-black" symbol="{{ asset('storage/images/vector_peso.png') }}"  background="bg-white">
-                
-    </x-card>
+        <x-search-bar
+        route="billing.index"
+        label="Search Customers"
+        placeholder="Search by name, email, or contact"
+        :filters="[
+            ['name' => 'status', 'label' => 'Filter by Status', 'options' => [
+                ['value' => 'Active',      'label' => 'Active'],
+                ['value' => 'Deactivated', 'label' => 'Deactivated'],
+            ]],
+        ]"
+    />
 
     
 
