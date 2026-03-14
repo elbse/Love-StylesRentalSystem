@@ -1,9 +1,10 @@
 @props([
-    'image' => 'red-ball-gown.jpg',
-    'name' => 'Red Ball Gown',
-    'size' => 'Small',
-    'code' => 'RG001',
-    'price' => '3,000Php',
+    'id'     => 1,
+    'image'  => 'red-ball-gown.jpg',
+    'name'   => 'Red Ball Gown',
+    'size'   => 'Small',
+    'code'   => 'RG001',
+    'price'  => '3,000Php',
     'status' => 'available',
 ])
 
@@ -25,8 +26,6 @@
             alt="{{ $name }}"
             class="w-full h-56 object-cover group-hover:scale-105 transition-transform duration-300"
         />
-
-        {{-- Status Badge --}}
         <span class="absolute top-3 left-3 inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-medium {{ $statusConfig['badge'] }} backdrop-blur-sm">
             <span class="w-1.5 h-1.5 rounded-full {{ $statusConfig['dot'] }}"></span>
             {{ $statusConfig['text'] }}
@@ -44,12 +43,11 @@
             <p class="text-lg font-bold text-purple-600 mt-2">{{ $price }}</p>
         </div>
 
-        {{-- Action Button --}}
-        <button class="mt-4 w-full bg-purple-600 hover:bg-purple-700 active:bg-purple-800 text-white text-xs font-semibold py-2.5 rounded-xl transition-colors duration-150 tracking-wide">
+        <a href="{{ route('inventories.show', $id) }}"
+           class="mt-4 w-full bg-purple-600 hover:bg-purple-700 active:bg-purple-800 text-white text-xs font-semibold py-2.5 rounded-xl transition-colors duration-150 tracking-wide text-center block">
             View Details
-        </button>
+        </a>
     </div>
 
     {{ $slot }}
-
 </div>
