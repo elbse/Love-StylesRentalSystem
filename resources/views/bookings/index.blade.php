@@ -102,7 +102,7 @@
          onclick="if(event.target === this) closeModal()">
 
         {{-- Backdrop --}}
-        <div class="absolute inset-0 bg-black/40 backdrop-blur-sm"></div>
+        <div class="absolute inset-0 bg-black/30 backdrop-blur-[2px]"></div>
 
         {{-- Modal Card --}}
         <div class="relative bg-white rounded-xl shadow-xl w-full max-w-md mx-4 p-6">

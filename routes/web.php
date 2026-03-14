@@ -52,6 +52,8 @@ Route::middleware('auth')->group(function () {
     
     // Inventory
     Route::get('/inventory', [InventoryController::class, 'index'])->name('inventory.index');
+    Route::get('/inventories/create', [InventoryController::class, 'create'])->name('inventories.create');
+    Route::post('/inventories', [InventoryController::class, 'store'])->name('inventories.store');
     
     // Customer Reports (must be before customer routes to avoid conflicts)
     Route::get('/customers/reports', [CustomerReportController::class, 'index'])->name('customers.reports.index');

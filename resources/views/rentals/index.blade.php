@@ -25,12 +25,6 @@
                 <h2 class="text-base font-semibold text-gray-900">All Rentals</h2>
                 <p class="text-xs text-gray-400 mt-0.5">View and manage all rental inventory</p>
             </div>
-            <a href="#" class="px-4 py-2 bg-purple-600 hover:bg-purple-700 text-white text-sm rounded-lg transition-colors duration-200 flex items-center gap-2">
-                <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" viewBox="0 0 20 20" fill="currentColor">
-                    <path fill-rule="evenodd" d="M10 3a1 1 0 011 1v5h5a1 1 0 110 2h-5v5a1 1 0 11-2 0v-5H4a1 1 0 110-2h5V4a1 1 0 011-1z" clip-rule="evenodd" />
-                </svg>
-                New Rental
-            </a>
         </div>
 
         {{-- Search + Filters --}}
@@ -89,10 +83,13 @@
             <table class="w-full text-sm">
                 <thead>
                     <tr class="border-b border-gray-100">
-                        <th class="text-left text-gray-500 font-medium py-3 px-4">Item</th>
-                        <th class="text-left text-gray-500 font-medium py-3 px-4">Category</th>
-                        <th class="text-left text-gray-500 font-medium py-3 px-4">Size</th>
-                        <th class="text-left text-gray-500 font-medium py-3 px-4">Price</th>
+                        <th class="text-left text-gray-500 font-medium py-3 px-4">Rental ID</th>
+                        <th class="text-left text-gray-500 font-medium py-3 px-4">Customer Name</th>
+                        <th class="text-left text-gray-500 font-medium py-3 px-4">Attire</th>
+                        <th class="text-left text-gray-500 font-medium py-3 px-4">Release Date</th>
+                        <th class="text-left text-gray-500 font-medium py-3 px-4">Expected Return Date</th>
+                        <th class="text-left text-gray-500 font-medium py-3 px-4">Actual Return Date</th>
+                        <th class="text-left text-gray-500 font-medium py-3 px-4">Penalty</th>
                         <th class="text-left text-gray-500 font-medium py-3 px-4">Status</th>
                         <th class="text-left text-gray-500 font-medium py-3 px-4">Actions</th>
                     </tr>
