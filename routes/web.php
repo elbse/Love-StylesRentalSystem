@@ -30,6 +30,9 @@ Route::middleware('auth')->group(function () {
     
     // Bookings
     Route::get('/bookings', [ReservationController::class, 'index'])->name('bookings.index');
+    Route::get('/bookings/create', [ReservationController::class, 'create'])->name('bookings.create');
+    Route::post('/bookings', [ReservationController::class, 'store'])->name('bookings.store');
+    
     
     // Rentals
     Route::get('/rentals', [RentalController::class, 'index'])->name('rentals.index');
@@ -49,6 +52,9 @@ Route::middleware('auth')->group(function () {
     
     // Inventory
     Route::get('/inventory', [InventoryController::class, 'index'])->name('inventory.index');
+    Route::get('/inventories/create', [InventoryController::class, 'create'])->name('inventories.create');
+    Route::post('/inventories', [InventoryController::class, 'store'])->name('inventories.store');
+    Route::get('/inventories/{inventory}', [InventoryController::class, 'show'])->name('inventories.show');
     
     // Customer Reports (must be before customer routes to avoid conflicts)
     Route::get('/customers/reports', [CustomerReportController::class, 'index'])->name('customers.reports.index');
