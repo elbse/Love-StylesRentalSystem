@@ -1,44 +1,78 @@
 <x-layout :title="$title">
 
-    {{-- Search Bar --}}
-    <x-search-bar
-    route="bookings.index"
-    label="Search Reservations"
-    placeholder="Search by name, size or category"
-    :filters="[
-        ['name' => 'status', 'label' => 'Filter by Status', 'options' => [
-            ['value' => 'Active',   'label' => 'Active'],
-            ['value' => 'Inactive', 'label' => 'Inactive'],
-        ]],
-    ]"
-    />
+    <div class="bg-white rounded-lg shadow-md mb-6">
 
-    {{-- Table --}}
-    <div class="bg-white rounded-lg shadow-md p-4 mb-6">
+        {{-- Header --}}
+        <div class="flex items-center justify-between p-4 border-b border-gray-100">
+            <div>
+                <h2 class="text-base font-semibold text-gray-900">All Reservations</h2>
+                <p class="text-xs text-gray-400 mt-0.5">View and manage all booking records</p>
+            </div>
+            <a href="#" class="px-4 py-2 bg-purple-600 hover:bg-purple-700 text-white text-sm rounded-lg transition-colors duration-200 flex items-center gap-2">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" viewBox="0 0 20 20" fill="currentColor">
+                    <path fill-rule="evenodd" d="M10 3a1 1 0 011 1v5h5a1 1 0 110 2h-5v5a1 1 0 11-2 0v-5H4a1 1 0 110-2h5V4a1 1 0 011-1z" clip-rule="evenodd" />
+                </svg>
+                New Reservation
+            </a>
+        </div>
+
+        {{-- Search --}}
+        <div class="px-4 py-3 border-b border-gray-100">
+            <form method="GET" action="{{ route('bookings.index') }}">
+                <div class="relative">
+                    <span class="absolute inset-y-0 left-0 pl-3 flex items-center text-gray-400">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" viewBox="0 0 20 20" fill="currentColor">
+                            <path fill-rule="evenodd" d="M8 4a4 4 0 100 8 4 4 0 000-8zM2 8a6 6 0 1110.89 3.476l3.817 3.817a1 1 0 01-1.414 1.414l-3.817-3.817A6 6 0 012 8z" clip-rule="evenodd" />
+                        </svg>
+                    </span>
+                    <input type="text"
+                           name="q"
+                           value="{{ request('q') }}"
+                           placeholder="Search by customer attire..."
+                           class="w-full border border-gray-200 rounded-lg pl-9 pr-9 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-purple-500" />
+                    @if(request('q'))
+                        <a href="{{ route('bookings.index', array_filter(request()->except('page', 'q'))) }}"
+                           class="absolute inset-y-0 right-0 pr-3 flex items-center text-gray-400 hover:text-gray-600">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" viewBox="0 0 20 20" fill="currentColor">
+                                <path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd" />
+                            </svg>
+                        </a>
+                    @else
+                        <button type="submit" class="absolute inset-y-0 right-0 pr-3 flex items-center text-gray-400 hover:text-purple-600">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" viewBox="0 0 20 20" fill="currentColor">
+                                <path fill-rule="evenodd" d="M10.293 3.293a1 1 0 011.414 0l6 6a1 1 0 010 1.414l-6 6a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-4.293-4.293a1 1 0 010-1.414z" clip-rule="evenodd" />
+                            </svg>
+                        </button>
+                    @endif
+                </div>
+            </form>
+        </div>
+
+        {{-- Table --}}
         <div class="overflow-x-auto">
             <table class="w-full text-sm">
                 <thead>
                     <tr class="border-b border-gray-100">
-                        <th class="text-left text-gray-500 font-medium pb-3 pr-6">Customer</th>
-                        <th class="text-left text-gray-500 font-medium pb-3 pr-6">Reservation ID</th>
-                        <th class="text-left text-gray-500 font-medium pb-3 pr-6">Start Date</th>
-                        <th class="text-left text-gray-500 font-medium pb-3 pr-6">End Date</th>
-                        <th class="text-left text-gray-500 font-medium pb-3 pr-6">Amount</th>
-                        <th class="text-left text-gray-500 font-medium pb-3 pr-6">Status</th>
-                        <th class="text-left text-gray-500 font-medium pb-3">Actions</th>
+                        <th class="text-left text-gray-500 font-medium py-3 px-4">Customer</th>
+                        <th class="text-left text-gray-500 font-medium py-3 px-4">Reservation ID</th>
+                        <th class="text-left text-gray-500 font-medium py-3 px-4">Start Date</th>
+                        <th class="text-left text-gray-500 font-medium py-3 px-4">End Date</th>
+                        <th class="text-left text-gray-500 font-medium py-3 px-4">Amount</th>
+                        <th class="text-left text-gray-500 font-medium py-3 px-4">Status</th>
+                        <th class="text-left text-gray-500 font-medium py-3 px-4">Actions</th>
                     </tr>
                 </thead>
                 <tbody class="divide-y divide-gray-50">
                     <tr class="hover:bg-gray-50 transition-colors duration-100">
-                        <td class="py-3 pr-6 font-semibold text-gray-900">Charisse Priego</td>
-                        <td class="py-3 pr-6 text-gray-600">RV0001</td>
-                        <td class="py-3 pr-6 text-gray-600">01/01/2026</td>
-                        <td class="py-3 pr-6 text-gray-600">03/01/2026</td>
-                        <td class="py-3 pr-6 text-gray-600">P3000</td>
-                        <td class="py-3 pr-6">
+                        <td class="py-3 px-4 font-semibold text-gray-900">Charisse Priego</td>
+                        <td class="py-3 px-4 text-gray-600">RV0001</td>
+                        <td class="py-3 px-4 text-gray-600">01/01/2026</td>
+                        <td class="py-3 px-4 text-gray-600">03/01/2026</td>
+                        <td class="py-3 px-4 text-gray-600">P3000</td>
+                        <td class="py-3 px-4">
                             <span class="text-green-600 font-medium">Completed</span>
                         </td>
-                        <td class="py-3">
+                        <td class="py-3 px-4">
                             <div class="flex items-center gap-3">
                                 <a href="#" class="text-gray-400 hover:text-purple-600 transition-colors duration-150" title="Edit">
                                     <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" viewBox="0 0 20 20" fill="currentColor">
@@ -56,6 +90,7 @@
                 </tbody>
             </table>
         </div>
+
     </div>
 
 </x-layout>
