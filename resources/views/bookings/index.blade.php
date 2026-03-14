@@ -8,12 +8,15 @@
                 <h2 class="text-base font-semibold text-gray-900">All Reservations</h2>
                 <p class="text-xs text-gray-400 mt-0.5">View and manage all booking records</p>
             </div>
-            <a href="#" class="px-4 py-2 bg-purple-600 hover:bg-purple-700 text-white text-sm rounded-lg transition-colors duration-200 flex items-center gap-2">
+            {{-- Changed from <a> to <button> to trigger modal --}}
+            <button
+                onclick="document.getElementById('reservationModal').classList.remove('hidden')"
+                class="px-4 py-2 bg-purple-600 hover:bg-purple-700 text-white text-sm rounded-lg transition-colors duration-200 flex items-center gap-2">
                 <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" viewBox="0 0 20 20" fill="currentColor">
                     <path fill-rule="evenodd" d="M10 3a1 1 0 011 1v5h5a1 1 0 110 2h-5v5a1 1 0 11-2 0v-5H4a1 1 0 110-2h5V4a1 1 0 011-1z" clip-rule="evenodd" />
                 </svg>
                 New Reservation
-            </a>
+            </button>
         </div>
 
         {{-- Search --}}
@@ -92,5 +95,93 @@
         </div>
 
     </div>
+
+    {{-- Modal Overlay --}}
+    <div id="reservationModal"
+         class="hidden fixed inset-0 z-50 flex items-center justify-center"
+         onclick="if(event.target === this) closeModal()">
+
+        {{-- Backdrop --}}
+        <div class="absolute inset-0 bg-black/40 backdrop-blur-sm"></div>
+
+        {{-- Modal Card --}}
+        <div class="relative bg-white rounded-xl shadow-xl w-full max-w-md mx-4 p-6">
+
+            {{-- Modal Header --}}
+            <div class="mb-5">
+                <h3 class="text-lg font-bold text-gray-900">Create New Reservation</h3>
+                <p class="text-xs text-gray-400 mt-0.5">Fill in the booking details</p>
+            </div>
+
+            {{-- Form --}}
+            <form method="POST" action="{{ route('bookings.store') }}">
+                @csrf
+
+                {{-- Customer & Attire --}}
+                <div class="grid grid-cols-2 gap-4 mb-4">
+                    <div>
+                        <label class="block text-xs font-medium text-gray-600 mb-1">Customer</label>
+                        <input
+                            type="text"
+                            name="customer"
+                            placeholder="Rho Alphonce Jornadal"
+                            class="w-full border border-gray-200 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-purple-500" />
+                    </div>
+                    <div>
+                        <label class="block text-xs font-medium text-gray-600 mb-1">Attire</label>
+                        <input
+                            type="text"
+                            name="attire"
+                            placeholder="Blue Suit"
+                            class="w-full border border-gray-200 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-purple-500" />
+                    </div>
+                </div>
+
+                {{-- Start Date & End Date --}}
+                <div class="grid grid-cols-2 gap-4 mb-6">
+                    <div>
+                        <label class="block text-xs font-medium text-gray-600 mb-1">Start Date</label>
+                        <input
+                            type="date"
+                            name="start_date"
+                            class="w-full border border-gray-200 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-purple-500" />
+                    </div>
+                    <div>
+                        <label class="block text-xs font-medium text-gray-600 mb-1">End Date</label>
+                        <input
+                            type="date"
+                            name="end_date"
+                            class="w-full border border-gray-200 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-purple-500" />
+                    </div>
+                </div>
+
+                {{-- Actions --}}
+                <div class="flex items-center justify-end gap-3">
+                    <button
+                        type="button"
+                        onclick="closeModal()"
+                        class="px-4 py-2 text-sm text-gray-600 hover:text-gray-800 border border-gray-200 rounded-lg hover:bg-gray-50 transition-colors duration-150">
+                        Cancel
+                    </button>
+                    <button
+                        type="submit"
+                        class="px-4 py-2 bg-purple-600 hover:bg-purple-700 text-white text-sm rounded-lg transition-colors duration-200">
+                        Create Reservation
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        function closeModal() {
+            document.getElementById('reservationModal').classList.add('hidden');
+        }
+
+        // Close on Escape key
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape') closeModal();
+        });
+    </script>
 
 </x-layout>

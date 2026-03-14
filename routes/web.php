@@ -30,6 +30,9 @@ Route::middleware('auth')->group(function () {
     
     // Bookings
     Route::get('/bookings', [ReservationController::class, 'index'])->name('bookings.index');
+    Route::get('/bookings/create', [ReservationController::class, 'create'])->name('bookings.create');
+    Route::post('/bookings', [ReservationController::class, 'store'])->name('bookings.store');
+    
     
     // Rentals
     Route::get('/rentals', [RentalController::class, 'index'])->name('rentals.index');
