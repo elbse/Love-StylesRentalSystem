@@ -58,8 +58,8 @@
                     <select name="status"
                             class="w-full border border-gray-200 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-purple-500">
                         <option value="">All Statuses</option>
-                        <option value="Active"   {{ request('status') == 'Active'   ? 'selected' : '' }}>Active</option>
-                        <option value="Inactive" {{ request('status') == 'Inactive' ? 'selected' : '' }}>Inactive</option>
+                        <option value="Active"   {{ request('status') == 'Active'   ? 'selected' : '' }}>Rented Out</option>
+                        <option value="Inactive" {{ request('status') == 'Inactive' ? 'selected' : '' }}>To Process</option>
                     </select>
                 </div>
 
@@ -118,6 +118,9 @@
                                 </button>
                             </div>
                         </td>
+                        <td class="py-3 px-4 text-gray-600">Tuxedo</td>
+                        <td class="py-3 px-4 text-gray-600">Rented Out</td>
+                        <td class="py-3 px-4 text-gray-600">Return</td>
                     </tr>
                     {{-- @empty
                     <tr>

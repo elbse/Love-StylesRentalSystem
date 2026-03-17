@@ -88,7 +88,7 @@
                         <th class="text-left text-gray-500 font-medium py-3 px-4">Payment Method</th>
                         <th class="text-left text-gray-500 font-medium py-3 px-4">Date</th>
                         <th class="text-left text-gray-500 font-medium py-3 px-4">Status</th>
-                        <th class="text-left text-gray-500 font-medium py-3 px-4">Actions</th>
+                        <th class="text-left text-gray-500 font-medium py-3 px-4">Actions</th>  
                     </tr>
                 </thead>
                 <tbody class="divide-y divide-gray-50">
