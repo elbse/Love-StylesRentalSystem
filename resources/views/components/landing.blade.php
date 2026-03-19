@@ -47,15 +47,7 @@
             </div>
         </div>
 
-        <!-- Footer Badge - Bottom Right Corner -->
-        <div class="absolute right-8 bg-white rounded-2xl py-4 px-6 flex items-center space-x-4 shadow-2xl max-w-md -mt-80 mr-2">
-
-            <img src="{{ asset('storage/images/pod_logo.png') }}" alt="Logo" class="w-14 h-14 flex-shrink-0">
-            <p class="text-gray-800 text-sm leading-relaxed">
-                Most trusted by people for delivering timeless style and elegant formal wear 
-                for every occasion.
-            </p>
-        </div>
+      
     </section>
 
 </body>
