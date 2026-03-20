@@ -606,4 +606,4 @@ npm run build
 
 **Love & Styles Rental Management System** - Streamlining fashion rental operations with modern technology.
 
-*Built with ❤️ using Laravel, TailwindCSS, and modern web technologies.*
+*Built using Laravel, TailwindCSS, and modern web technologies.*
